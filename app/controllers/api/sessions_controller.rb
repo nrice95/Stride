@@ -1,3 +1,27 @@
-class Api::UsersController < ApplicationController
+class Api::SessionssController < ApplicationController
+  def create
+    @athlete = Athlete.find_by_credentials(
+      params[:athlete][:username],
+      params[:athlete][:password]
+    )
+    if @athlete
+      login!(@athlete)
+      render :show
+    else
+      render json: ["Invalid username or password"], status: 401
+    end
+  end
 
+  def show
+    @athlete = Athlete.find(params[:id])
+  end
+
+  def destroy
+    if logged_in?
+      logout!
+      render json: {}
+    else
+      render json: ["Not logged in!"], status: 404
+    end
+  end
 end
