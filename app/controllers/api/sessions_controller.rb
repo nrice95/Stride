@@ -1,4 +1,4 @@
-class Api::SessionssController < ApplicationController
+class Api::SessionsController < ApplicationController
   def create
     @athlete = Athlete.find_by_credentials(
       params[:athlete][:username],
@@ -6,7 +6,9 @@ class Api::SessionssController < ApplicationController
     )
     if @athlete
       login!(@athlete)
-      render :show
+      # render :show
+      render json: @athlete
+      # render "api/athletes/show"
     else
       render json: ["Invalid username or password"], status: 401
     end
