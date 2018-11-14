@@ -31,11 +31,13 @@ class SessionForm extends React.Component {
   }
 
   render(){
+    debugger
     return(
       <div className="login-form-container">
         <form onSubmit={() => this.props.action(this.state)} className="login-form-box">
           {this.props.formType}
           <br></br>
+          {this.renderErrors()}
           <div className="login-form">
             <label>{`Username `}
               <input type="text" value={this.state.username} onChange={this.updateUsername.bind(this)} className="login-input"/>

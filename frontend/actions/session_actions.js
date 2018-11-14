@@ -21,7 +21,7 @@ export const receiveErrors = (errors) => ({
 });
 
 export const login = (athlete) => dispatch => {
-  // debugger
+  debugger
   return APIUtil.login(athlete).then(athlete => (
     // debugger
     dispatch(receiveCurrentAthlete(athlete))
@@ -35,7 +35,13 @@ export const logout = () => dispatch => {
 };
 
 export const signup = (athlete) => dispatch => {
-  return APIUtil.signup(athlete).then(res => dispatch(receiveCurrentAthlete(res)));
+  // debugger
+  return APIUtil.signup(athlete).then(athlete => (
+    // debugger
+    dispatch(receiveCurrentAthlete(athlete))
+  ), err => (
+    dispatch(receiveErrors(err.responseJSON))
+  ));
 };
 
 // export const login = athlete => dispatch => {

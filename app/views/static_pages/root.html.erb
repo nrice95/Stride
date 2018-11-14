@@ -1,0 +1,8 @@
+<% if logged_in? %>
+  <script id="bootstrap-current-athlete" type="text/javascript">
+  	window.currentAthlete = <%= render("api/athletes/athlete.json.jbuilder",
+  		athlete: current_athlete).html_safe %>
+  </script>
+<% end %>
+
+<div id="root"></div>

@@ -7,7 +7,21 @@ import { login, logout, signup } from "./actions/session_actions";
 
 
 document.addEventListener("DOMContentLoaded", () => {
-  const store = configureStore();
+  // debugger
+  let store;
+  if (window.currentAthlete) {
+    const preloadedState = {
+      entities: {
+        athletes: { [window.currentAthlete.id]: window.currentAthlete }
+      },
+      session: { id: window.currentAthlete.id }
+    };
+    store = configureStore(preloadedState);
+    delete window.currentAthlete;
+  }
+  else{
+    store = configureStore();
+  }
   // TESTING START
   window.getState = store.getState;
   window.dispatch = store.dispatch;

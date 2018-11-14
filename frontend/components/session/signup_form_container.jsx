@@ -5,8 +5,9 @@ import { signup } from "../../actions/session_actions";
 import SessionForm from "./session_form";
 
 const msp = ({ errors }) => {
+  // debugger
   return {
-    errors: errors.session,
+    errors,
     formType: "Signup",
     navLink: <Link to="/login">login instead</Link>
   };

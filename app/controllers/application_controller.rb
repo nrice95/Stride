@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
 
-  helper_method :current_athlete
+  helper_method :current_athlete, :logged_in?
 
   def current_athlete
     Athlete.find_by(session_token: session[:session_token])
