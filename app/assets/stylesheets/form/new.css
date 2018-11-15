@@ -11,25 +11,42 @@ html{
   border: 0;
   margin: 0;
   outline: 0;
-  background-image: url("yoga-for-runners-girl-sunset-stock.jpg");
+  height: 100%;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, Roboto, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  /* display: flex;
+  /* background-image: url("yoga-for-runners-girl-sunset-stock.jpg");
   height: 100%;
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: cover; */
+}
+
+#root {
+    height: 100%;
 }
 
 body{
   padding: 0;
   border: 0;
   margin: 0;
+  height: 100%;
+}
+
+.bg{
+  background-image: url("yoga-for-runners-girl-sunset-stock.jpg");
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  justify-content: center;
+  align-items: center; */
 }
 
 .login-form-container {
   display: flex;
   flex-direction: column;
-  margin-top: 100px;
   align-items: center;
-
+  /* margin: 100px 0 0 0; */
 }
 
 .login-form {
@@ -40,10 +57,10 @@ body{
 
 .login-input {
   /* margin-left: 20px; */
-  outline: 1px solid #666;
+  outline: 1px solid #666666;
   border: 0;
   background: rgba(0,0,0,0.5);
-  width: 100%;
+  width: 290px;
   color: white;
   display: flex;
   justify-content: center;
@@ -51,6 +68,7 @@ body{
   padding: 15px 0 15px 10px;
   margin: 5px 0 5px 0;
   font-size: 12
+  color: #6f7474;
 }
 
 .login-input:focus {
@@ -68,6 +86,20 @@ body{
   margin: 0;
 } */
 
+.signup-button {
+  text-decoration: none;
+  color: #7f6974;
+  font-size: 14px;
+  border: 1px solid #cccccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 38px;
+  width: 82px;
+  border-radius: 3px;
+  margin-left: 40px;
+}
+
 .login-form-box {
   /* outline: 1px solid black; */
   /* padding: 20px; */
@@ -80,7 +112,6 @@ body{
 
 .login-title {
   border-radius: 3px 3px 0 0;
-  font-family: -apple-system, system-ui, BlinkMacSystemFont, Roboto, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   display: flex;
   color: white;
   width: 400px;
@@ -88,7 +119,8 @@ body{
   background: rgba(0,0,0,0.75);
   padding: 20px 0 20px;
   font-size: 32px;
-  font-weight: 100;
+  font-weight: 100px;
+  margin-top: 100px;
 }
 
 .main-header {
@@ -97,17 +129,21 @@ body{
   width: 100%;
   margin: 0;
   border: 0;
-  padding: 10px 0px 10px 0px;
+  /* padding: 10px 0px 10px 0px; */
   /* justify-content: center; */
-  /* align-items: center; */
-  justify-content: space-around;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   /* border-bottom: 1px solid #ccc; */
+  height: 55px;
+  border-bottom: 1px solid #e6e6ea;
 }
 
 .header-items {
-  margin: 0 200px 0 200px;
+  margin: 0 100px 0 100px;
   display: flex;
   flex-direction: row;
+  width: 600px;
   justify-content: space-between;
 }
 
@@ -122,11 +158,11 @@ body{
   cursor: pointer;
 }
 
-.stride-title{
+.footer-stride-title, .home-stride-title, .login-stride-title, .dashboard-stride-title{
   border: 0;
   margin: 0;
   padding: 0;
-  color: #f00;
+  color: #ed4b30;
   font-size: 30px;
   /* font-weight: 400px; */
   /* font-weight: bold; */
@@ -135,7 +171,126 @@ body{
   text-decoration: none;
 }
 
-ul {
+.home-stride-title{
+  margin-left: 8%;
+}
+
+.auth-errors {
   list-style-type: none;
-  color: red;
+  color: white;
+  background-color: red;
+  border: 0;
+  margin: 0;
+  width: 400px;
+  font-size: 12px;
+  padding: 19px 0 19px 0;
+}
+
+.error-item{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.home-header-items {
+  display: flex;
+  width: 1000px;
+  justify-content: space-between;
+}
+
+.home-header {
+  /* background: #ffffff; */
+  background: white;
+  width: 100%;
+  margin: 0;
+  border: 0;
+  /* padding: 10px 0px 10px 0px; */
+  /* justify-content: center; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* border-bottom: 1px solid #ccc; */
+  height: 50px;
+  border-bottom: 1px solid #e6e6ea;
+}
+
+.home-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+}
+
+.home-catch-phrase{
+  font-size: 42px;
+  font-weight: 300;
+}
+
+.home-login-button{
+  margin-right: 8%;
+  text-decoration: none;
+  color: #f00;
+  font-weight: 500;
+  font-size: 15px;
+  border: 1px solid #cccccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 42px;
+  width: 102px;
+  border-radius: 3px;
+}
+
+.footer-stride-title{
+  color: white;
+}
+
+.home-footer{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 0%;
+  width: 100%;
+  height: 320px;
+  background-color: #2d2d32;
+  /* padding-left: 100px; */
+  /* padding-right: 10%; */
+}
+
+.footer-stride-title {
+  margin-left: 100px;
+  margin-top: 50px;
+  /* position: relative; */
+  /* top: 10%; */
+  /* left: 10%; */
+}
+
+.get-started-title{
+  font-size: 12px;
+  color: #99999e;
+}
+
+.get-started{
+  margin-top: 50px;
+  margin-right: 100px;
+  /* position: relative; */
+  /* left: 75%; */
+}
+
+.get-started-list{
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  align-items: space-between;
+}
+
+
+.footer-sign-up-element, .footer-log-in-element{
+  color: white;
+  text-decoration: none;
+}
+
+.footer-sign-up-element:hover, .footer-log-in-element:hover{
+  text-decoration: underline;
 }

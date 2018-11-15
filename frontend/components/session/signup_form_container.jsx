@@ -8,7 +8,9 @@ const msp = ({ errors }) => {
   // debugger
   return {
     errors,
-    formType: "Signup",
+    formType: "Sign Up",
+    oppFormType: "Log In",
+    navKey: "login",
     navLink: <Link to="/login">login instead</Link>
   };
 };

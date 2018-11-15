@@ -10,7 +10,7 @@ class Api::SessionsController < ApplicationController
       # render json: @athlete
       render "api/athletes/show"
     else
-      render json: ["Invalid username or password"], status: 401
+      render json: ["The username or password did not match. Please try again."], status: 401
     end
   end
 
@@ -22,6 +22,7 @@ class Api::SessionsController < ApplicationController
     if logged_in?
       logout!
       render json: {}
+      # render "/api/session"
     else
       render json: ["Not logged in!"], status: 404
     end

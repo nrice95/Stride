@@ -19,29 +19,34 @@ class SessionForm extends React.Component {
   }
 
   renderErrors(){
-    return(
-      <ul className="auth-errors">
-        {this.props.errors.map((error,i) => (
-          <li key={`error-${i}`}>
-            {error}
-          </li>
-        ))}
-      </ul>
-    )
+    if (this.props.errors.length > 0){
+      return(
+        <ul className="auth-errors">
+          {this.props.errors.map((error,i) => (
+            <li className="error-item" key={`error-${i}`}>
+              {error}
+            </li>
+          ))}
+        </ul>
+      )
+    }
   }
 
   render(){
     // debugger
     return(
       <div className="bg">
-        // <a href="#" className="js-modal-open">{this.props.form}</a>
+        <header className="main-header">
+          <div className="header-items">
+            <a href="/" className="login-stride-title">STRIDE</a>
+            <a href={`/#/${this.props.navKey}`} className="signup-button">{this.props.oppFormType}</a>
+          </div>
+        </header>
         <div className="login-form-container">
           <div className="login-title">
             {this.props.formType}
           </div>
-          <div className="rendered-errors">
-            {this.renderErrors()}
-          </div>
+          {this.renderErrors()}
           <form onSubmit={() => this.props.action(this.state)} className="login-form-box">
             <br></br>
             <div className="login-form">

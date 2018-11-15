@@ -21,17 +21,22 @@ export const receiveErrors = (errors) => ({
 });
 
 export const login = (athlete) => dispatch => {
-  // debugger
-  return APIUtil.login(athlete).then(athlete => (
-    // debugger
-    dispatch(receiveCurrentAthlete(athlete))
-  ), err => (
-    dispatch(receiveErrors(err.responseJSON))
-  ));
+  debugger
+  return APIUtil.login(athlete).then(athlete => {
+    debugger
+    return dispatch(receiveCurrentAthlete(athlete))
+  }, err => {
+    debugger
+    return dispatch(receiveErrors(err.responseJSON))
+  });
 };
 
 export const logout = () => dispatch => {
-  return APIUtil.logout().then(() => dispatch(logoutCurrentAthlete()));
+  debugger
+  return APIUtil.logout().then(() => {
+    debugger
+    return dispatch(logoutCurrentAthlete())
+  });
 };
 
 export const signup = (athlete) => dispatch => {
