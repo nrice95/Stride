@@ -21,7 +21,7 @@ export const receiveErrors = (errors) => ({
 });
 
 export const login = (athlete) => dispatch => {
-  debugger
+  // debugger
   return APIUtil.login(athlete).then(athlete => (
     // debugger
     dispatch(receiveCurrentAthlete(athlete))

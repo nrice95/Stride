@@ -1,4 +1,87 @@
-/* .login-form-box {
-  background: black;
-
+/* .login-form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 } */
+
+.login-form-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 100px;
+  align-items: center;
+
+}
+
+.login-form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.login-input {
+  /* margin-left: 20px; */
+  outline: 1px solid #666;
+  border: 0;
+  background: rgba(0,0,0,0.5);
+  width: 100%;
+  color: white;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 15px 0 15px 3px;
+  margin: 5px 0 5px 0;
+}
+
+.login-input:focus {
+  background-color: white;
+  color: black;
+}
+/*
+.login-signup{
+  margin: 0;
+} */
+
+.login-form-box {
+  /* outline: 1px solid black; */
+  /* padding: 20px; */
+  border-radius: 0 0 3px 3px;
+  background: rgba(0,0,0,0.5);
+  width: 300px;
+  padding: 0 50px 0 50px;
+}
+
+html{
+  display: block;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  outline: 0;
+  background-image: url("yoga-for-runners-girl-sunset-stock.jpg");
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.login-title {
+  border-radius: 3px 3px 0 0;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, Roboto, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  display: flex;
+  color: white;
+  width: 400px;
+  justify-content: center;
+  background: rgba(0,0,0,0.75);
+  padding: 20px 0 20px;
+  font-size: 32px;
+  font-weight: 100;
+}
+
+.main-header {
+  /* background: #ffffff; */
+  background: white;
+  color: #f00;
+  width: 100%;
+  margin: 0;
+  /* border-bottom: 1px solid #ccc; */
+}

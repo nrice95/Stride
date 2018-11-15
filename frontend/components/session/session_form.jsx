@@ -31,26 +31,30 @@ class SessionForm extends React.Component {
   }
 
   render(){
-    debugger
+    // debugger
     return(
-      <div className="login-form-container">
-        <form onSubmit={() => this.props.action(this.state)} className="login-form-box">
-          {this.props.formType}
-          <br></br>
-          {this.renderErrors()}
-          <div className="login-form">
-            <label>{`Username `}
-              <input type="text" value={this.state.username} onChange={this.updateUsername.bind(this)} className="login-input"/>
-            </label>
-            <label>{`Password `}
-              <input type="password" value={this.state.password} onChange={this.updatePassword.bind(this)} className="login-input"/>
-            </label>
-            <button type="submit">Submit</button>
-            <br></br>
-            {this.props.navLink}
+      <div className="bg">
+        <div className="login-form-container">
+          <div className="login-title">
+            {this.props.formType}
           </div>
-        </form>
+          <form onSubmit={() => this.props.action(this.state)} className="login-form-box">
+            <br></br>
+            {this.renderErrors()}
+            <div className="login-form">
+              <label>
+                <input type="text" placeholder="username" value={this.state.username} onChange={this.updateUsername.bind(this)} className="login-input"/>
+              </label>
+              <label>
+                <input type="password" placeholder="password" value={this.state.password} onChange={this.updatePassword.bind(this)} className="login-input"/>
+              </label>
+              <button type="submit">{this.props.formType}</button>
+              <br></br>
+              {this.props.navLink}
+            </div>
+          </form>
 
+        </div>
       </div>
     )
   }

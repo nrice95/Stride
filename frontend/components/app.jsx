@@ -8,8 +8,8 @@ import { AuthRoute } from "../util/route_util";
 const App = () => {
   // debugger
   return(
-    <div>
-      <header>
+    <div className="top">
+      <header className="main-header">
         <h1>Stride</h1>
         <GreetingContainer />
       </header>
