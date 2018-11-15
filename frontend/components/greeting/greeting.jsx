@@ -12,7 +12,8 @@ class Greeting extends React.Component {
       // debugger
       return(
         <div>
-
+          <Link to="/login">Log In</Link>
+          <Link to="/signup">Sign Up</Link>
         </div>
       );
     }else{
