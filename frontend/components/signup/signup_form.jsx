@@ -34,7 +34,7 @@ class SessionForm extends React.Component {
   }
 
   render(){
-    debugger
+    // debugger
     return(
       <div className="bg">
 

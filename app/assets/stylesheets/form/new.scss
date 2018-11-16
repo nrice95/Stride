@@ -33,13 +33,13 @@ body{
 }
 
 .bg{
-  background-image: url("runner.jpg");
+  background-image: image-url("yoga-for-runners-girl-sunset-stock.jpg");
   height: 100%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   justify-content: center;
-  align-items: center; */
+  align-items: center;
 }
 
 .login-form-container {
@@ -67,7 +67,7 @@ body{
   flex-direction: column;
   padding: 15px 0 15px 10px;
   margin: 5px 0 5px 0;
-  font-size: 12
+  font-size: 12;
   color: #6f7474;
 }
 

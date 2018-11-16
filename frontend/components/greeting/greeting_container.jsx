@@ -9,7 +9,7 @@ const mapStateToProps = ({ session }) => ({
 });
 
 const mapDispatchToProps = dispatch => {
-  debugger
+  // debugger
   return {
   logout: () => dispatch(logout()),
   openModal: modal => dispatch(openModal(modal))

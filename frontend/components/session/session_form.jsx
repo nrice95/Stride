@@ -34,7 +34,7 @@ class SessionForm extends React.Component {
 
   render(){
     const { openModal } = this.props
-    debugger
+    // debugger
     return(
       <div className="bg">
         <header className="main-header">

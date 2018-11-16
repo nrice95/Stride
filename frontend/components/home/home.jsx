@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { demoLogin } from "../../actions/session_actions";
 
 export const Home = () => {
-  debugger
+  // debugger
   return(
     <div className="home">
       <header className="home-header">
