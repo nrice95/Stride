@@ -4,37 +4,37 @@ import { logout } from "../../actions/session_actions";
 
 class Dashboard extends React.Component {
   componentDidMount(){
-    debugger
+    //debugger
     // this.props[this.props.match.params.id];
   }
 
   constructor(props){
     super(props);
-    debugger
+    //debugger
   }
 
   render(){
-    debugger
+    //debugger
     const { currentAthlete, logout } = this.props
     return(
       <div className="dashboard">
         <header className="dashboard-header">
           <div className="dashboard-header-items">
-            <a className="dashboard-stride-title">STRIDE</a>
+            <a href="#/dashboard" className="dashboard-stride-title">STRIDE</a>
           </div>
           <button className="header-button" onClick={logout}>Log Out</button>
         </header>
         <div className="dashboard-body">
           <div className="summary-column">
             <div className="dashboard-profile-summary">
-              <div className="summary-avatar">
+              <a href="#/athlete" className="summary-avatar">
                 <div className="summary-avatar-char">
                   {currentAthlete.username.charAt(0).toUpperCase()}
                 </div>
-              </div>
-              <div className="dashboard-username">
+              </a>
+              <a href="#/athlete" className="dashboard-username">
                 {currentAthlete.username}
-              </div>
+              </a>
             </div>
           </div>
           <div className="activities-feed">

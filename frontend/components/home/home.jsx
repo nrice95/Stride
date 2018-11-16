@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { demoLogin } from "../../actions/session_actions";
 
 export const Home = () => {
+  debugger
   return(
     <div className="home">
       <header className="home-header">
@@ -13,6 +15,9 @@ export const Home = () => {
       <div className="home-body">
         <div className="home-catch-phrase">
           {`Cloning the #1 app for runners and cyclists`}
+        </div>
+        <div className="home-demo-login">
+          <button className="header-button" onClick={() => dispatch(demoLogin())}>Try as Guest</button>
         </div>
       </div>
       <footer className="home-footer">

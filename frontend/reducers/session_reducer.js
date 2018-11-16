@@ -3,7 +3,7 @@ const defaultState = { id: null };
 
 export default (state = {}, action) => {
   Object.freeze(state);
-  debugger
+  // debugger
   switch (action.type) {
     case RECEIVE_CURRENT_ATHLETE:
       return { id: action.athlete.id };

@@ -2,7 +2,8 @@ import { connect } from "react-redux";
 import React from "react";
 import { Link } from "react-router-dom";
 import { signup } from "../../actions/session_actions";
-import SessionForm from "./session_form";
+import SignupForm from "./signup_form";
+
 
 const msp = ({ errors }) => {
   // debugger
@@ -17,8 +18,15 @@ const msp = ({ errors }) => {
 
 const mdp = dispatch => {
   return ({
-    action: athlete => dispatch(signup(athlete))
+    action: athlete => dispatch(signup(athlete)),
+    openModal: modal => dispatch(openModal(modal)),
+    otherForm: (
+      <button onClick={() => dispatch(openModal('login'))}>
+        Login
+      </button>
+    ),
+    closeModal: () => dispatch(closeModal())
   })
 }
 
-export default connect(msp,mdp)(SessionForm);
+export default connect(msp,mdp)(SignupForm);

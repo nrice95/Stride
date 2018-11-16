@@ -1,4 +1,11 @@
 import { connect } from "react-redux";
 import { Home } from "./home";
+import { demoLogin } from "../../actions/session_actions";
 
-export default connect(null,null)(Home);
+const mdp = dispatch => {
+  return ({
+    demoLogin: () => dispatch(demoLogin())
+  })
+}
+
+export default connect(null,mdp)(Home);

@@ -33,13 +33,14 @@ class SessionForm extends React.Component {
   }
 
   render(){
-    // debugger
+    const { openModal } = this.props
+    debugger
     return(
       <div className="bg">
         <header className="main-header">
           <div className="header-items">
             <a href="/" className="login-stride-title">STRIDE</a>
-            <a href={`/#/${this.props.navKey}`} className="signup-button">{this.props.oppFormType}</a>
+            <button className="signup-button" onClick={() => openModal('signup')}>Sign Up</button>
           </div>
         </header>
         <div className="login-form-container">

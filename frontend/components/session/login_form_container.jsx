@@ -3,9 +3,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { login } from "../../actions/session_actions";
 import SessionForm from "./session_form";
+import { openModal } from '../../actions/modal_actions';
 
 const msp = ({ errors }) => {
-  debugger
+  // debugger
   return {
     errors: errors,
     formType: "Log In",
@@ -18,7 +19,8 @@ const msp = ({ errors }) => {
 const mdp = dispatch => {
   // debugger
   return ({
-    action: athlete => dispatch(login(athlete))
+    action: athlete => dispatch(login(athlete)),
+    openModal: modal => dispatch(openModal(modal))
   })
 }
 

@@ -7,7 +7,7 @@ export const signup = (athlete) => {
 }
 
 export const login = (athlete) => {
-  debugger
+  // debugger
   return $.ajax({
     method: "POST",
     url: `/api/session`,
@@ -16,7 +16,7 @@ export const login = (athlete) => {
 }
 
 export const logout = () => {
-  debugger
+  // debugger
   return $.ajax({
     method: "DELETE",
     url: `/api/session`

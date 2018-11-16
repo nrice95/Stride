@@ -1,21 +1,21 @@
-import { connect } from "react-redux";
-import Greeting from "./greeting";
-import { receiveCurrentAthlete } from "../../actions/session_actions";
+import { connect } from 'react-redux';
+
 import { logout } from '../../actions/session_actions';
+import { openModal } from '../../actions/modal_actions';
+import Greeting from './greeting';
 
+const mapStateToProps = ({ session }) => ({
+  currentUser: session.currentUser
+});
 
-const msp = state => {
-  // debugger
-  return ({
-    currentAthlete: state.entities.athletes[state.session.id]
-  });
-}
+const mapDispatchToProps = dispatch => {
+  debugger
+  return {
+  logout: () => dispatch(logout()),
+  openModal: modal => dispatch(openModal(modal))
+}};
 
-const mdp = dispatch => {
-  return ({
-    receiveCurrentAthlete: athlete => dispatch(receiveCurrentAthlete(athlete)),
-    logout: () => dispatch(logout())
-  });
-};
-
-export default connect(msp,mdp)(Greeting);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Greeting);

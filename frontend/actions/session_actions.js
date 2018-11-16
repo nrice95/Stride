@@ -4,7 +4,7 @@ export const LOGOUT_CURRENT_ATHLETE = "LOGOUT_CURRENT_ATHLETE";
 export const RECEIVE_SESSION_ERRORS = "RECEIVE_SESSION_ERRORS";
 
 export const receiveCurrentAthlete = (currentAthlete) => {
-  // debugger
+  // //debugger
   return {
     type: RECEIVE_CURRENT_ATHLETE,
     athlete: currentAthlete
@@ -20,29 +20,39 @@ export const receiveErrors = (errors) => ({
   errors,
 });
 
+const demoAthlete = {username: "DemoUser", password: "starwars"}
+
+export const demoLogin = () => dispatch => {
+  return APIUtil.login(demoAthlete).then(athlete => {
+    return dispatch(receiveCurrentAthlete(athlete))
+  }, err =>{
+    return dispatch(receiveErrors(err.responseJSON))
+  });
+};
+
 export const login = (athlete) => dispatch => {
-  debugger
+  //debugger
   return APIUtil.login(athlete).then(athlete => {
-    debugger
+    //debugger
     return dispatch(receiveCurrentAthlete(athlete))
   }, err => {
-    debugger
+    //debugger
     return dispatch(receiveErrors(err.responseJSON))
   });
 };
 
 export const logout = () => dispatch => {
-  debugger
+  //debugger
   return APIUtil.logout().then(() => {
-    debugger
+    //debugger
     return dispatch(logoutCurrentAthlete())
   });
 };
 
 export const signup = (athlete) => dispatch => {
-  // debugger
+  debugger
   return APIUtil.signup(athlete).then(athlete => (
-    // debugger
+    // //debugger
     dispatch(receiveCurrentAthlete(athlete))
   ), err => (
     dispatch(receiveErrors(err.responseJSON))
