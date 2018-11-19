@@ -17,6 +17,34 @@
   justify-content: space-between;
 }
 
+.right-items {
+  display: flex;
+  flex-direction: row;
+}
+
+.dashboard-user{
+  display: flex;
+  list-style: none;
+}
+
+.dashboard-header-avatar{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  width: 32px;
+  border-radius: 100%;
+  background-color: #be3825;
+  color: white;
+  list-style: none;
+}
+
+.dashboard-header-initial{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
 .dashboard {
   height: 100%;
 }
@@ -24,6 +52,10 @@
 .summary-column{
   display: flex;
   justify: center;
+}
+
+.header-button{
+  justify-self: end;
 }
 
 .dashboard-body {

@@ -1,6 +1,5 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import { openModal } from '../../actions/modal_actions';
 
 class SessionForm extends React.Component {
   constructor(props){
@@ -9,6 +8,7 @@ class SessionForm extends React.Component {
       username: "",
       password: ""
     };
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   updateUsername(e){
@@ -33,6 +33,12 @@ class SessionForm extends React.Component {
     }
   }
 
+  handleSubmit(e) {
+    e.preventDefault();
+    const user = Object.assign({}, this.state);
+    this.props.action(user).then(this.props.closeModal);
+  }
+
   render(){
     // debugger
     return(
@@ -44,7 +50,7 @@ class SessionForm extends React.Component {
           </div>
           <div className="signup-subtag">Join for the tracking. Stay for the community.</div>
           {this.renderErrors()}
-          <form onSubmit={() => this.props.action(this.state)} className="signup-form-box">
+          <form onSubmit={this.handleSubmit} className="signup-form-box">
             <br></br>
             <div className="signup-form">
 

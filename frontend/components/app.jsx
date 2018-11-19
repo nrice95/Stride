@@ -5,6 +5,7 @@ import LoginFormContainer from './session/login_form_container';
 import HomeContainer from "./home/home_container";
 import DashboardContainer from "./dashboard/dashboard_container";
 import AthleteContainer from "./athlete/athlete_container";
+import MapContainer from "./map_demo/map_demo_container";
 import Modal from "./modal/modal";
 import { Route, Switch } from "react-router-dom";
 import { AuthRoute, ProtectedRoute } from "../util/route_util";
@@ -20,6 +21,7 @@ const App = () => {
         <AuthRoute path="/signup" component={SignupFormContainer} />
         <ProtectedRoute path="/dashboard" component={DashboardContainer} />
         <ProtectedRoute path="/athlete" component={AthleteContainer}/>
+        <ProtectedRoute path="/map" component={MapContainer}/>
         <AuthRoute path="/" component={HomeContainer} />
       </Switch>
     </>

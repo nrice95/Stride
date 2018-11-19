@@ -20,9 +20,21 @@ class Dashboard extends React.Component {
       <div className="dashboard">
         <header className="dashboard-header">
           <div className="dashboard-header-items">
-            <a href="#/dashboard" className="dashboard-stride-title">STRIDE</a>
+            <div className="left-items">
+              <a href="#/dashboard" className="dashboard-stride-title">STRIDE</a>
+            </div>
+            <div className="right-items">
+              <a href="#/map" className="dashboard-map-title">Map</a>
+              <div className="dashboard-user">
+                <a href="#/athlete" className="dashboard-header-avatar">
+                  <div className="dashboard-header-initial">
+                    {currentAthlete.username.charAt(0).toUpperCase()}
+                  </div>
+                </a>
+              </div>
+              <button className="header-button" onClick={logout}>Log Out</button>
+            </div>
           </div>
-          <button className="header-button" onClick={logout}>Log Out</button>
         </header>
         <div className="dashboard-body">
           <div className="summary-column">

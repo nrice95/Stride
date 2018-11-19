@@ -17,7 +17,7 @@ export const Home = () => {
           {`Cloning the #1 app for runners and cyclists`}
         </div>
         <div className="home-demo-login">
-          <button className="header-button" onClick={() => dispatch(demoLogin())}>Try as Guest</button>
+          <button className="demo-login-button" onClick={() => dispatch(demoLogin())}>Try as Guest</button>
         </div>
       </div>
       <footer className="home-footer">
