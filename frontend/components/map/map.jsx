@@ -26,14 +26,14 @@ var placeIdArray;
 var polylines;
 let markers;
 var snappedCoordinates;
-let distance;
-let distanceStack = [];
+let distance = 0;
+let distanceStack = [0];
 let pathLengthStack;
 let allSnaps;
 class Map extends React.Component {
   constructor(props){
     super(props);
-    this.state = {distance: 0}
+    this.state = {distance: distance}
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -111,9 +111,11 @@ class Map extends React.Component {
         pathLengthStack.push(path.length);
         placeIdArray = [];
         runSnapToRoad(path)
+        this.setState({distance: distance});
+        // callback();
         // debugger
         // setTimeout(this.setState({distance: this.state.distance + distanceStack[distanceStack.length-1]}), 5000);
-        // this.setState({distance: this.state.distance + distanceStack[distanceStack.length-1]});
+
         // debugger
       }
       // console.log(polylines.length);
@@ -180,7 +182,7 @@ class Map extends React.Component {
     return (
       <div>
         <div className="bar" ref="bar`">
-          <p className="distance">{this.state.distance*0.000621371}</p>
+          <p className="distance">{distance*0.000621371}</p>
           <p className="auto"><input type="text" className="autoc" ref="autoc"/></p>
           <p><a className="clear" href="#/map">Click here</a> to clear map.</p>
           <p><a className="undo" href="#/map">undo</a></p>
@@ -248,8 +250,10 @@ const drawSnappedPolyline = () => {
     tmpDist += dist;
   }
   distanceStack.push(tmpDist);
-  // console.log(this.state.distance*0.000621371);
-  debugger
+  distance += distanceStack[distanceStack.length-1]
+  console.log(distance*0.000621371);
+
+  // debugger
 }
 
 export default withRouter(Map);

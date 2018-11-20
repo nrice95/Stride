@@ -86,6 +86,99 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./frontend/actions/activity_actions.js":
+/*!**********************************************!*\
+  !*** ./frontend/actions/activity_actions.js ***!
+  \**********************************************/
+/*! exports provided: RECEIVE_ACTIVITIES, RECEIVE_ACTIVITY, REMOVE_ACTIVITY, RECEIVE_ACTIVITY_ERRORS, fetchActivities, fetchActivity, createActivity, updateActivity, deleteActivity */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_ACTIVITIES", function() { return RECEIVE_ACTIVITIES; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_ACTIVITY", function() { return RECEIVE_ACTIVITY; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_ACTIVITY", function() { return REMOVE_ACTIVITY; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_ACTIVITY_ERRORS", function() { return RECEIVE_ACTIVITY_ERRORS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchActivities", function() { return fetchActivities; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchActivity", function() { return fetchActivity; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createActivity", function() { return createActivity; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateActivity", function() { return updateActivity; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteActivity", function() { return deleteActivity; });
+/* harmony import */ var _util_activity_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/activity_api_util */ "./frontend/util/activity_api_util.js");
+
+var RECEIVE_ACTIVITIES = "RECEIVE_ACTIVITIES";
+var RECEIVE_ACTIVITY = "RECEIVE_ACTIVITY";
+var REMOVE_ACTIVITY = "REMOVE_ACTIVITY";
+var RECEIVE_ACTIVITY_ERRORS = "RECEIVE_ACTIVITY_ERRORS";
+var fetchActivities = function fetchActivities() {
+  return function (dispatch) {
+    return _util_activity_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchActivities"]().then(function (activities) {
+      return dispatch(receiveActivities(activities));
+    });
+  };
+};
+var fetchActivity = function fetchActivity(id) {
+  return function (dispatch) {
+    return _util_activity_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchActivity"](id).then(function (activity) {
+      return dispatch(receiveActivity(activity));
+    });
+  };
+};
+var createActivity = function createActivity(activity) {
+  return function (dispatch) {
+    debugger;
+    return _util_activity_api_util__WEBPACK_IMPORTED_MODULE_0__["createActivity"](activity).then(function (activity) {
+      dispatch(receiveActivity(activity));
+    }, function (err) {
+      return dispatch(receiveErrors(err.responseJSON));
+    });
+  };
+};
+var updateActivity = function updateActivity(activity) {
+  return function (dispatch) {
+    return _util_activity_api_util__WEBPACK_IMPORTED_MODULE_0__["updateActivity"](activity).then(function (activity) {
+      return dispatch(receiveActivity(activity));
+    });
+  };
+};
+var deleteActivity = function deleteActivity(activityId) {
+  return function (dispatch) {
+    return _util_activity_api_util__WEBPACK_IMPORTED_MODULE_0__["deleteActivity"](activityId).then(function (activity) {
+      return dispatch(removeActivity(activity));
+    });
+  };
+};
+
+var receiveActivities = function receiveActivities(activities) {
+  return {
+    type: RECEIVE_ACTIVITIES,
+    activities: activities
+  };
+};
+
+var receiveActivity = function receiveActivity(activity) {
+  return {
+    type: RECEIVE_ACTIVITY,
+    activity: activity
+  };
+};
+
+var removeActivity = function removeActivity(activityId) {
+  return {
+    type: REMOVE_ACTIVITY,
+    activityId: activityId
+  };
+};
+
+var receiveErrors = function receiveErrors(errors) {
+  return {
+    type: RECEIVE_ACTIVITY_ERRORS,
+    errors: errors
+  };
+};
+
+/***/ }),
+
 /***/ "./frontend/actions/modal_actions.js":
 /*!*******************************************!*\
   !*** ./frontend/actions/modal_actions.js ***!
@@ -321,6 +414,163 @@ var signup = function signup(athlete) {
 
 /***/ }),
 
+/***/ "./frontend/components/activity/activity_form.jsx":
+/*!********************************************************!*\
+  !*** ./frontend/components/activity/activity_form.jsx ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+
+
+
+var ActivityForm =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(ActivityForm, _React$Component);
+
+  function ActivityForm(props) {
+    var _this;
+
+    _classCallCheck(this, ActivityForm);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ActivityForm).call(this, props));
+    _this.state = _this.props.activity;
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    return _this;
+  }
+
+  _createClass(ActivityForm, [{
+    key: "update",
+    value: function update(field) {
+      var _this2 = this;
+
+      return function (e) {
+        _this2.setState(_defineProperty({}, field, e.target.value));
+      };
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      debugger;
+      e.preventDefault();
+      this.props.action(this.state);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        onSubmit: this.handleSubmit
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Distance", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        value: this.state.distance,
+        onChange: this.update("distance")
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Duration", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        value: this.state.duration_hours,
+        onChange: this.update("duration_hours")
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        value: this.state.duration_minutes,
+        onChange: this.update("duration_minutes")
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        value: this.state.duration_seconds,
+        onChange: this.update("duration_seconds")
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Sport", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        value: this.state.activity_type,
+        onChange: this.update("activity_type")
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Title", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        value: this.state.title,
+        onChange: this.update("title")
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Description", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+        value: this.state.description,
+        onChange: this.update("Description")
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "submit",
+        value: "submit"
+      })));
+    }
+  }]);
+
+  return ActivityForm;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (ActivityForm);
+
+/***/ }),
+
+/***/ "./frontend/components/activity/create_activity_form_container.jsx":
+/*!*************************************************************************!*\
+  !*** ./frontend/components/activity/create_activity_form_container.jsx ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _activity_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./activity_form */ "./frontend/components/activity/activity_form.jsx");
+/* harmony import */ var _actions_activity_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/activity_actions */ "./frontend/actions/activity_actions.js");
+
+
+
+
+var msp = function msp(state, ownProps) {
+  return {
+    activity: {
+      title: "",
+      description: "",
+      activity_type: "",
+      distance: 0,
+      duration_hours: 0,
+      duration_minutes: 0,
+      duration_seconds: 0,
+      run_type: "",
+      athlete_id: state.session.id
+    }
+  };
+};
+
+var mdp = function mdp(dispatch) {
+  return {
+    action: function action(activity) {
+      return dispatch(Object(_actions_activity_actions__WEBPACK_IMPORTED_MODULE_2__["createActivity"])(activity));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_activity_form__WEBPACK_IMPORTED_MODULE_1__["default"]));
+
+/***/ }),
+
 /***/ "./frontend/components/app.jsx":
 /*!*************************************!*\
   !*** ./frontend/components/app.jsx ***!
@@ -342,9 +592,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _map_demo_map_test_container__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./map_demo/map_test_container */ "./frontend/components/map_demo/map_test_container.jsx");
 /* harmony import */ var _route_show_route_show_container__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./route_show/route_show_container */ "./frontend/components/route_show/route_show_container.jsx");
 /* harmony import */ var _route_index_route_index_container__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./route_index/route_index_container */ "./frontend/components/route_index/route_index_container.jsx");
-/* harmony import */ var _modal_modal__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./modal/modal */ "./frontend/components/modal/modal.jsx");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
-/* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.jsx");
+/* harmony import */ var _activity_create_activity_form_container__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./activity/create_activity_form_container */ "./frontend/components/activity/create_activity_form_container.jsx");
+/* harmony import */ var _modal_modal__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./modal/modal */ "./frontend/components/modal/modal.jsx");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+/* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.jsx");
+
 
 
 
@@ -363,31 +615,34 @@ __webpack_require__.r(__webpack_exports__);
 
 var App = function App() {
   // debugger
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_modal_modal__WEBPACK_IMPORTED_MODULE_11__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_13__["AuthRoute"], {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_modal_modal__WEBPACK_IMPORTED_MODULE_12__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["AuthRoute"], {
     path: "/login",
     component: _session_login_form_container__WEBPACK_IMPORTED_MODULE_3__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_13__["AuthRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["AuthRoute"], {
     path: "/signup",
     component: _signup_signup_form_container__WEBPACK_IMPORTED_MODULE_2__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_13__["ProtectedRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["ProtectedRoute"], {
     path: "/dashboard",
     component: _dashboard_dashboard_container__WEBPACK_IMPORTED_MODULE_5__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_13__["ProtectedRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["ProtectedRoute"], {
     path: "/athlete",
     component: _athlete_athlete_container__WEBPACK_IMPORTED_MODULE_6__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_13__["ProtectedRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["ProtectedRoute"], {
     path: "/map",
     component: _map_map_container__WEBPACK_IMPORTED_MODULE_7__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_13__["ProtectedRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["ProtectedRoute"], {
     path: "/route/:routeId",
     component: _route_show_route_show_container__WEBPACK_IMPORTED_MODULE_9__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_13__["ProtectedRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["ProtectedRoute"], {
     path: "/maptest",
     component: _map_demo_map_test_container__WEBPACK_IMPORTED_MODULE_8__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_13__["ProtectedRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["ProtectedRoute"], {
     path: "/routes",
     component: _route_index_route_index_container__WEBPACK_IMPORTED_MODULE_10__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_13__["AuthRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["ProtectedRoute"], {
+    path: "/activity/new",
+    component: _activity_create_activity_form_container__WEBPACK_IMPORTED_MODULE_11__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["AuthRoute"], {
     path: "/",
     component: _home_home_container__WEBPACK_IMPORTED_MODULE_4__["default"]
   })));
@@ -1022,8 +1277,8 @@ var placeIdArray;
 var polylines;
 var markers;
 var snappedCoordinates;
-var distance;
-var distanceStack = [];
+var distance = 0;
+var distanceStack = [0];
 var pathLengthStack;
 var allSnaps;
 
@@ -1039,7 +1294,7 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Map).call(this, props));
     _this.state = {
-      distance: 0
+      distance: distance
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
@@ -1048,6 +1303,8 @@ function (_React$Component) {
   _createClass(Map, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      var _this2 = this;
+
       placeIdArray = [];
       polylines = [];
       markers = [];
@@ -1112,10 +1369,15 @@ function (_React$Component) {
           var path = newPoly.getPath();
           pathLengthStack.push(path.length);
           placeIdArray = [];
-          runSnapToRoad(path); // debugger
-          // setTimeout(this.setState({distance: this.state.distance + distanceStack[distanceStack.length-1]}), 5000);
-          // this.setState({distance: this.state.distance + distanceStack[distanceStack.length-1]});
+          runSnapToRoad(path);
+
+          _this2.setState({
+            distance: distance
+          }); // callback();
           // debugger
+          // setTimeout(this.setState({distance: this.state.distance + distanceStack[distanceStack.length-1]}), 5000);
+          // debugger
+
         } // console.log(polylines.length);
 
       });
@@ -1170,7 +1432,7 @@ function (_React$Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
-      var _this2 = this;
+      var _this3 = this;
 
       debugger;
       e.preventDefault();
@@ -1182,7 +1444,7 @@ function (_React$Component) {
       };
       debugger;
       this.props.createRoute(newRoute).then(function () {
-        return _this2.props.history.push("#/routes");
+        return _this3.props.history.push("#/routes");
       });
     }
   }, {
@@ -1193,7 +1455,7 @@ function (_React$Component) {
         ref: "bar`"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "distance"
-      }, this.state.distance * 0.000621371), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      }, distance * 0.000621371), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "auto"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
@@ -1281,9 +1543,9 @@ var drawSnappedPolyline = function drawSnappedPolyline() {
     tmpDist += dist;
   }
 
-  distanceStack.push(tmpDist); // console.log(this.state.distance*0.000621371);
-
-  debugger;
+  distanceStack.push(tmpDist);
+  distance += distanceStack[distanceStack.length - 1];
+  console.log(distance * 0.000621371); // debugger
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(Map));
@@ -2557,6 +2819,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util_session_api_util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./util/session_api_util */ "./frontend/util/session_api_util.js");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./actions/session_actions */ "./frontend/actions/session_actions.js");
 /* harmony import */ var _actions_route_actions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./actions/route_actions */ "./frontend/actions/route_actions.js");
+/* harmony import */ var _actions_activity_actions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./actions/activity_actions */ "./frontend/actions/activity_actions.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
@@ -2564,6 +2827,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
  //TEST
+
 
 
 
@@ -2599,6 +2863,59 @@ window.signup = _actions_session_actions__WEBPACK_IMPORTED_MODULE_5__["signup"];
 window.logout = _actions_session_actions__WEBPACK_IMPORTED_MODULE_5__["logout"];
 window.demoLogin = _actions_session_actions__WEBPACK_IMPORTED_MODULE_5__["demoLogin"];
 window.createRoute = _actions_route_actions__WEBPACK_IMPORTED_MODULE_6__["createRoute"];
+window.createActivity = _actions_activity_actions__WEBPACK_IMPORTED_MODULE_7__["createActivity"];
+
+/***/ }),
+
+/***/ "./frontend/util/activity_api_util.js":
+/*!********************************************!*\
+  !*** ./frontend/util/activity_api_util.js ***!
+  \********************************************/
+/*! exports provided: fetchActivities, fetchActivity, createActivity, updateActivity, deleteActivity */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchActivities", function() { return fetchActivities; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchActivity", function() { return fetchActivity; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createActivity", function() { return createActivity; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateActivity", function() { return updateActivity; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteActivity", function() { return deleteActivity; });
+var fetchActivities = function fetchActivities(data) {
+  return $.ajax({
+    method: "GET",
+    url: "api/activities",
+    data: data
+  });
+};
+var fetchActivity = function fetchActivity(id) {
+  return $.ajax({
+    method: "GET",
+    url: "api/activities/".concat(id)
+  });
+};
+var createActivity = function createActivity(data) {
+  return $.ajax({
+    method: "POST",
+    url: "api/activities",
+    data: data
+  });
+};
+var updateActivity = function updateActivity(activity) {
+  return $.ajax({
+    method: "PATCH",
+    url: "api/activities/".concat(activity.id, "/edit"),
+    data: {
+      activity: activity
+    }
+  });
+};
+var deleteActivity = function deleteActivity(id) {
+  return $.ajax({
+    url: "api/activities/".concat(id),
+    method: "DELETE"
+  });
+};
 
 /***/ }),
 
