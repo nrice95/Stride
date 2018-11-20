@@ -5,7 +5,9 @@ import LoginFormContainer from './session/login_form_container';
 import HomeContainer from "./home/home_container";
 import DashboardContainer from "./dashboard/dashboard_container";
 import AthleteContainer from "./athlete/athlete_container";
-import MapContainer from "./map_demo/map_demo_container";
+import MapContainer from "./map/map_container";
+import MapTest from "./map_demo/map_test_container";
+import RouteShow from "./route_show/route_show_container";
 import Modal from "./modal/modal";
 import { Route, Switch } from "react-router-dom";
 import { AuthRoute, ProtectedRoute } from "../util/route_util";
@@ -22,6 +24,8 @@ const App = () => {
         <ProtectedRoute path="/dashboard" component={DashboardContainer} />
         <ProtectedRoute path="/athlete" component={AthleteContainer}/>
         <ProtectedRoute path="/map" component={MapContainer}/>
+        <ProtectedRoute path="/route/:routeId" component={RouteShow}/>
+        <ProtectedRoute path="/maptest" component={MapTest}/>
         <AuthRoute path="/" component={HomeContainer} />
       </Switch>
     </>

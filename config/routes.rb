@@ -4,5 +4,6 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     resources :athletes, only: [:create, :show]
     resource :session, only: [:destroy, :create]
+    resources :routes, only: [:create, :show, :index]
   end
 end

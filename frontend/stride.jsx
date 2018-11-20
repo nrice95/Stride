@@ -4,6 +4,7 @@ import Root from "./components/root";
 import configureStore from "./store/store";
 import * as APIUtil from './util/session_api_util'; //TEST
 import { login, logout, signup, demoLogin } from "./actions/session_actions";
+import { createRoute } from "./actions/route_actions";
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -34,3 +35,4 @@ window.login = login;
 window.signup = signup;
 window.logout = logout;
 window.demoLogin = demoLogin;
+window.createRoute = createRoute;

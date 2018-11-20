@@ -4,7 +4,6 @@
 #
 #  id              :bigint(8)        not null, primary key
 #  username        :string           not null
-#  email           :string           not null
 #  password_digest :string           not null
 #  session_token   :string           not null
 #  created_at      :datetime         not null
@@ -17,6 +16,10 @@ class Athlete < ApplicationRecord
   validates :password, length: { minimum: 6 }, allow_nil: true
 
   after_initialize :ensure_session_token
+
+  has_many :routes,
+    foreign_key: :athlete_id,
+    class_name: :Route
 
   attr_reader :password
 
