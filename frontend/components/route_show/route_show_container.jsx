@@ -6,6 +6,7 @@ import RouteShow from "./route_show";
 const msp = (state, ownProps) => {
   debugger
   return ({
+    athlete: state.entities.athletes[state.session.id],
     route: state.entities.routes[ownProps.match.params.routeId],
     routeId: ownProps.match.params.routeId
   })

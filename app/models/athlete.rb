@@ -21,6 +21,10 @@ class Athlete < ApplicationRecord
     foreign_key: :athlete_id,
     class_name: :Route
 
+  has_many :activities,
+    foreign_key: :athlete_id,
+    class_name: :Activity
+
   attr_reader :password
 
   def self.find_by_credentials(username,password)

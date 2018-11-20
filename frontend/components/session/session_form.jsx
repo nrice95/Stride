@@ -54,6 +54,9 @@ class SessionForm extends React.Component {
             {this.props.formType}
           </div>
           {this.renderErrors()}
+          <div className="home-demo-login">
+            <button className="demo-login-button" onClick={() => dispatch(demoLogin())}>Try as Guest</button>
+          </div>
           <form onSubmit={this.handleSubmit} className="login-form-box">
             <br></br>
             <div className="login-form">

@@ -22,14 +22,14 @@ let mappy;
 let map;
 
 var drawingManager;
-var placeIdArray = [];
-var polylines = [];
-let markers = [];
-var snappedCoordinates = [];
-let distance = 0;
+var placeIdArray;
+var polylines;
+let markers;
+var snappedCoordinates;
+let distance;
 let distanceStack = [];
-let pathLengthStack = [];
-let allSnaps = [];
+let pathLengthStack;
+let allSnaps;
 class Map extends React.Component {
   constructor(props){
     super(props);
@@ -38,6 +38,13 @@ class Map extends React.Component {
   }
 
   componentDidMount() {
+    placeIdArray = [];
+    polylines = [];
+    markers = [];
+    snappedCoordinates = [];
+    distance = 0;
+    pathLengthStack = [];
+    allSnaps = [];
         debugger
     // const map = this.refs.map;
     // this.map = new google.maps.Map(map, mapOptions);
@@ -87,6 +94,7 @@ class Map extends React.Component {
     drawingManager.setMap(map);
 
     drawingManager.addListener('markercomplete', (marker) =>{
+      debugger
       markers.push(marker);
       if (markers.length > 1){
         let newPoly = new google.maps.Polyline({
@@ -102,9 +110,10 @@ class Map extends React.Component {
         var path = newPoly.getPath();
         pathLengthStack.push(path.length);
         placeIdArray = [];
-        runSnapToRoad(path);
-        debugger
-        this.setState({distance: this.state.distance + distanceStack[distanceStack.length-1]});
+        runSnapToRoad(path)
+        // debugger
+        // setTimeout(this.setState({distance: this.state.distance + distanceStack[distanceStack.length-1]}), 5000);
+        // this.setState({distance: this.state.distance + distanceStack[distanceStack.length-1]});
         // debugger
       }
       // console.log(polylines.length);
@@ -129,14 +138,15 @@ class Map extends React.Component {
       // debugger
       if (polylines.length > 0){
         for (let i = 0; i < pathLengthStack[pathLengthStack.length-1]; i++){
-          polylines[polylines.length-1].setMap(null);
+          polylines[0].setMap(null);
         }
-        polylines.pop();
+        polylines.shift();
         // debugger
-        this.setState({distance: this.state.distance -= distanceStack[distanceStack.length-1]});
-        distanceStack.pop();
+        // this.setState({distance: this.state.distance -= distanceStack[distanceStack.length-1]});
+        // distanceStack.pop();
       }
       if (markers.length > 0){
+        debugger
         markers[markers.length-1].setMap(null);
         markers.pop();
       }
@@ -162,7 +172,7 @@ class Map extends React.Component {
     const encode = google.maps.geometry.encoding.encodePath(allSnaps);
     const newRoute = {polyline: encode, athlete_id: this.props.current_athlete_id, activity_type: "run"};
     debugger
-    this.props.createRoute(newRoute);
+    this.props.createRoute(newRoute).then(() => this.props.history.push("#/routes"));
   }
 
   render() {
@@ -174,13 +184,12 @@ class Map extends React.Component {
           <p className="auto"><input type="text" className="autoc" ref="autoc"/></p>
           <p><a className="clear" href="#/map">Click here</a> to clear map.</p>
           <p><a className="undo" href="#/map">undo</a></p>
-          // <p><a className="save" href="#">save</a></p>
+          <form onSubmit={this.handleSubmit}>
+            <input type="submit" value="Save" href="#/dashboard" className="new-route-button"/>
+          </form>
           <a className="dashboard-return-button" href="#/dashboard">Dashboard</a>
         </div>
         <div className="map" ref="map"></div>
-        <form onSubmit={this.handleSubmit}>
-          <input type="submit" value="Save" className="new-route-button"/>
-        </form>
       </div>
     );
   }
@@ -218,11 +227,11 @@ function processSnapToRoadResponse(data) {
 
 const drawSnappedPolyline = () => {
   debugger
-  if (allSnaps.length === 0) {
-    allSnaps.push(snappedCoordinates[0]);
-  }
-  allSnaps.push(...snappedCoordinates.slice(1));
-  debugger
+  // if (allSnaps.length === 0) {
+  //   allSnaps.push(snappedCoordinates[0]);
+  // }
+  allSnaps.unshift(...snappedCoordinates.slice(1));
+  // debugger
   var snappedPolyline = new google.maps.Polyline({
     path: snappedCoordinates,
     strokeColor: 'red',
@@ -230,7 +239,7 @@ const drawSnappedPolyline = () => {
   });
 
   snappedPolyline.setMap(map);
-  polylines.push(snappedPolyline);
+  polylines.unshift(snappedPolyline);
   let polies = snappedPolyline.latLngs.j[0].j;
   let tmpDist = 0;
   debugger

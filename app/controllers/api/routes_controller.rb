@@ -16,13 +16,15 @@ class Api::RoutesController < ApplicationController
     end
   end
 
+  def index
+    @routes = Route.where(athlete_id: current_athlete.id)
+    render :index
+  end
+
 
   private
 
   def route_params
     params.require(:route).permit(:athlete_id, :polyline, :activity_type)
   end
-
-
-
 end

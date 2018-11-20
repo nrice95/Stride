@@ -5,5 +5,6 @@ Rails.application.routes.draw do
     resources :athletes, only: [:create, :show]
     resource :session, only: [:destroy, :create]
     resources :routes, only: [:create, :show, :index]
+    resources :activities, only: [:create, :show, :edit, :show]
   end
 end

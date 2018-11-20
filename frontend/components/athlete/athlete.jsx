@@ -1,4 +1,5 @@
 import React from "react"
+import Header from "../header/header_container";
 
 class Athlete extends React.Component {
   render(){
@@ -6,10 +7,7 @@ class Athlete extends React.Component {
     return(
       <div className="athlete">
         <header className="athlete-header">
-          <div className="athlete-header-items">
-            <a href="#/dashboard" className="athlete-stride-title">STRIDE</a>
-          </div>
-          <button className="header-button" onClick={logout}>Log Out</button>
+          <Header />
         </header>
         <div  className="athlete-body">
           <div className="athlete-summary-row">

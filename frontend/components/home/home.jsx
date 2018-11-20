@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { demoLogin } from "../../actions/session_actions";
+// import { demoLogin } from "../../actions/session_actions";
 
 export const Home = () => {
   // debugger
