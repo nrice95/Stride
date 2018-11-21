@@ -2,11 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { logout } from "../../actions/session_actions";
 import Header from "../header/header_container";
+import ActivityIndexItem from "../activity/activity_index_item";
 
 class Dashboard extends React.Component {
   componentDidMount(){
     //debugger
     // this.props[this.props.match.params.id];
+    this.props.fetchActivities();
   }
 
   constructor(props){
@@ -16,7 +18,14 @@ class Dashboard extends React.Component {
 
   render(){
     //debugger
-    const { currentAthlete, logout } = this.props
+    const { currentAthlete, logout } = this.props;
+    const activities = this.props.activities.map(activity => {
+      return (
+        <ActivityIndexItem
+          key={activity.id}
+          activity={activity} />
+      )
+    });
     return(
       <div className="dashboard">
         <Header />
@@ -35,6 +44,9 @@ class Dashboard extends React.Component {
           </div>
           <div className="activities-feed">
             Activities go here
+            <ul>
+              {activities}
+            </ul>
           </div>
         </div>
       </div>

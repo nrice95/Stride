@@ -1,5 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import Header from "../header/header_container";
 
 class ActivityForm extends React.Component {
   constructor(props) {
@@ -17,13 +18,30 @@ class ActivityForm extends React.Component {
   handleSubmit(e){
     debugger
     e.preventDefault();
-    this.props.action(this.state)
+    this.props.action({activity: this.state}).then(() => this.props.history.push("/activities"));
   }
+
+  renderErrors(){
+    if (this.props.errors.length > 0){
+      return(
+        <ul className="activity-errors">
+          {this.props.errors.map((error,i) => (
+            <li className="error-item" key={`error-${i}`}>
+              {error}
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  }
+
 
   render() {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
+          <Header />
+          {this.renderErrors()}
           <label>Distance
             <input type="text" value={this.state.distance} onChange={this.update("distance")}/>
           </label>
@@ -39,7 +57,7 @@ class ActivityForm extends React.Component {
             <input type="text" value={this.state.title} onChange={this.update("title")}/>
           </label>
           <label>Description
-            <textarea value={this.state.description} onChange={this.update("Description")}/>
+            <textarea type="text" value={this.state.description} onChange={this.update("description")}/>
           </label>
           <input type="submit" value="submit"/>
         </form>

@@ -6,7 +6,9 @@ class Api::ActivitiesController < ApplicationController
 
   def create
     @activity = Activity.new(activity_params)
+    # debugger
     if @activity.save
+      # debugger
       render :show
     else
       render json: @activity.errors.full_messages, status: 422

@@ -1,0 +1,143 @@
+.map-header-items {
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1;
+}
+
+.map {
+  width: 100%;
+  height: 800px;
+  float: left;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.left-map-header {
+  padding-left: 20px;
+  font-size: 20px;
+  font-weight: 500;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.exit-builder{
+  text-decoration: none;
+  color: #999999;
+  font-weight: 500;
+}
+
+.map-stride-title {
+  color: #ed4b30;
+  font-size: 30px;
+  margin-right: 20px;
+  font-weight: bolder;
+  font-family: 'Anton', sans-serif;
+  text-decoration: none;
+}
+
+.sub-header {
+  background-color: #f1f1f1;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1;
+}
+
+.left-sub-header {
+  display: flex;
+  flex-direction: row;
+  padding-left: 20px;
+}
+
+.auto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.autoc{
+  height: 40px;
+  width: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 20px;
+  font-size: 20px;
+  margin: 0;
+  border: 0;
+}
+
+.autoc:focus{
+  /* border: 0; */
+  border-color: black;
+}
+
+.map-history-buttons{
+  display: flex;
+  flex-direction: row;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.map-history-buttons > p > a{
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: #696969;
+}
+
+.map-history-buttons > p > a:hover {
+  transition: 0.3s;
+  background-color: #dadada;
+}
+
+.map-history-buttons > p > a:active {
+  transition: 0s;
+  background-color: #686868;
+}
+
+.map-history-buttons > p > a:active {
+  transition: 0s;
+  color: white;
+}
+
+.new-route-button{
+  margin-right: 20px;
+  height: 44px;
+  width: 63px;
+  border: none;
+  background-color: #fe9366;
+  color: white;
+}
+
+.map-footer{
+  position: absolute;
+  width: 92%;
+  height: 50px;
+  margin-left: 4%;
+  margin-right: 4%;
+  bottom: 10%;
+  z-index: 1;
+  background-color: rgb(241,241,241);
+  border-radius: 3px;
+  box-shadow: 0px 8px 20px -4px rgba(209,209,209,1);
+}
+
+.distance {
+  position: relative;
+  z-index: 1;
+  bottom: 20px;
+}

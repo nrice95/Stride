@@ -110,8 +110,8 @@ class Map extends React.Component {
         var path = newPoly.getPath();
         pathLengthStack.push(path.length);
         placeIdArray = [];
-        runSnapToRoad(path)
-        this.setState({distance: distance});
+        runSnapToRoad(path, this.setState.bind(this));
+        // this.setState({distance: distance});
         // callback();
         // debugger
         // setTimeout(this.setState({distance: this.state.distance + distanceStack[distanceStack.length-1]}), 5000);
@@ -130,8 +130,11 @@ class Map extends React.Component {
         markers[i].setMap(null);
       }
       markers = [];
-      this.setState({ distance: 0 })
+      distance = 0;
+      // this.setState({distance: distance});
       distanceStack = [];
+      allSnaps = [];
+      pathLengthStack = [];
       ev.preventDefault();
       return false;
     });
@@ -139,16 +142,17 @@ class Map extends React.Component {
     $('.undo').click(function(ev) {
       // debugger
       if (polylines.length > 0){
-        for (let i = 0; i < pathLengthStack[pathLengthStack.length-1]; i++){
-          polylines[0].setMap(null);
+        for (let i = 0; i < polylines[0].length; i++){
+          allSnaps.shift();
+          distance -= distanceStack[distanceStack.length-1];
         }
+        polylines[0].setMap(null);
         polylines.shift();
         // debugger
         // this.setState({distance: this.state.distance -= distanceStack[distanceStack.length-1]});
         // distanceStack.pop();
       }
       if (markers.length > 0){
-        debugger
         markers[markers.length-1].setMap(null);
         markers.pop();
       }
@@ -174,30 +178,50 @@ class Map extends React.Component {
     const encode = google.maps.geometry.encoding.encodePath(allSnaps);
     const newRoute = {polyline: encode, athlete_id: this.props.current_athlete_id, activity_type: "run"};
     debugger
-    this.props.createRoute(newRoute).then(() => this.props.history.push("#/routes"));
+    this.props.createRoute(newRoute).then(() => this.props.history.push("/routes"));
   }
 
   render() {
 
     return (
       <div>
-        <div className="bar" ref="bar`">
-          <p className="distance">{distance*0.000621371}</p>
-          <p className="auto"><input type="text" className="autoc" ref="autoc"/></p>
-          <p><a className="clear" href="#/map">Click here</a> to clear map.</p>
-          <p><a className="undo" href="#/map">undo</a></p>
+        <header>
+          <div className="map-header-items">
+            <div className="left-map-header">
+              <a href="#/dashboard" className="map-stride-title">STRIDE</a>
+              <div className="route-builder">{`ROUTE BUILDER`}</div>
+            </div>
+            <a href="#/routes" className="exit-builder">Exit Builder</a>
+          </div>
+        </header>
+        <nav className="sub-header">
+          <div className="left-sub-header">
+            <p className="auto"><input type="text" className="autoc" placeholder="New York, New York, United States" ref="autoc"/></p>
+            <div className="map-history-buttons">
+              <p><a className="undo" href="#/map">Undo</a></p>
+              <p><a className="clear" href="#/map">Clear</a></p>
+            </div>
+          </div>
           <form onSubmit={this.handleSubmit}>
-            <input type="submit" value="Save" href="#/dashboard" className="new-route-button"/>
+            <input type="submit" value="Save" className="new-route-button"/>
           </form>
-          <a className="dashboard-return-button" href="#/dashboard">Dashboard</a>
+        </nav>
+        <div className="map" ref="map">
         </div>
-        <div className="map" ref="map"></div>
+        <div className="map-footer">
+          <div className="distance-container">
+            <div className="distance-group">
+              <p className="miles">mi</p>
+              <p className="distance">{Math.round(distance*0.0621371)/100}</p>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
 }
 
-function runSnapToRoad(path) {
+function runSnapToRoad(path, setState) {
   var pathValues = [];
   for (var i = 0; i < path.getLength(); i++) {
     pathValues.push(path.getAt(i).toUrlValue());
@@ -208,7 +232,8 @@ function runSnapToRoad(path) {
     path: pathValues.join('|')
   }, function(data) {
     processSnapToRoadResponse(data);
-    drawSnappedPolyline();
+    const dist = drawSnappedPolyline();
+    setState({distance: dist});
   });
 }
 
@@ -228,17 +253,21 @@ function processSnapToRoadResponse(data) {
 // Draws the snapped polyline (after processing snap-to-road response).
 
 const drawSnappedPolyline = () => {
-  debugger
-  // if (allSnaps.length === 0) {
-  //   allSnaps.push(snappedCoordinates[0]);
-  // }
+  // debugger
+  let newSnaps = [];
   allSnaps.unshift(...snappedCoordinates.slice(1));
+  newSnaps.unshift(...snappedCoordinates.slice(1));
+  if (allSnaps.length === 0) {
+    allSnaps.push(snappedCoordinates[0]);
+    newSnaps.push(snappedCoordinates[0]);
+  }
   // debugger
   var snappedPolyline = new google.maps.Polyline({
     path: snappedCoordinates,
     strokeColor: 'red',
     strokeWeight: 6
   });
+  debugger
 
   snappedPolyline.setMap(map);
   polylines.unshift(snappedPolyline);
@@ -251,8 +280,7 @@ const drawSnappedPolyline = () => {
   }
   distanceStack.push(tmpDist);
   distance += distanceStack[distanceStack.length-1]
-  console.log(distance*0.000621371);
-
+  return distance;
   // debugger
 }
 

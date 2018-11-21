@@ -1,4 +1,22 @@
+.dashboard-header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-bottom: 1px solid #e6e6ea;
+  height: 50px;
+}
+
+.dashboard-header-items{
+  width: 1200px;
+  display: flex;
+  justify-content: space-between;
+}
+
 .left-items {
+  margin: 0;
+  padding: 0;
   display:flex;
   flex-direction: row;
   align-items: center;
@@ -9,3 +27,131 @@
   flex-direction: row;
   align-items: center;
 }
+
+.left-items {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+}
+
+.left-items > li{
+  text-decoration: none;
+  width: 112px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+}
+
+.left-items > li > a{
+  text-decoration: none;
+  color: #717176;
+  font-size: 15px;
+}
+
+.left-items > li:hover > a{
+  color: #eb4f2f;
+}
+
+.left-items > li:hover{
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  width: 110px;
+}
+
+.dashboard-stride-title{
+  border: 0;
+  margin: 0;
+  padding: 0;
+  color: #ed4b30;
+  font-size: 30px;
+  font-weight: bolder;
+  font-family: 'Anton', sans-serif;
+  text-decoration: none;
+  margin-right: 20px;
+}
+
+.left-items > li{
+  position: relative;
+}
+
+.dashboard-list, .training-list {
+  display: none;
+  width: 110px;
+  padding: 0;
+  position: absolute;
+  font-size: 14px;
+  white-space: nowrap;
+  background: white;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  overflow: hidden;
+  z-index: 1;
+  list-style: none;
+  text-decoration: none;
+}
+
+li:hover .dashboard-list, li:hover .training-list{
+  display: flex;
+  flex-direction: column;
+  top: 50px;
+}
+
+.dashboard-list > li > a, .training-list > li > a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #717176;
+}
+
+.dashboard-list > li, .training-list > li {
+  /* border-top: 1px solid #ccc; */
+  text-decoration: none;
+  width: 100%;
+  padding: 15px 0px 15px 10px;
+  color: #000;
+}
+
+.dashboard-list > li:hover, .training-list > li:hover {
+  background: #dddddd;
+}
+
+.dashboard-header-avatar{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  width: 32px;
+  border-radius: 100%;
+  background-color: #be3825;
+  color: white;
+  text-decoration: none;
+}
+
+.right-items {
+  position: relative;
+}
+
+/* .user-actions {
+  display: none;
+  width: 110px;
+  padding: 0;
+  position: absolute;
+  font-size: 14px;
+  white-space: nowrap;
+  background: white;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  overflow: hidden;
+  z-index: 1;
+  list-style: none;
+  text-decoration: none;
+}
+
+li:hover .user-actions {
+  display: block;
+  flex-direction: column;
+  top: 50px;
+} */

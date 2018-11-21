@@ -54,12 +54,12 @@ class SessionForm extends React.Component {
             {this.props.formType}
           </div>
           {this.renderErrors()}
-          <div className="home-demo-login">
-            <button className="demo-login-button" onClick={() => dispatch(demoLogin())}>Try as Guest</button>
-          </div>
           <form onSubmit={this.handleSubmit} className="login-form-box">
             <br></br>
             <div className="login-form">
+              <div className="session-demo-login">
+                <button className="session-demo-login-button" onClick={() => dispatch(demoLogin())}>Try as Guest</button>
+              </div>
               <label>
                 <input type="text" placeholder="Username" value={this.state.username} onChange={this.updateUsername.bind(this)} className="login-input"/>
               </label>

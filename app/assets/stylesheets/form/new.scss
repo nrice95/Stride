@@ -58,7 +58,7 @@ body{
 .login-input {
   /* margin-left: 20px; */
   outline: 1px solid #666666;
-  border: 0;
+  border: none;
   background: rgba(0,0,0,0.5);
   width: 290px;
   color: white;
@@ -76,6 +76,7 @@ body{
   color: black;
   border: 2px solid;
   border-color: #c78253;
+  margin: 3px 0 3px 0;
   border-radius: 2px;
   outline: none;
   box-shadow: 0px 0px 5px 1px #daeaff;
@@ -101,6 +102,7 @@ body{
   margin-left: 40px;
   cursor: pointer;
   font-weight: 500;
+  transition: 0.2s;
 }
 
 .signup-button:hover {
@@ -136,10 +138,11 @@ body{
 .signup-username, .signup-new-password{
   padding-bottom: 10px;
   font-weight: 400;
+  border: none;
 }
 
 .signup-input{
-  border: 0;
+  border: none;
   outline: 1px solid #666666;
   width: 350px;
   height: 30px;
@@ -176,7 +179,7 @@ body{
   border-radius: 0 0 3px 3px;
   background: rgba(0,0,0,0.5);
   width: 300px;
-  padding: 0 50px 0 50px;
+  padding: 30px 50px 50px 50px;
 }
 
 
@@ -222,14 +225,18 @@ body{
   color: white;
   border: 0;
   width: 300px;
-  margin: 20px 0 0 0;
+  margin: 40px 0 0 0;
   padding: 10px 0 10px 0;
   border-radius: 3px;
   cursor: pointer;
+  transition: 0.1s;
 }
 
+.session-submit:hover{
+  background-color: #ec4023;
+}
 
-.athlete-stride-title, .footer-stride-title, .home-stride-title, .login-stride-title, .dashboard-stride-title{
+.athlete-stride-title, .footer-stride-title, .home-stride-title, .login-stride-title{
   border: 0;
   margin: 0;
   padding: 0;
@@ -256,6 +263,12 @@ body{
   font-size: 12px;
   padding: 19px 0 19px 0;
 }
+
+// .signup-form-elements{
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// }
 
 .error-item{
   display: flex;
@@ -298,6 +311,7 @@ body{
 }
 
 .home-login-button{
+  background-color: white;
   margin-right: 8%;
   text-decoration: none;
   color: #f00;
@@ -310,6 +324,12 @@ body{
   height: 42px;
   width: 102px;
   border-radius: 3px;
+  transition: 0.3s;
+}
+
+.home-login-button:hover{
+  background-color: #cccccc;
+  border-color: #99999e;
 }
 
 .home-demo-login{
@@ -318,12 +338,29 @@ body{
 }
 
 .demo-login-button{
+  margin-top: 30px;
   border: none;
   width: 390px;
   height: 48px;
   background-color: #3b5997;
   color: white;
   cursor: pointer;
+}
+
+.demo-login-button:hover, .session-demo-login-button:hover{
+  background-color: #2d4373;
+}
+
+.session-demo-login-button{
+  border: none;
+  margin-bottom: 40px;
+  width: 300px;
+  height: 40px;
+  background-color: #3b5997;
+  color: white;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: 0.3s;
 }
 
 .footer-stride-title{

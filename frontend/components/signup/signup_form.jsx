@@ -1,7 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 
-class SessionForm extends React.Component {
+class SignupForm extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -45,14 +45,17 @@ class SessionForm extends React.Component {
       <div className="bg">
 
         <div className="signup-form-container">
-          <div className="signup-title">
-            {`Sign Up for free`}
-          </div>
-          <div className="signup-subtag">Join for the tracking. Stay for the community.</div>
-          {this.renderErrors()}
-          <form onSubmit={this.handleSubmit} className="signup-form-box">
-            <br></br>
-            <div className="signup-form">
+          <div className="signup-form-elements">
+            <div className="signup-title">
+              {`Sign Up for free`}
+            </div>
+            <div className="signup-subtag">Join for the tracking. Stay for the community.</div>
+            <div className="signup-errors">
+              {this.renderErrors()}
+            </div>
+            <form onSubmit={this.handleSubmit} className="signup-form-box">
+              <br></br>
+              <div className="signup-form">
 
                 <div className="signup-username">Username</div>
                 <input type="text" value={this.state.username} onChange={this.updateUsername.bind(this)} className="signup-input"/>
@@ -60,17 +63,17 @@ class SessionForm extends React.Component {
                 <div className="signup-new-password">New Password</div>
                 <input type="password" value={this.state.password} onChange={this.updatePassword.bind(this)} className="signup-input"/>
 
-              <br></br>
-            </div>
-            <div className="signup-submit-holder">
-              <button className="signup-submit" type="submit">{this.props.formType}</button>
-            </div>
-          </form>
-
+                <br></br>
+              </div>
+              <div className="signup-submit-holder">
+                <button className="signup-submit" type="submit">{this.props.formType}</button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     )
   }
 }
 
-export default withRouter(SessionForm)
+export default withRouter(SignupForm)

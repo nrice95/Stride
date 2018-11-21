@@ -4,6 +4,7 @@ import { createActivity } from "../../actions/activity_actions";
 
 const msp = (state, ownProps) => {
   return ({
+    errors: state.errors,
     activity: {
       title: "",
       description: "",
@@ -14,7 +15,8 @@ const msp = (state, ownProps) => {
       duration_seconds: 0,
       run_type: "",
       athlete_id: state.session.id
-    }
+    },
+    formType: "Create",
   })
 }
 
