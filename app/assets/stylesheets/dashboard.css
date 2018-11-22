@@ -21,9 +21,8 @@
   justify: center;
 }
 
-
-
 .dashboard-body {
+  margin: 0;
   padding-left: 10%;
   display: flex;
   flex-direction: row;
@@ -77,4 +76,91 @@
 
 .dashboard-username:hover{
   color: blue;
+}
+
+.activities-feed {
+  margin-top: 75px;
+}
+
+.activities-list {
+  list-style: none;
+  margin-top: 0;
+}
+
+.dashboard-activity{
+  padding: 20px;
+  background-color: white;
+  width: 552px;
+  height: 160px;
+  margin-top: 0;
+  margin-bottom: 10px;
+  border-radius: 3px;
+  box-shadow: 0px 8px 20px -4px rgba(209,209,209,1);
+  display: flex;
+  flex-direction: row;
+}
+
+.dashboard-item-avatar{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 40px;
+  border-radius: 100%;
+  background-color: #be3825;
+  color: white;
+  text-decoration: none;
+  margin-right: 20px;
+  font-size: 24px;
+}
+
+.dashboard-avatar-column{
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-item-name{
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+  margin-bottom: 30px;
+}
+
+.dashboard-item-name:hover{
+  transition: 0.2s;
+  color: #005b83;
+  font-weight: 500;
+}
+
+.dashboard-activity-summary {
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-activity-title{
+  text-decoration: none;
+  color: black;
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.dashboard-activity-title:hover{
+  transition: 0.2s;
+  color: #005b83;
+}
+
+.dashboard-workout-data{
+  display: flex;
+  flex-direction: row;
+}
+
+.dashboard-distance{
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-distance-render{
+  display: flex;
+  flex-direction: row;
 }

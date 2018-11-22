@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { logout } from "../../actions/session_actions";
 import Header from "../header/header_container";
-import ActivityIndexItem from "../activity/activity_index_item";
+import ActivityIndexItem from "../activity/dashboard_activity_index_item";
 
 class Dashboard extends React.Component {
   componentDidMount(){
@@ -19,11 +19,12 @@ class Dashboard extends React.Component {
   render(){
     //debugger
     const { currentAthlete, logout } = this.props;
-    const activities = this.props.activities.map(activity => {
+    const activities = this.props.activities.reverse().slice(0,6).map(activity => {
       return (
         <ActivityIndexItem
           key={activity.id}
-          activity={activity} />
+          activity={activity}
+          currentAthlete={currentAthlete} />
       )
     });
     return(
@@ -43,8 +44,7 @@ class Dashboard extends React.Component {
             </div>
           </div>
           <div className="activities-feed">
-            Activities go here
-            <ul>
+            <ul className="activities-list">
               {activities}
             </ul>
           </div>

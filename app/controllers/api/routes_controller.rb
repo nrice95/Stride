@@ -25,6 +25,6 @@ class Api::RoutesController < ApplicationController
   private
 
   def route_params
-    params.require(:route).permit(:athlete_id, :polyline, :activity_type)
+    params.require(:route).permit(:athlete_id, :polyline, :activity_type, :title)
   end
 end

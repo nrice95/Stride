@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Header from "../header/header_container";
 
 
 let mappy;
@@ -65,6 +66,13 @@ class RouteShow extends React.Component {
     path.setMap(map);
     let startMarker = new google.maps.Marker({
       position: coords[coords.length-1],
+      icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          fillColor: "green",
+          scale: 8,
+          fillOpacity: 1,
+          strokeWeight: 3
+        },
       map
     })
     let endMarker = new google.maps.Marker({
@@ -73,6 +81,7 @@ class RouteShow extends React.Component {
     })
     return(
       <div>
+        <Header />
         <a href="#/routes">My Routes</a>
         <div className="map" ref="map"></div>
         {this.props.athlete.username}

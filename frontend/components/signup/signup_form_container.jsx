@@ -7,7 +7,7 @@ import { closeModal } from "../../actions/modal_actions";
 
 
 const msp = ({ errors }) => {
-  // debugger
+  debugger
   return {
     errors,
     formType: "Sign Up",
@@ -21,7 +21,7 @@ const mdp = dispatch => {
   return ({
     action: athlete => dispatch(signup(athlete)),
     otherForm: (
-      <button onClick={() => dispatch(openModal('login'))}>
+      <button onClick={() => dispatch(openUserModal('login'))}>
         Login
       </button>
     ),

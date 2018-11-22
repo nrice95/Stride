@@ -1,11 +1,16 @@
-import { OPEN_MODAL, CLOSE_MODAL } from '../actions/modal_actions';
+import { OPEN_USER_MODAL, OPEN_ROUTE_MODAL, CLOSE_MODAL } from '../actions/modal_actions';
+import merge from "lodash/merge";
 
-export default function modalReducer(state = null, action) {
+export default function modalReducer(state = {}, action) {
+  // debugger
   switch (action.type) {
-    case OPEN_MODAL:
-      return action.modal;
+    case OPEN_ROUTE_MODAL:
+      return merge({}, {modalType: action.modal, polyline: action.polyline});
+    case OPEN_USER_MODAL:
+        return merge({}, {modalType: action.modal});
     case CLOSE_MODAL:
-      return null;
+    // debugger
+      return {};
     default:
       return state;
   }

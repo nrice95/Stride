@@ -1,0 +1,177 @@
+.activity-form{
+  padding-left: 30%;
+  padding-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: space-around;
+  color: #452e33;
+  border: 0;
+}
+
+.activity-row-one {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 50px;
+  border-bottom: 1px solid #ccccd1;
+  width: 750px;
+}
+
+.activity-row-two, .activity-row-three {
+  margin-top: 20px;
+  padding-bottom: 50px;
+  border-bottom: 1px solid #ccccd1;
+  width: 750px;
+}
+
+.activity-row-two{
+  display: flex;
+  flex-direction: row;
+}
+
+.activity-row-three{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 40px;
+}
+
+
+.activity-form-title{
+  font-size: 24px;
+  font-weight: 300;
+  padding-bottom: 30px;
+}
+
+.activity-row-one > label, .activity-row-two > label, .activity-row-three > label {
+  display: flex;
+  flex-direction: column;
+  padding-right: 30px;
+  font-size: 12px;
+}
+
+
+.duration-inputs {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+}
+
+.duration-inputs > input{
+  height: 34px;
+  width: 79px;
+}
+
+.activity-row-one > label > input {
+  margin-top: 10px;
+}
+
+.distance-input {
+  padding: 0;
+  width: 125px;
+  height: 34px;
+  text-align: center;
+  border: 1px solid #ccccd1;
+}
+
+/* .distance-input:focus {
+  border: 1px solid blue;
+} */
+
+.sport-input {
+  width: 237px;
+  height: 34px;
+}
+
+.duration{
+  width: 237px;
+  display: block;
+  border: 0;
+}
+
+.dur-label{
+  /* position: relative; */
+  left: 50px;
+  font-size: 10px;
+  color: #dfdbe5;
+  margin: 0;
+  border: 0;
+}
+
+.dur-input {
+  width: 49px;
+  height: 34px;
+  padding-left: 25px;
+  margin: 0;
+  border-top: 1px solid  #ccccd1;
+  border-left: 1px solid  #ccccd1;
+  border-bottom: 1px solid  #ccccd1;
+  border-right: 0;
+}
+
+.dur-div:last-of-type{
+  border-right: 1px solid  #ccccd1;
+}
+
+.duration{
+  display: flex;
+  flex-direction: column;
+}
+
+.duration-boxes{
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+}
+
+.sport, .type {
+  margin-top: 10px;
+  height: 38px;
+  border: 1px solid #ccccd1;
+  background-color: white;
+  padding-left: 10px;
+}
+
+.sport{
+  width: 129px;
+}
+
+.type {
+  width: 225px;
+}
+
+.title-input {
+  margin-top: 10px;
+  width: 394px;
+  height: 38px;
+  border: 1px solid #ccccd1;
+  padding-left: 10px;
+  margin-bottom: 60px;
+}
+
+.description-input{
+  margin-top: 10px;
+  width: 500px;
+  height: 125px;
+}
+
+.activity-submit{
+  width: 65px;
+  height: 34px;
+  border: 0;
+  color: white;
+  background-color: #ed4b30;
+  border-radius: 3px;
+}
+
+.activity-submit:hover{
+  background-color: #e43114;
+}
+
+.action-cancel{
+  color: #007FB6;
+  margin-left: 5px;
+  text-decoration: none;
+}
+
+.action-cancel:hover{
+  text-decoration: underline;
+}

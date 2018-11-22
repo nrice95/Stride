@@ -2,12 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const ActivityIndexItem = ({ activity }) => {
-  return (
-    <li>
+  return(
+    <div>
       <Link to={`/activity/${activity.id}`}>
-        {activity.title}
-      </Link>
-    </li>
+      {activity.title}
+    </Link>
+    </div>
   )
 }
 

@@ -5,7 +5,7 @@ const RouteIndexItem = ({ route }) => {
   return (
     <li>
       <Link to={`/route/${route.id}`}>
-        {route.polyline}
+        {route.title}
       </Link>&nbsp;
     </li>
   )

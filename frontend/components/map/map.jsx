@@ -2,21 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { withRouter } from 'react-router-dom';
 
-// const getCoordsObj = latLng => ({
-//   lat: latLng.lat(),
-//   lng: latLng.lng()
-// });
-//
-// const mapOptions = {
-//   center: {
-//     lat: 40.7512817,
-//     lng: -73.98399010000003
-//   }, // San Francisco coords
-//   zoom: 17
-// };
-// Handles click events on a map, and adds a new point to the Polyline.
-
-
 var apiKey="AIzaSyA4rAT0fdTZLNkJ5o0uaAwZ89vVPQpr_Kc";
 let mappy;
 let map;
@@ -33,7 +18,7 @@ let allSnaps;
 class Map extends React.Component {
   constructor(props){
     super(props);
-    this.state = {distance: distance}
+    this.state = {distance: 0, colorOfFill: "green"}
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -42,7 +27,7 @@ class Map extends React.Component {
     polylines = [];
     markers = [];
     snappedCoordinates = [];
-    distance = 0;
+    this.setState({distance: 0});
     pathLengthStack = [];
     allSnaps = [];
         debugger
@@ -74,6 +59,10 @@ class Map extends React.Component {
       }
     });
 
+    // let colorOfFill = "green";
+    // if (markers.length === 0){
+    //   colorOfFill = "green";
+    // }
     // Enables the polyline drawing control. Click on the map to start drawing a
     // polyline. Each click will add a new vertice. Double-click to stop drawing.
     drawingManager = new google.maps.drawing.DrawingManager({
@@ -88,12 +77,20 @@ class Map extends React.Component {
         strokeWeight: 2
       },
       markerOptions: {
-        // visible: false
+        icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            fillColor: this.state.colorOfFill,
+            scale: 8,
+            fillOpacity: 1,
+            strokeWeight: 3
+          },
       },
-    });
+    },
+  );
     drawingManager.setMap(map);
 
     drawingManager.addListener('markercomplete', (marker) =>{
+      this.setState({colorOfFill: "white"});
       debugger
       markers.push(marker);
       if (markers.length > 1){
@@ -173,16 +170,17 @@ class Map extends React.Component {
   }
 
   handleSubmit(e){
-    debugger
     e.preventDefault();
     const encode = google.maps.geometry.encoding.encodePath(allSnaps);
-    const newRoute = {polyline: encode, athlete_id: this.props.current_athlete_id, activity_type: "run"};
+    // debugger
+    const newRoute = {polyline: encode, athlete_id: this.props.current_athlete_id, activity_type: "Run", title: "tests"};
     debugger
-    this.props.createRoute(newRoute).then(() => this.props.history.push("/routes"));
+    // this.props.createRoute(newRoute).then(() => this.props.history.push("/routes"));
+    this.props.openRouteModal("saveRoute", newRoute.polyline);
   }
 
   render() {
-
+    const { openRouteModal } = this.props
     return (
       <div>
         <header>
@@ -202,18 +200,18 @@ class Map extends React.Component {
               <p><a className="clear" href="#/map">Clear</a></p>
             </div>
           </div>
-          <form onSubmit={this.handleSubmit}>
-            <input type="submit" value="Save" className="new-route-button"/>
-          </form>
+          <button className="new-route-button" onClick={this.handleSubmit}>Save</button>
+
         </nav>
         <div className="map" ref="map">
         </div>
         <div className="map-footer">
           <div className="distance-container">
             <div className="distance-group">
-              <p className="miles">mi</p>
               <p className="distance">{Math.round(distance*0.0621371)/100}</p>
+              <p className="miles">mi</p>
             </div>
+            <p>Distance</p>
           </div>
         </div>
       </div>

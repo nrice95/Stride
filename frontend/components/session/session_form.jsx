@@ -35,18 +35,19 @@ class SessionForm extends React.Component {
 
   handleSubmit(e){
     e.preventDefault();
+    debugger
     this.props.action(this.state);
   }
 
   render(){
-    const { openModal } = this.props
+    const { openUserModal } = this.props
     // debugger
     return(
       <div className="bg">
         <header className="main-header">
           <div className="header-items">
             <a href="/" className="login-stride-title">STRIDE</a>
-            <button className="signup-button" onClick={() => openModal('signup')}>Sign Up</button>
+            <button className="signup-button" onClick={() => openUserModal('signup')}>Sign Up</button>
           </div>
         </header>
         <div className="login-form-container">

@@ -2,7 +2,7 @@ import { RECEIVE_ACTIVITY, RECEIVE_ACTIVITIES, REMOVE_ACTIVITY } from "../action
 import merge from "lodash/merge";
 
 const ActivitiesReducer = (state ={}, action) => {
-  debugger
+  // debugger
   Object.freeze(state);
   switch (action.type) {
     case RECEIVE_ACTIVITIES:

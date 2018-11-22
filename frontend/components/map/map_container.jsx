@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
 import { createRoute } from "../../actions/route_actions";
+import { openRouteModal } from '../../actions/modal_actions';
 import Map from "./map";
 
 const msp = state => {
@@ -12,7 +13,8 @@ const msp = state => {
 const mdp = dispatch => {
   // debugger
   return ({
-    createRoute: route => dispatch(createRoute(route))
+    createRoute: route => dispatch(createRoute(route)),
+    openRouteModal: (modal, polyline) => dispatch(openRouteModal(modal, polyline))
   })
 }
 

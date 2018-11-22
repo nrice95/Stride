@@ -2,13 +2,13 @@ import React from 'react';
 
 
 
-const Greeting = ({ currentUser, logout, openModal }) => {
+const Greeting = ({ currentUser, logout, openUserModal }) => {
 
   const sessionLinks = () => (
     <nav className="login-signup">
-      <button onClick={() => openModal('login')}>Login</button>
+      <button onClick={() => openUserModal('login')}>Login</button>
       &nbsp;or&nbsp;
-      <button onClick={() => openModal('signup')}>Signup</button>
+      <button onClick={() => openUserModal('signup')}>Signup</button>
     </nav>
   );
   const personalGreeting = () => (

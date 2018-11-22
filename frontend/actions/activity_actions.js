@@ -20,6 +20,7 @@ export const createActivity = activity => dispatch => {
   return ActivityApiUtil.createActivity(activity).then(activity => {
     dispatch(receiveActivity(activity))
   }, err => {
+    debugger
     return dispatch(receiveErrors(err.responseJSON))
   });
 };
