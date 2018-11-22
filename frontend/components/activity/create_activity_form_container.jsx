@@ -10,11 +10,14 @@ const msp = (state, ownProps) => {
       description: "",
       activity_type: "Run",
       distance: 0,
-      duration_hours: 1,
+      distance_units: "miles",
+      duration_hours: 0,
       duration_minutes: 0,
       duration_seconds: 0,
-      type: "",
-      athlete_id: state.session.id
+      run_type: "",
+      athlete_id: state.session.id,
+      elevation: 0,
+      elevation_units: "feet"
     },
     formType: "Create",
   })

@@ -6,9 +6,9 @@ class Api::ActivitiesController < ApplicationController
 
   def create
     @activity = Activity.new(activity_params)
-    debugger
+    # debugger
     if @activity.save
-      debugger
+      # debugger
       render :show
     else
       render json: @activity.errors.full_messages, status: 422
@@ -25,7 +25,7 @@ class Api::ActivitiesController < ApplicationController
   def activity_params
     params.require(:activity).permit(
       :athlete_id,
-      :title,
+      :route_id,
       :activity_type,
       :title,
       :description,
@@ -33,7 +33,10 @@ class Api::ActivitiesController < ApplicationController
       :duration_hours,
       :duration_minutes,
       :duration_seconds,
-      :run_type
+      :run_type,
+      :distance_units,
+      :elevation,
+      :elevation_units
     )
   end
 end

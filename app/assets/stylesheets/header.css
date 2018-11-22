@@ -26,8 +26,8 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-}
 
+}
 .left-items {
   list-style: none;
   display: flex;
@@ -106,7 +106,7 @@ li:hover .dashboard-list, li:hover .training-list{
 }
 
 .dashboard-list > li, .training-list > li {
-  /* border-top: 1px solid #ccc; */
+  border-top: 1px solid #ccc;
   text-decoration: none;
   width: 100%;
   padding: 15px 0px 15px 10px;
@@ -129,11 +129,26 @@ li:hover .dashboard-list, li:hover .training-list{
   text-decoration: none;
 }
 
-.right-items {
+.right-items > li{
   position: relative;
+  list-style: none;
 }
 
-/* .user-actions {
+.header-avatar-container{
+  height: 50px;
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-avatar-container:hover{
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  width: 48px;
+}
+
+.user-actions {
   display: none;
   width: 110px;
   padding: 0;
@@ -151,7 +166,27 @@ li:hover .dashboard-list, li:hover .training-list{
 }
 
 li:hover .user-actions {
-  display: block;
+  display: flex;
   flex-direction: column;
   top: 50px;
-} */
+}
+
+
+.user-actions > li > a, .training-list > li > a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #717176;
+}
+
+.user-actions > li, .training-list > li {
+  border-top: 1px solid #ccc;
+  text-decoration: none;
+  width: 100%;
+  padding: 15px 0px 15px 10px;
+  color: #000;
+}
+
+.user-actions > li:hover, .training-list > li:hover {
+  background: #dddddd;
+}

@@ -599,12 +599,25 @@ function (_React$Component) {
         className: "activity-form-title"
       }, "Manual Entry"), this.renderErrors(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "activity-row-one"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Distance", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Distance", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "distance"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         className: "distance-input",
         type: "text",
         value: this.state.distance,
         onChange: this.update("distance")
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Duration", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        className: "distance-unit",
+        onChange: this.update("distance_units")
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "miles"
+      }, "miles"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "kilometers"
+      }, "kilometers"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "meters"
+      }, "meters"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "yards"
+      }, "yards")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Duration (h/m/s)", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "duration-boxes"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dur-div"
@@ -633,7 +646,21 @@ function (_React$Component) {
         type: "text",
         value: this.state.duration_seconds,
         onChange: this.update("duration_seconds")
-      }))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Elevation", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "elevation"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "elevation-input",
+        type: "text",
+        value: this.state.elevation,
+        onChange: this.update("elevation")
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        className: "elevation-unit",
+        onChange: this.update("elevation_units")
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "feet"
+      }, "feet"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "meters"
+      }, "meters"))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "activity-row-two"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Sport", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         className: "sport",
@@ -644,7 +671,7 @@ function (_React$Component) {
         value: "Ride"
       }, "Ride"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Run Type", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         className: "type",
-        onChange: this.update("type")
+        onChange: this.update("run_type")
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         value: ""
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
@@ -880,11 +907,14 @@ var msp = function msp(state, ownProps) {
       description: "",
       activity_type: "Run",
       distance: 0,
-      duration_hours: 1,
+      distance_units: "miles",
+      duration_hours: 0,
       duration_minutes: 0,
       duration_seconds: 0,
-      type: "",
-      athlete_id: state.session.id
+      run_type: "",
+      athlete_id: state.session.id,
+      elevation: 0,
+      elevation_units: "feet"
     },
     formType: "Create"
   };
@@ -917,12 +947,84 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+var calculatePace = function calculatePace(distance, time) {
+  var minutes = Math.floor(time / distance);
+  var seconds = time / distance % 1;
+  seconds = seconds * 60;
+  seconds = Math.ceil(seconds);
+  var secondsString = seconds.toString();
+
+  if (secondsString.length === 1) {
+    secondsString = "0" + secondsString;
+  }
+
+  var hours = Math.floor(minutes / 60);
+  minutes = minutes % 60;
+  var minutesString = minutes.toString();
+  var hoursString = hours.toString();
+
+  if (hours > 0) {
+    if (minutesString.length === 1) {
+      minutesString = "0" + minutesString;
+    }
+
+    return hoursString + ":" + minutesString + ":" + secondsString;
+  } else {
+    return minutesString + ":" + secondsString;
+  }
+}; //in minutes
+
+
+var timeToFloat = function timeToFloat(hours, minutes, seconds) {
+  return 60 * hours + minutes + Math.round(seconds / 60 * 100) / 100;
+}; // const formatTime = (hours,minutes,seconds) => {
+//   let result = "";
+//   if (hours > 0){
+//     result += `${hours}h`
+//   }if (minutes > 0 || result.length > 0){
+//     let minutesString = minutes.toString();
+//     if
+//   }
+// }
+
+
 var ActivityIndexItem = function ActivityIndexItem(_ref) {
   var activity = _ref.activity,
       currentAthlete = _ref.currentAthlete;
+  var unitAbbrs = {
+    "kilometers": "km",
+    "miles": "mi",
+    "feet": "ft",
+    "meters": "m",
+    "yards": "yds"
+  };
   debugger;
+  var first_render = "";
+  var first_render_title = "";
+  var second_render = "";
+  var second_render_title = "";
+  var third_render = "";
+  var third_render_title = "";
+
+  if (activity.distance === 0) {
+    first_render = "".concat(activity.duration_hours, "h ").concat(activity.duration_minutes, "m ").concat(activity.duration_seconds, "s");
+    first_render_title = "Time";
+    second_render = "".concat(activity.elevation, " ").concat(unitAbbrs[activity.elevation_units]);
+    second_render_title = "Elevation Gain";
+    third_render_title = "Elapsed Time";
+  } else {
+    first_render = "".concat(Math.round(activity.distance * 100) / 100, " ").concat(unitAbbrs[activity.distance_units]);
+    first_render_title = "Distance";
+    second_render = calculatePace(activity.distance, timeToFloat(activity.duration_hours, activity.duration_minutes, activity.duration_seconds)) + " /".concat(unitAbbrs[activity.distance_units]);
+    second_render_title = "Pace";
+    third_render_title = "Time";
+  }
+
+  third_render = "".concat(activity.duration_hours, "h ").concat(activity.duration_minutes, "m ").concat(activity.duration_seconds, "s");
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "dashboard-activity"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "dashboard-activity-content"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "dashboard-avatar-column"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -941,16 +1043,24 @@ var ActivityIndexItem = function ActivityIndexItem(_ref) {
   }, activity.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "dashboard-workout-data"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "dashboard-distance"
+    className: "dashboard-datum"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "dashboard-distance-label"
-  }, "Distance"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "dashboard-distance-render"
+    className: "dashboard-datum-label"
+  }, "".concat(first_render_title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "dashboard-datum-value"
+  }, "".concat(first_render))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "dashboard-datum"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "dashboard-distance-value"
-  }, activity.distance), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "dashboard-distance-measurement"
-  }, "mi"))))));
+    className: "dashboard-datum-label"
+  }, "".concat(second_render_title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "dashboard-datum-value"
+  }, "".concat(second_render))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "dashboard-datum"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "dashboard-datum-label"
+  }, "".concat(third_render_title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "dashboard-datum-value"
+  }, "".concat(third_render)))))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (ActivityIndexItem);
@@ -1231,6 +1341,10 @@ function (_React$Component) {
           activity: activity,
           currentAthlete: currentAthlete
         });
+
+        if (activities.length === 0) {
+          activities = "No recent activities";
+        }
       });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dashboard"
@@ -1480,16 +1594,16 @@ function (_React$Component) {
         className: "training-list"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "#activities"
-      }, "My Activities"))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "My Activities"))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "right-items"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "header-avatar-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "#/athlete",
         className: "dashboard-header-avatar"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dashboard-header-initial"
-      }, currentAthlete.username.charAt(0).toUpperCase())), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "dashboard-user"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      }, currentAthlete.username.charAt(0).toUpperCase()))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "user-actions"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "#/athlete"
@@ -1690,7 +1804,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 
 
-var apiKey = "AIzaSyA4rAT0fdTZLNkJ5o0uaAwZ89vVPQpr_Kc";
+var apiKey = "AIzaSyCaftJEgu1zIwd59dIWRW_KKqwV1sdpXWo";
 var mappy;
 var map;
 var drawingManager;

@@ -37,13 +37,15 @@ class Header extends React.Component {
 
 
 
-          <div className="right-items">
-            <a href="#/athlete" className="dashboard-header-avatar">
-              <div className="dashboard-header-initial">
-                {currentAthlete.username.charAt(0).toUpperCase()}
+          <ul className="right-items">
+            <li>
+              <div className="header-avatar-container">
+                <a href="#/athlete" className="dashboard-header-avatar">
+                  <div className="dashboard-header-initial">
+                    {currentAthlete.username.charAt(0).toUpperCase()}
+                  </div>
+                </a>
               </div>
-            </a>
-            <ul className="dashboard-user">
               <ul className="user-actions">
                 <li>
                   <a href="#/athlete">My Profile</a>
@@ -52,7 +54,9 @@ class Header extends React.Component {
                   <button className="header-button" onClick={this.props.logout}>Log Out</button>
                 </li>
               </ul>
-            </ul>
+            </li>
+
+
             <ul className="add-action">
               <li>
                 <a href="#/map" className="dashboard-map-title">Create a route</a>
@@ -61,7 +65,7 @@ class Header extends React.Component {
                 <a href="#/activity/new" className="dashboard-activity-title">Add manual entry</a>
               </li>
             </ul>
-          </div>
+          </ul>
         </nav>
       </header>
     )

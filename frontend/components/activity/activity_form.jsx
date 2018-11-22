@@ -45,9 +45,17 @@ class ActivityForm extends React.Component {
           {this.renderErrors()}
           <div className="activity-row-one">
             <label>Distance
-              <input className="distance-input" type="text" value={this.state.distance} onChange={this.update("distance")}/>
+              <div className="distance">
+                <input className="distance-input" type="text" value={this.state.distance} onChange={this.update("distance")}/>
+                <select className="distance-unit" onChange={this.update("distance_units")}>
+                  <option value="miles">miles</option>
+                  <option value="kilometers">kilometers</option>
+                  <option value="meters">meters</option>
+                  <option value="yards">yards</option>
+                </select>
+              </div>
             </label>
-            <label>Duration
+            <label>{`Duration (h/m/s)`}
               <div className="duration-boxes">
                 <div className="dur-div">
                   <label className="dur-label">
@@ -66,6 +74,15 @@ class ActivityForm extends React.Component {
                 </div>
               </div>
             </label>
+            <label>Elevation
+              <div className="elevation">
+                <input className="elevation-input" type="text" value={this.state.elevation} onChange={this.update("elevation")}/>
+                <select className="elevation-unit" onChange={this.update("elevation_units")}>
+                  <option value="feet">feet</option>
+                  <option value="meters">meters</option>
+                </select>
+              </div>
+            </label>
           </div>
           <div className="activity-row-two">
             <label>Sport
@@ -75,7 +92,7 @@ class ActivityForm extends React.Component {
               </select>
             </label>
             <label>Run Type
-              <select className="type" onChange={this.update("type")}>
+              <select className="type" onChange={this.update("run_type")}>
                 <option value=""></option>
                 <option value="Ride">Race</option>
                 <option value="Run">Long Run</option>

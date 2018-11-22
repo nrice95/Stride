@@ -64,7 +64,7 @@
   margin-top: 10px;
 }
 
-.distance-input {
+.distance-input, .elevation-input {
   padding: 0;
   width: 125px;
   height: 34px;
@@ -75,6 +75,28 @@
 /* .distance-input:focus {
   border: 1px solid blue;
 } */
+
+.distance, .elevation {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+}
+
+.distance > select , .elevation > select{
+  background-color: white;
+  border-top: 1px solid #ccccd1;
+  border-bottom: 1px solid #ccccd1;
+  border-right: 1px solid #ccccd1;
+  border-left: 0;
+  width: 111px;
+  border-radius: 0 3px 3px 0;
+  padding-left: 10px;
+}
+
+.distance > select:hover, .elevation > select:hover {
+  transition: 0.3s;
+  background-color: #f5f5fa;
+}
 
 .sport-input {
   width: 237px;
@@ -131,16 +153,18 @@
 }
 
 .sport{
-  width: 129px;
+  width: 237px;
+  border-radius: 3px;
 }
 
 .type {
   width: 225px;
+  border-radius: 3px;
 }
 
 .title-input {
   margin-top: 10px;
-  width: 394px;
+  width: 482px;
   height: 38px;
   border: 1px solid #ccccd1;
   padding-left: 10px;

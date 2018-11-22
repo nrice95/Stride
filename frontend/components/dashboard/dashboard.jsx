@@ -19,13 +19,16 @@ class Dashboard extends React.Component {
   render(){
     //debugger
     const { currentAthlete, logout } = this.props;
-    const activities = this.props.activities.reverse().slice(0,6).map(activity => {
+    let activities = this.props.activities.reverse().slice(0,6).map(activity => {
       return (
         <ActivityIndexItem
           key={activity.id}
           activity={activity}
           currentAthlete={currentAthlete} />
       )
+      if (activities.length === 0) {
+        activities = "No recent activities"
+      }
     });
     return(
       <div className="dashboard">
