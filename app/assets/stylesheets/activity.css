@@ -1,0 +1,157 @@
+.activity-show{
+  display: flex;
+  flex-direction: column;
+  align-items: space-between;
+}
+
+.activity-body {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.activity-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.activity-header {
+  width: 1000px;
+  height: 24px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  padding-left: 20px;
+  background-color: #f5f5fa;
+  border-top: 1px solid #ccccd1;
+  border-left: 1px solid #ccccd1;
+  border-right: 1px solid #ccccd1;
+  font-weight: 300;
+  font-size: 18px;
+}
+
+.activity-header > a {
+  text-decoration: none;
+  color: black;
+}
+
+.activity-header > a:hover {
+  color: #4797cf;
+  text-decoration: underline;
+}
+
+.activity-info{
+  width: 1020px;
+  height: 190px;
+  border: 1px solid #ccccd1;
+  display: flex;
+  flex-direction: row;
+}
+
+.activity-info > div {
+  width: 500px;
+  /* height: 182px; */
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.left-activity{
+  border-right: 1px solid #ccccd1;
+  display: flex;
+  flex-direction: column;
+}
+
+.left-activity-info{
+  display: flex;
+  flex-direction: row;
+}
+
+.bottom-bar{
+  margin-top: 20px;
+  width: 480px;
+  height: 10px;
+  border-top: 1px solid #ccccd1;
+}
+
+.activity-avatar{
+  text-decoration: none;
+  top: -65px;
+  z-index: 0.5;
+  height: 100px;
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #bf3825;
+  color: white;
+  font-size: 48px;
+  border-radius: 100%;
+}
+
+.activity-info-data {
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.activity-title{
+  font-size: 24px;
+  font-weight: 300;
+  margin-bottom: 10px;
+}
+
+.activity-description{
+  font-size: 12px;
+}
+
+.add-description {
+  width: 115px;
+  height: 24px;
+  background-color: #e6e6ea;
+  border-radius: 3px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: black;
+  transition: 0.3s;
+}
+
+.add-description:hover {
+  background-color: #cacaca;
+}
+
+.right-activity-info {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ccccd1;
+}
+
+.right-activity-info > div {
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
+}
+
+.right-activity-info > div > div:first-of-type{
+  font-size: 24px;
+  font-weight: 300;
+}
+
+.right-activity-info > div > div:last-of-type{
+  font-size: 14px;
+  font-weight: 300;
+  color: #aea0b4;
+}
+
+.activity-footer{
+  width: 100%;
+  height: 400px;
+  background-color: #f5f5fa;
+  position: absolute;
+  bottom: 0;
+}

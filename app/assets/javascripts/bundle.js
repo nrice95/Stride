@@ -439,6 +439,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 /* harmony import */ var _header_header_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../header/header_container */ "./frontend/components/header/header_container.jsx");
+/* harmony import */ var _reducers_selectors__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../reducers/selectors */ "./frontend/reducers/selectors.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -456,6 +457,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -487,7 +489,90 @@ function (_React$Component) {
           activity_type: ""
         }
       };
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_header_header_container__WEBPACK_IMPORTED_MODULE_2__["default"], null), activity.title, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), username);
+      var data;
+
+      if (activity === {
+        activity: {
+          title: "",
+          activity_type: ""
+        }
+      }) {
+        data = {
+          first_render: "",
+          first_render_title: "",
+          second_render: "",
+          second_render_title: "",
+          third_render: "",
+          third_render_title: ""
+        };
+      }
+
+      data = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["activityData"])(activity);
+      var first_render = data.first_render;
+      var first_render_title = data.first_render_title;
+      var second_render = data.second_render;
+      var second_render_title = data.second_render_title;
+      var third_render = data.third_render;
+      var third_render_title = data.third_render_title;
+      var description;
+
+      if (activity.description === "") {
+        description = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          className: "add-description",
+          href: "#/activity/new"
+        }, "Add a description");
+      } else {
+        description = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "activity-description"
+        }, activity.description);
+      }
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_header_header_container__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "activity-show"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "activity-body"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "activity-field"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "activity-header"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#/athlete"
+      }, "".concat(username)), " \u2013 ", "".concat(activity.activity_type)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "activity-info"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "left-activity"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "left-activity-info"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#/athlete",
+        className: "activity-avatar"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "activity-avatar-char"
+      }, username.charAt(0).toUpperCase())), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "activity-info-data"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "activity-title"
+      }, activity.title), description)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "bottom-bar"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "right-activity"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "right-activity-info"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "first-render"
+      }, first_render), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "first-render-title"
+      }, first_render_title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "third-render"
+      }, third_render), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "third-render-title"
+      }, third_render_title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "second-render"
+      }, second_render), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "second-render-title"
+      }, second_render_title))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "activity-footer"
+      })));
     }
   }]);
 
@@ -944,83 +1029,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+/* harmony import */ var _reducers_selectors__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../reducers/selectors */ "./frontend/reducers/selectors.js");
 
 
-
-var calculatePace = function calculatePace(distance, time) {
-  var minutes = Math.floor(time / distance);
-  var seconds = time / distance % 1;
-  seconds = seconds * 60;
-  seconds = Math.ceil(seconds);
-  var secondsString = seconds.toString();
-
-  if (secondsString.length === 1) {
-    secondsString = "0" + secondsString;
-  }
-
-  var hours = Math.floor(minutes / 60);
-  minutes = minutes % 60;
-  var minutesString = minutes.toString();
-  var hoursString = hours.toString();
-
-  if (hours > 0) {
-    if (minutesString.length === 1) {
-      minutesString = "0" + minutesString;
-    }
-
-    return hoursString + ":" + minutesString + ":" + secondsString;
-  } else {
-    return minutesString + ":" + secondsString;
-  }
-}; //in minutes
-
-
-var timeToFloat = function timeToFloat(hours, minutes, seconds) {
-  return 60 * hours + minutes + Math.round(seconds / 60 * 100) / 100;
-}; // const formatTime = (hours,minutes,seconds) => {
-//   let result = "";
-//   if (hours > 0){
-//     result += `${hours}h`
-//   }if (minutes > 0 || result.length > 0){
-//     let minutesString = minutes.toString();
-//     if
-//   }
-// }
 
 
 var ActivityIndexItem = function ActivityIndexItem(_ref) {
   var activity = _ref.activity,
       currentAthlete = _ref.currentAthlete;
-  var unitAbbrs = {
-    "kilometers": "km",
-    "miles": "mi",
-    "feet": "ft",
-    "meters": "m",
-    "yards": "yds"
-  };
-  debugger;
-  var first_render = "";
-  var first_render_title = "";
-  var second_render = "";
-  var second_render_title = "";
-  var third_render = "";
-  var third_render_title = "";
-
-  if (activity.distance === 0) {
-    first_render = "".concat(activity.duration_hours, "h ").concat(activity.duration_minutes, "m ").concat(activity.duration_seconds, "s");
-    first_render_title = "Time";
-    second_render = "".concat(activity.elevation, " ").concat(unitAbbrs[activity.elevation_units]);
-    second_render_title = "Elevation Gain";
-    third_render_title = "Elapsed Time";
-  } else {
-    first_render = "".concat(Math.round(activity.distance * 100) / 100, " ").concat(unitAbbrs[activity.distance_units]);
-    first_render_title = "Distance";
-    second_render = calculatePace(activity.distance, timeToFloat(activity.duration_hours, activity.duration_minutes, activity.duration_seconds)) + " /".concat(unitAbbrs[activity.distance_units]);
-    second_render_title = "Pace";
-    third_render_title = "Time";
-  }
-
-  third_render = "".concat(activity.duration_hours, "h ").concat(activity.duration_minutes, "m ").concat(activity.duration_seconds, "s");
+  var data = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_2__["activityData"])(activity);
+  var first_render = data.first_render;
+  var first_render_title = data.first_render_title;
+  var second_render = data.second_render;
+  var second_render_title = data.second_render_title;
+  var third_render = data.third_render;
+  var third_render_title = data.third_render_title;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "dashboard-activity"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1038,7 +1061,7 @@ var ActivityIndexItem = function ActivityIndexItem(_ref) {
     href: "#/athlete",
     className: "dashboard-item-name"
   }, currentAthlete.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-    href: "#/activities",
+    href: "#/activity/".concat(activity.id),
     className: "dashboard-activity-title"
   }, activity.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "dashboard-workout-data"
@@ -1596,7 +1619,9 @@ function (_React$Component) {
         href: "#activities"
       }, "My Activities"))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "right-items"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "avatar-dropdown"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "header-avatar-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "#/athlete",
@@ -1607,18 +1632,20 @@ function (_React$Component) {
         className: "user-actions"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "#/athlete"
-      }, "My Profile")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, "My Profile")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "logout-li"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "header-button",
         onClick: this.props.logout
-      }, "Log Out")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      }, "Log Out")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "+"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "add-action"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "#/map",
         className: "dashboard-map-title"
       }, "Create a route")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "#/activity/new",
-        className: "dashboard-activity-title"
-      }, "Add manual entry"))))));
+        className: "header-new-activity"
+      }, "Add manual entry")))))));
     }
   }]);
 
@@ -3503,6 +3530,114 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return state;
   }
 });
+
+/***/ }),
+
+/***/ "./frontend/reducers/selectors.js":
+/*!****************************************!*\
+  !*** ./frontend/reducers/selectors.js ***!
+  \****************************************/
+/*! exports provided: activityData */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "activityData", function() { return activityData; });
+var activityData = function activityData(activity) {
+  var unitAbbrs = {
+    "kilometers": "km",
+    "miles": "mi",
+    "feet": "ft",
+    "meters": "m",
+    "yards": "yds"
+  };
+  var first_render = "";
+  var first_render_title = "";
+  var second_render = "";
+  var second_render_title = "";
+  var third_render = "";
+  var third_render_title = "";
+
+  if (activity.distance === 0) {
+    // first_render = `${activity.duration_hours}h ${activity.duration_minutes}m ${activity.duration_seconds}s`;
+    first_render = renderTime(activity);
+    first_render_title = "Time";
+    second_render = "".concat(activity.elevation, " ").concat(unitAbbrs[activity.elevation_units]);
+    second_render_title = "Elevation Gain";
+    third_render_title = "Elapsed Time";
+  } else {
+    first_render = "".concat(Math.round(activity.distance * 100) / 100, " ").concat(unitAbbrs[activity.distance_units]);
+    first_render_title = "Distance";
+    second_render = calculatePace(activity.distance, timeToFloat(activity.duration_hours, activity.duration_minutes, activity.duration_seconds)) + " /".concat(unitAbbrs[activity.distance_units]);
+    second_render_title = "Pace";
+    third_render_title = "Time";
+  } // third_render = `${activity.duration_hours}h ${activity.duration_minutes}m ${activity.duration_seconds}s`;
+
+
+  third_render = renderTime(activity);
+  return {
+    first_render: first_render,
+    first_render_title: first_render_title,
+    second_render: second_render,
+    second_render_title: second_render_title,
+    third_render: third_render,
+    third_render_title: third_render_title
+  };
+};
+
+var calculatePace = function calculatePace(distance, time) {
+  var minutes = Math.floor(time / distance);
+  var seconds = time / distance % 1;
+  seconds = seconds * 60;
+  seconds = Math.ceil(seconds);
+  var secondsString = seconds.toString();
+
+  if (secondsString.length === 1) {
+    secondsString = "0" + secondsString;
+  }
+
+  var hours = Math.floor(minutes / 60);
+  minutes = minutes % 60;
+  var minutesString = minutes.toString();
+  var hoursString = hours.toString();
+
+  if (hours > 0) {
+    if (minutesString.length === 1) {
+      minutesString = "0" + minutesString;
+    }
+
+    return hoursString + ":" + minutesString + ":" + secondsString;
+  } else {
+    return minutesString + ":" + secondsString;
+  }
+}; //in minutes
+
+
+var timeToFloat = function timeToFloat(hours, minutes, seconds) {
+  return 60 * hours + minutes + Math.round(seconds / 60 * 100) / 100;
+};
+
+var renderTime = function renderTime(activity) {
+  var hours = activity.duration_hours;
+  var minutes = activity.duration_minutes;
+  var seconds = activity.duration_seconds;
+
+  if (hours === 0 && minutes === 0 && seconds === 0) {
+    return "0h 0m 0s";
+  } else {
+    var result = "".concat(seconds, "s");
+
+    if (minutes > 0) {
+      result = "".concat(minutes, "m ") + result;
+
+      if (hours > 0) {
+        result = "".concat(hours, "h ") + result;
+      }
+    }
+
+    return result;
+  }
+};
 
 /***/ }),
 

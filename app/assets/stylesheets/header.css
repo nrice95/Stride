@@ -6,6 +6,7 @@
   align-items: center;
   border-bottom: 1px solid #e6e6ea;
   height: 50px;
+  /* position: fixed; */
 }
 
 .dashboard-header-items{
@@ -35,6 +36,7 @@
 }
 
 .left-items > li{
+  position: relative;
   text-decoration: none;
   width: 112px;
   display: flex;
@@ -71,9 +73,6 @@
   margin-right: 20px;
 }
 
-.left-items > li{
-  position: relative;
-}
 
 .dashboard-list, .training-list {
   display: none;
@@ -106,7 +105,7 @@ li:hover .dashboard-list, li:hover .training-list{
 }
 
 .dashboard-list > li, .training-list > li {
-  border-top: 1px solid #ccc;
+  /* border-top: 1px solid #ccc; */
   text-decoration: none;
   width: 100%;
   padding: 15px 0px 15px 10px;
@@ -132,6 +131,8 @@ li:hover .dashboard-list, li:hover .training-list{
 .right-items > li{
   position: relative;
   list-style: none;
+  display: flex;
+  align-items: center;
 }
 
 .header-avatar-container{
@@ -141,14 +142,14 @@ li:hover .dashboard-list, li:hover .training-list{
   align-items: center;
   justify-content: center;
 }
-
+/*
 .header-avatar-container:hover{
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
   width: 48px;
-}
+} */
 
-.user-actions {
+.user-actions, .add-action {
   display: none;
   width: 110px;
   padding: 0;
@@ -160,33 +161,144 @@ li:hover .dashboard-list, li:hover .training-list{
   border-right: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   overflow: hidden;
-  z-index: 1;
+  z-index: 0;
   list-style: none;
   text-decoration: none;
 }
 
-li:hover .user-actions {
+.add-action {
+  width: 150px;
+}
+
+li:hover .user-actions, li:hover .add-action {
+  position: absolute;
   display: flex;
   flex-direction: column;
   top: 50px;
+  right: -1px;
+  z-index: -1;
 }
 
 
-.user-actions > li > a, .training-list > li > a {
+.user-actions > li > a, .add-action > li > a {
   display: flex;
   align-items: center;
   text-decoration: none;
   color: #717176;
 }
 
-.user-actions > li, .training-list > li {
-  border-top: 1px solid #ccc;
+.user-actions > li > button {
+  height: 50px;
+  width: 110px;
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 12px;
+  color:  #717176;
+}
+
+
+.user-actions > li {
+  /* border-top: 1px solid #ccc; */
   text-decoration: none;
   width: 100%;
   padding: 15px 0px 15px 10px;
   color: #000;
 }
 
-.user-actions > li:hover, .training-list > li:hover {
+.add-action > li {
+  /* border-top: 1px solid #ccc; */
+  text-decoration: none;
+  width: 100%;
+  padding: 15px 0px 15px 10px;
+  color: #000;
+}
+
+.user-actions > .logout-li{
+  padding: 0;
+}
+
+.user-actions > li:hover, .add-action > li:hover {
   background: #dddddd;
+}
+
+.user-actions > li:hover > button{
+  background: #dddddd;
+}
+
+.right-items > li {
+  position: relative;
+  text-decoration: none;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+}
+
+.right-items > .avatar-dropdown{
+  position: relative;
+  text-decoration: none;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+}
+
+.right-items > .avatar-dropdown > a{
+  text-decoration: none;
+  color: #717176;
+  font-size: 15px;
+}
+
+.right-items > li > a{
+  text-decoration: none;
+  color: #717176;
+  font-size: 15px;
+}
+
+
+
+.right-items > .avatar-dropdown:hover{
+  /* position: absolute; */
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  /* height: 59px; */
+  z-index: 1;
+  width: 48px;
+}
+
+.right-items > li:hover{
+  /* position: absolute; */
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  /* height: 59px; */
+  z-index: 1;
+  width: 48px;
+}
+
+.header-button {
+  background-color: white;
+  border: 0;
+}
+
+.right-items > li > a {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  color: #eb4f2f;
+  height: 20px;
+  font-size: 24px;
+  border: 2px solid #eb4f2f;
+  border-radius: 100%;
+  font-weight: 500;
+}
+
+.right-items > li:hover > a{
+  color: white;
+  background-color: #eb4f2f;
+  font-weight: 500;
 }

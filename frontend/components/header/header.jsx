@@ -38,7 +38,7 @@ class Header extends React.Component {
 
 
           <ul className="right-items">
-            <li>
+            <li className="avatar-dropdown">
               <div className="header-avatar-container">
                 <a href="#/athlete" className="dashboard-header-avatar">
                   <div className="dashboard-header-initial">
@@ -50,21 +50,24 @@ class Header extends React.Component {
                 <li>
                   <a href="#/athlete">My Profile</a>
                 </li>
-                <li>
+                <li className="logout-li">
                   <button className="header-button" onClick={this.props.logout}>Log Out</button>
                 </li>
               </ul>
             </li>
 
 
-            <ul className="add-action">
-              <li>
-                <a href="#/map" className="dashboard-map-title">Create a route</a>
-              </li>
-              <li>
-                <a href="#/activity/new" className="dashboard-activity-title">Add manual entry</a>
-              </li>
-            </ul>
+            <li>
+              <a>{`+`}</a>
+              <ul className="add-action">
+                <li>
+                  <a href="#/map" className="dashboard-map-title">Create a route</a>
+                </li>
+                <li>
+                  <a href="#/activity/new" className="header-new-activity">Add manual entry</a>
+                </li>
+              </ul>
+            </li>
           </ul>
         </nav>
       </header>

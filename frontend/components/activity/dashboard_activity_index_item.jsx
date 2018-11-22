@@ -1,73 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
-const calculatePace = (distance,time) => {
-  let minutes = Math.floor(time/distance);
-  let seconds = (time/distance)%1;
-  seconds = seconds*60;
-  seconds = Math.ceil(seconds);
-  let secondsString = seconds.toString();
-  if (secondsString.length === 1){
-    secondsString = "0" + secondsString;
-  }
-  let hours = Math.floor(minutes/60);
-  minutes = minutes % 60;
-  let minutesString = minutes.toString();
-  let hoursString = hours.toString();
-  if (hours > 0){
-    if (minutesString.length === 1){
-      minutesString = "0" + minutesString;
-    }return hoursString + ":" + minutesString + ":" + secondsString;
-  }else{
-    return minutesString + ":" + secondsString;
-  }
-}
-
-//in minutes
-const timeToFloat = (hours,minutes,seconds) => {
-  return (60 * hours) + minutes + Math.round((seconds/60)*100)/100;
-}
-
-// const formatTime = (hours,minutes,seconds) => {
-//   let result = "";
-//   if (hours > 0){
-//     result += `${hours}h`
-//   }if (minutes > 0 || result.length > 0){
-//     let minutesString = minutes.toString();
-//     if
-//   }
-// }
+import { activityData } from "../../reducers/selectors";
 
 const ActivityIndexItem = ({ activity, currentAthlete }) => {
-  const unitAbbrs = {"kilometers": "km", "miles": "mi", "feet": "ft", "meters": "m", "yards": "yds"}
-  debugger
-
-  let first_render = "";
-  let first_render_title = "";
-
-  let second_render = "";
-  let second_render_title = "";
-
-  let third_render = ""
-  let third_render_title = "";
-
-  if (activity.distance === 0){
-    first_render = `${activity.duration_hours}h ${activity.duration_minutes}m ${activity.duration_seconds}s`;
-    first_render_title = "Time";
-    second_render = `${activity.elevation} ${unitAbbrs[activity.elevation_units]}`;
-    second_render_title = "Elevation Gain";
-    third_render_title = "Elapsed Time"
-
-  }else{
-    first_render = `${Math.round(activity.distance*100)/100} ${unitAbbrs[activity.distance_units]}`;
-    first_render_title = "Distance";
-    second_render = calculatePace(activity.distance,timeToFloat(activity.duration_hours,activity.duration_minutes,activity.duration_seconds)) + ` /${unitAbbrs[activity.distance_units]}`;
-    second_render_title = "Pace"
-    third_render_title = "Time"
-  }
-  third_render = `${activity.duration_hours}h ${activity.duration_minutes}m ${activity.duration_seconds}s`;
-
-
+  const data = activityData(activity);
+  const first_render = data.first_render;
+  const first_render_title = data.first_render_title;
+  const second_render = data.second_render;
+  const second_render_title = data.second_render_title;
+  const third_render = data.third_render;
+  const third_render_title = data.third_render_title;
 
   return (
     <li className="dashboard-activity">
@@ -83,7 +25,7 @@ const ActivityIndexItem = ({ activity, currentAthlete }) => {
           <a href="#/athlete" className="dashboard-item-name">
             {currentAthlete.username}
           </a>
-          <a href="#/activities" className="dashboard-activity-title">
+          <a href={`#/activity/${activity.id}`} className="dashboard-activity-title">
             {activity.title}
           </a>
           <div className="dashboard-workout-data">
