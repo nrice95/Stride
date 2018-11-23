@@ -307,5 +307,12 @@ li:hover .dashboard-user-actions, li:hover .dashboard-add-action {
 }
 
 .avis-class > a{
-  margin-bottom: 10px !important;
+  /* padding-bottom: 10px !important; */
+}
+
+.avis-class{
+  padding-top: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

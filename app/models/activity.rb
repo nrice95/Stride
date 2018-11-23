@@ -21,7 +21,7 @@
 #
 
 class Activity < ApplicationRecord
-  validates :athlete_id, :title, :activity_type, presence: true
+  validates :athlete_id, :title, :activity_type, :date, :time, presence: true
 
   belongs_to :athlete,
     foreign_key: :athlete_id,

@@ -215,7 +215,14 @@
   text-decoration: none;
   color: black;
   font-weight: 500;
-  margin-bottom: 30px;
+  /* margin-bottom: 5px; */
+}
+
+.dashboard-dateT {
+  font-size: 12px;
+  font-weight: 300;
+  margin-bottom: 20px;
+  color: #6c6c6c;
 }
 
 .dashboard-item-name:hover{

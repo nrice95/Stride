@@ -17,7 +17,9 @@ const msp = (state, ownProps) => {
       run_type: "",
       athlete_id: state.session.id,
       elevation: 0,
-      elevation_units: "feet"
+      elevation_units: "feet",
+      date: "",
+      time: ""
     },
     formType: "Create",
   })

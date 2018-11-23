@@ -36,7 +36,9 @@ class Api::ActivitiesController < ApplicationController
       :run_type,
       :distance_units,
       :elevation,
-      :elevation_units
+      :elevation_units,
+      :date,
+      :time
     )
   end
 end

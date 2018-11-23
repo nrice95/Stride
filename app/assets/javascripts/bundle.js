@@ -197,7 +197,7 @@ var OPEN_ROUTE_MODAL = 'OPEN_ROUTE_MODAL';
 var OPEN_USER_MODAL = "OPEN_USER_MODAL";
 var CLOSE_MODAL = 'CLOSE_MODAL';
 var openRouteModal = function openRouteModal(modal, polyline, centerLat, centerLng, distance) {
-  debugger;
+  // debugger
   return {
     type: OPEN_ROUTE_MODAL,
     modal: modal,
@@ -208,14 +208,14 @@ var openRouteModal = function openRouteModal(modal, polyline, centerLat, centerL
   };
 };
 var openUserModal = function openUserModal(modal) {
-  debugger;
+  // debugger
   return {
     type: OPEN_USER_MODAL,
     modal: modal
   };
 };
 var closeModal = function closeModal() {
-  debugger;
+  // debugger
   return {
     type: CLOSE_MODAL
   };
@@ -248,7 +248,7 @@ var RECEIVE_ROUTE = "RECEIVE_ROUTE";
 var RECEIVE_ROUTE_ERRORS = "RECEIVE_ROUTE_ERRORS";
 var createRoute = function createRoute(route) {
   return function (dispatch) {
-    debugger;
+    // debugger
     return _util_route_api_util__WEBPACK_IMPORTED_MODULE_0__["createRoute"](route).then(function (route) {
       // debugger
       return dispatch(receiveRoute(route));
@@ -272,7 +272,7 @@ var fetchRoutes = function fetchRoutes() {
   };
 };
 var receiveRoute = function receiveRoute(route) {
-  debugger;
+  // debugger
   return {
     type: RECEIVE_ROUTE,
     route: route
@@ -396,7 +396,7 @@ var logout = function logout() {
 };
 var signup = function signup(athlete) {
   return function (dispatch) {
-    debugger;
+    // debugger
     return _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__["signup"](athlete).then(function (athlete) {
       return (// //debugger
         dispatch(receiveCurrentAthlete(athlete))
@@ -515,6 +515,14 @@ function (_React$Component) {
       var second_render_title = data.second_render_title;
       var third_render = data.third_render;
       var third_render_title = data.third_render_title;
+      var dateT = "";
+
+      if (typeof activity.date !== "undefined") {
+        dateT = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["parseDateTime"])(activity, "show");
+        ;
+        debugger;
+      }
+
       var description;
 
       if (activity.description === "") {
@@ -528,6 +536,7 @@ function (_React$Component) {
         }, activity.description);
       }
 
+      debugger;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_header_header_container__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "activity-show"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -552,6 +561,8 @@ function (_React$Component) {
       }, username.charAt(0).toUpperCase())), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "activity-info-data"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "show-dateT"
+      }, dateT), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "activity-title"
       }, activity.title), description)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "bottom-bar"
@@ -643,8 +654,7 @@ function (_React$Component) {
       var _this2 = this;
 
       return function (e) {
-        debugger;
-
+        // debugger
         _this2.setState(_defineProperty({}, field, e.target.value));
       };
     }
@@ -658,8 +668,7 @@ function (_React$Component) {
       this.props.action({
         activity: this.state
       }).then(function (thing) {
-        debugger;
-
+        // debugger
         _this3.props.history.push("/activity/".concat(thing.activity.id));
       });
     }
@@ -680,6 +689,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      debugger;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_header_header_container__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         className: "activity-form",
         onSubmit: this.handleSubmit
@@ -768,7 +778,15 @@ function (_React$Component) {
         value: "Run"
       }, "Long Run"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         value: "Ride"
-      }, "Workout")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Workout"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Date&Time", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "datetime"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "date",
+        onChange: this.update("date")
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "time",
+        onChange: this.update("time")
+      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "activity-row-three"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Title", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         className: "title-input",
@@ -856,7 +874,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      debugger;
+      // debugger
       var activities = this.props.activities.map(function (activity) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_activity_table_element__WEBPACK_IMPORTED_MODULE_1__["ActivityTableElement"], {
           key: activity.id,
@@ -871,7 +889,7 @@ function (_React$Component) {
         className: "num-activities"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "".concat(activities.length, " Activities"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
         className: "activities-table"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Sport"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Title"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Time"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Distance"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Elevation"))), activities)));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Sport"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Title"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Time"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "DistanFce"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Elevation"))), activities)));
     }
   }]);
 
@@ -1011,7 +1029,9 @@ var msp = function msp(state, ownProps) {
       run_type: "",
       athlete_id: state.session.id,
       elevation: 0,
-      elevation_units: "feet"
+      elevation_units: "feet",
+      date: "",
+      time: ""
     },
     formType: "Create"
   };
@@ -1056,6 +1076,8 @@ var ActivityIndexItem = function ActivityIndexItem(_ref) {
   var second_render_title = data.second_render_title;
   var third_render = data.third_render;
   var third_render_title = data.third_render_title;
+  var dateT = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_2__["parseDateTime"])(activity, "index");
+  debugger;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "dashboard-activity"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1067,12 +1089,14 @@ var ActivityIndexItem = function ActivityIndexItem(_ref) {
     className: "dashboard-item-avatar"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "dashboard-item-initial"
-  }, currentAthlete.username.charAt(0).toUpperCase()))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, currentAthlete.username.charAt(0).toUpperCase())))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "dashboard-activity-summary"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     href: "#/athlete",
     className: "dashboard-item-name"
-  }, currentAthlete.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+  }, currentAthlete.username, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "dashboard-dateT"
+  }, dateT)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     href: "#/activity/".concat(activity.id),
     className: "dashboard-activity-title"
   }, activity.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1381,8 +1405,8 @@ function (_React$Component) {
       });
       var latestActivity = activities.length === 0 ? {
         title: ""
-      } : this.props.activities[0];
-      debugger;
+      } : this.props.activities[0]; // debugger
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dashboard"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_dashboard_header_dashboard_header_container__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2058,8 +2082,8 @@ function (_React$Component) {
         distance: 0
       });
       pathLengthStack = [];
-      allSnaps = [];
-      debugger; // const map = this.refs.map;
+      allSnaps = []; // debugger
+      // const map = this.refs.map;
       // this.map = new google.maps.Map(map, mapOptions);
 
       mappy = this.refs.map;
@@ -2070,8 +2094,8 @@ function (_React$Component) {
           lng: -74.49510900000001
         },
         mapTypeId: 'terrain'
-      });
-      debugger; // Adds a Places search box. Searching for a place will center the map on that
+      }); // debugger
+      // Adds a Places search box. Searching for a place will center the map on that
       // location.
 
       map.controls[google.maps.ControlPosition.RIGHT_TOP].push(this.refs.bar);
@@ -2116,9 +2140,9 @@ function (_React$Component) {
       drawingManager.addListener('markercomplete', function (marker) {
         _this2.setState({
           colorOfFill: "white"
-        });
+        }); // debugger
 
-        debugger;
+
         markers.push(marker);
 
         if (markers.length > 1) {
@@ -2194,9 +2218,9 @@ function (_React$Component) {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
-      var encode = google.maps.geometry.encoding.encodePath(allSnaps);
-      debugger;
-      debugger;
+      var encode = google.maps.geometry.encoding.encodePath(allSnaps); // debugger
+      // debugger
+
       var centerLat = allSnaps[allSnaps.length - 1].lat();
       var centerLng = allSnaps[allSnaps.length - 1].lng();
       var finalDistance = Math.round(this.state.distance * 100) / 100;
@@ -2323,13 +2347,12 @@ var drawSnappedPolyline = function drawSnappedPolyline() {
     path: snappedCoordinates,
     strokeColor: 'red',
     strokeWeight: 6
-  });
-  debugger;
+  }); // debugger
+
   snappedPolyline.setMap(map);
   polylines.unshift(snappedPolyline);
   var polies = snappedPolyline.latLngs.j[0].j;
-  var tmpDist = 0;
-  debugger;
+  var tmpDist = 0; // debugger
 
   for (var i = 0; i < polies.length - 1; i++) {
     var dist = google.maps.geometry.spherical.computeDistanceBetween(polies[i], polies[i + 1]);
@@ -2364,7 +2387,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var msp = function msp(state) {
-  debugger;
+  // debugger
   return {
     current_athlete_id: state.session.id
   };
@@ -2436,7 +2459,7 @@ function (_React$Component) {
   _createClass(RouteIndexItem, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      debugger;
+      // debugger
       route = this.props.route;
       mapRef = this.refs.map;
       map = new google.maps.Map(mapRef, {
@@ -2585,8 +2608,8 @@ function (_React$Component) {
           lng: -180
         },
         mapTypeId: 'terrain'
-      });
-      debugger;
+      }); // debugger
+
       var x = google.maps.geometry.encoding.decodePath("wrswF`zueMbC}@??_BuLe@{C_@Q}HpYlD{A??pDsAkU~DNTdA~A??VAFAHCbEiB??f@S");
       var coords = [];
 
@@ -2827,7 +2850,7 @@ function (_React$Component) {
     value: function render() {
       var _this = this;
 
-      debugger;
+      // debugger
       var routes = this.props.routes.reverse().map(function (route) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_map_route_index_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
           key: route.id,
@@ -2968,14 +2991,12 @@ function (_React$Component) {
     value: function handleSubmit(e) {
       var _this3 = this;
 
-      debugger;
+      // debugger
       e.preventDefault();
       this.props.createRoute(this.state).then(function (thing) {
-        debugger;
-
+        // debugger
         _this3.props.history.push("/route/".concat(thing.route.id));
-      }).then(this.props.closeModal);
-      debugger;
+      }).then(this.props.closeModal); // debugger
     }
   }, {
     key: "render",
@@ -3043,7 +3064,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var msp = function msp(state) {
-  debugger;
+  // debugger
   return {
     polyline: state.ui.modal.polyline,
     currentAthlete: state.entities.athletes[state.session.id],
@@ -3136,8 +3157,8 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      debugger;
-      debugger;
+      // debugger
+      // debugger
       var route = this.props.route || {
         polyline: "",
         distance: 0,
@@ -3200,8 +3221,8 @@ function (_React$Component) {
       var endMarker = new google.maps.Marker({
         position: coords[0],
         map: map
-      });
-      debugger;
+      }); // debugger
+
       var elevation = route.elevation;
 
       if (typeof route.elevation === "undefined") {
@@ -3257,7 +3278,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var msp = function msp(state, ownProps) {
-  debugger;
+  // debugger
   return {
     athlete: state.entities.athletes[state.session.id],
     route: state.entities.routes[ownProps.match.params.routeId],
@@ -3413,8 +3434,8 @@ function (_React$Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
-      e.preventDefault();
-      debugger;
+      e.preventDefault(); // debugger
+
       this.props.action(this.state);
     }
   }, {
@@ -3641,7 +3662,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var msp = function msp(_ref) {
   var errors = _ref.errors;
-  debugger;
+  // debugger
   return {
     errors: errors,
     formType: "Sign Up",
@@ -3793,8 +3814,8 @@ __webpack_require__.r(__webpack_exports__);
 function modalReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments.length > 1 ? arguments[1] : undefined;
-  debugger;
 
+  // debugger
   switch (action.type) {
     case _actions_modal_actions__WEBPACK_IMPORTED_MODULE_0__["OPEN_ROUTE_MODAL"]:
       return lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, {
@@ -3901,13 +3922,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /*!****************************************!*\
   !*** ./frontend/reducers/selectors.js ***!
   \****************************************/
-/*! exports provided: activityData, renderTime */
+/*! exports provided: activityData, renderTime, parseDateTime */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "activityData", function() { return activityData; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "renderTime", function() { return renderTime; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "parseDateTime", function() { return parseDateTime; });
 var activityData = function activityData(activity) {
   var unitAbbrs = {
     "kilometers": "km",
@@ -4001,6 +4023,47 @@ var renderTime = function renderTime(activity) {
     }
 
     return result;
+  }
+};
+var months = {
+  "01": "January",
+  "02": "February",
+  "03": "March",
+  "04": "April",
+  "05": "May",
+  "06": "June",
+  "07": "July",
+  "08": "August",
+  "09": "September",
+  "10": "October",
+  "11": "November",
+  "12": "December"
+};
+var parseDateTime = function parseDateTime(activity, type) {
+  var dateString = activity.date.split("-");
+  var year = dateString[0];
+  var day = dateString[2];
+  var month = months[dateString[1]];
+  var date = "".concat(month, " ").concat(day, ", ").concat(year);
+  var timeString = activity.time.split(":");
+  var hour = timeString[0];
+  var minute = timeString[1];
+  var ampm;
+  var hourInt = parseInt(hour);
+
+  if (hourInt > 12) {
+    ampm = "PM";
+    hour = (hourInt - 12).toString();
+  } else {
+    ampm = "AM";
+  }
+
+  var time = "".concat(hour, ":").concat(minute, " ").concat(ampm);
+
+  if (type === "index") {
+    return "".concat(date, " at ").concat(time);
+  } else {
+    return "".concat(time, " on ").concat(date);
   }
 };
 
@@ -4249,7 +4312,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchRoute", function() { return fetchRoute; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createRoute", function() { return createRoute; });
 var fetchRoutes = function fetchRoutes(data) {
-  debugger;
+  // debugger
   return $.ajax({
     method: "GET",
     url: "api/routes",
@@ -4263,7 +4326,7 @@ var fetchRoute = function fetchRoute(id) {
   });
 };
 var createRoute = function createRoute(data) {
-  debugger;
+  // debugger
   return $.ajax({
     method: "POST",
     url: "api/routes",

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Header from "../header/header_container";
-import { activityData } from "../../reducers/selectors";
+import { activityData, parseDateTime } from "../../reducers/selectors";
 
 class ActivityShow extends React.Component {
   componentDidMount(){
@@ -22,12 +22,19 @@ class ActivityShow extends React.Component {
     const second_render_title = data.second_render_title;
     const third_render = data.third_render;
     const third_render_title = data.third_render_title;
+
+    let dateT = ""
+    if (typeof activity.date !== "undefined"){
+      dateT = parseDateTime(activity, "show");;
+      debugger
+    }
     let description;
     if (activity.description === ""){
       description = <a className="add-description" href="#/activity/new">Add a description</a>;
     }else{
       description = <div className="activity-description">{activity.description}</div>;
     }
+    debugger
     return(
       <div>
         <Header />
@@ -46,6 +53,7 @@ class ActivityShow extends React.Component {
                     </div>
                   </a>
                   <div className="activity-info-data">
+                    <div className="show-dateT">{dateT}</div>
                     <div className="activity-title">{activity.title}</div>
                     {description}
                   </div>

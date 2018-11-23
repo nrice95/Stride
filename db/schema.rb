@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_23_110325) do
+ActiveRecord::Schema.define(version: 2018_11_23_170854) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,8 @@ ActiveRecord::Schema.define(version: 2018_11_23_110325) do
     t.float "elevation"
     t.string "elevation_units"
     t.string "distance_units"
+    t.string "date"
+    t.string "time"
   end
 
   create_table "athletes", force: :cascade do |t|

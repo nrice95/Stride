@@ -76,3 +76,33 @@ export const renderTime = (activity) => {
     return result
   }
 }
+
+const months = {"01": "January", "02": "February", "03": "March", "04": "April", "05": "May", "06": "June", "07": "July", "08": "August", "09": "September", "10": "October", "11": "November", "12": "December"}
+
+export const parseDateTime = (activity, type) => {
+  let dateString = activity.date.split("-");
+  let year = dateString[0];
+  let day = dateString[2];
+  let month = months[dateString[1]];
+  let date = `${month} ${day}, ${year}`;
+
+  let timeString = activity.time.split(":");
+  let hour = timeString[0];
+  let minute = timeString[1];
+  let ampm;
+
+  let hourInt = parseInt(hour);
+  if (hourInt > 12){
+    ampm = "PM";
+    hour = (hourInt-12).toString();
+  }else{
+    ampm = "AM";
+  }
+  let time = `${hour}:${minute} ${ampm}`;
+
+  if (type === "index"){
+  return `${date} at ${time}`;
+}else{
+  return `${time} on ${date}`;
+}
+}

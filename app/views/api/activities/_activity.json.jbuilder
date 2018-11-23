@@ -1,1 +1,1 @@
-json.extract! activity, :id, :athlete_id, :title, :route_id, :activity_type, :created_at, :distance, :description, :duration_hours, :duration_minutes, :duration_seconds, :run_type, :title, :updated_at, :distance_units, :elevation, :elevation_units, :description
+json.extract! activity, :id, :athlete_id, :title, :route_id, :activity_type, :created_at, :distance, :description, :duration_hours, :duration_minutes, :duration_seconds, :run_type, :title, :updated_at, :distance_units, :elevation, :elevation_units, :description, :date, :time

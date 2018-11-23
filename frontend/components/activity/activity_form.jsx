@@ -41,6 +41,7 @@ class ActivityForm extends React.Component {
   }
 
   render() {
+    debugger
     return (
       <div>
         <Header />
@@ -102,6 +103,12 @@ class ActivityForm extends React.Component {
                 <option value="Run">Long Run</option>
                 <option value="Ride">Workout</option>
               </select>
+            </label>
+            <label>Date&Time
+              <div className="datetime">
+                <input type="date" onChange={this.update("date")}></input>
+                <input type="time" onChange={this.update("time")}></input>
+              </div>
             </label>
             </div>
             <div className="activity-row-three">
