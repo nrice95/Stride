@@ -24,7 +24,7 @@ class RouteShow extends React.Component {
   render(){
     debugger
     debugger
-    const route = this.props.route || {polyline: "", distance: 0};
+    const route = this.props.route || {polyline: "", distance: 0, elevation: 0};
     // mappy = this.refs.map;
     // map = new google.maps.Map(mappy, {
     //   zoom: 16,
@@ -58,7 +58,6 @@ class RouteShow extends React.Component {
     if (typeof map !== "undefined"){
       map.setCenter({lat: route.center_lat, lng: route.center_lng});
     }
-    debugger
 
 
     var path = new google.maps.Polyline({
@@ -85,12 +84,53 @@ class RouteShow extends React.Component {
       position: coords[0],
       map
     })
+    debugger
+    let elevation = route.elevation;
+    if (typeof route.elevation === "undefined"){
+      elevation = 0;
+    };
     return(
       <div>
         <Header />
-        <a href="#/routes">My Routes</a>
-        <div className="map" ref="map"></div>
-        {route.distance}
+        <div className="route-show-content">
+          <div>
+            <a href="#/routes">My Routes/</a>
+            <div>{route.title}</div>
+          </div>
+          <div className="route-title">
+            {route.title}
+          </div>
+          <div className="map-and-user">
+            <div className="med-map" ref="map"></div>
+            <div className="user-stuff">
+              <div>
+                <a href="#/athlete" className="route-avatar">
+                  <div className="route-avatar-char">
+                    {this.props.athlete.username.charAt(0).toUpperCase()}
+                  </div>
+                </a>
+                <div>{`By ${this.props.athlete.username}`}</div>
+              </div>
+              <div>
+                <div>
+                  <div>
+                    {`${Math.round(0.0621371 * route.distance)/100}mi`}
+                  </div>
+                  <div>Distance</div>
+                </div>
+                <div>
+                  <div>
+                    {`0m`}
+                  </div>
+                  <div>Elevation Gain</div>
+                </div>
+              </div>
+              <div className="description-route">
+                <div>{route.description}</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }

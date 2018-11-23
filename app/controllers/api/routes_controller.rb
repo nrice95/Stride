@@ -6,8 +6,9 @@ class Api::RoutesController < ApplicationController
 
   def create
     @route = Route.new(route_params)
+    debugger
     if @route.save
-      # debugger
+      debugger
       render :show
     else
       # debugger
@@ -24,6 +25,6 @@ class Api::RoutesController < ApplicationController
   private
 
   def route_params
-    params.require(:route).permit(:athlete_id, :polyline, :activity_type, :title, :center_lat, :center_lng, :distance)
+    params.require(:route).permit(:athlete_id, :polyline, :activity_type, :title, :center_lat, :center_lng, :distance, :description)
   end
 end

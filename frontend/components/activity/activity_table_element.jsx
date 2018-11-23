@@ -5,10 +5,10 @@ export const ActivityTableElement = ({activity}) => {
   const duration = renderTime(activity);
 
   return(
-    <tbody>
+    <tbody className="index-table-element">
       <tr>
         <td>{activity.activity_type}</td>
-        <td>{activity.title}</td>
+        <td><a href={`#/activity/${activity.id}`}>{activity.title}</a></td>
         <td>{duration}</td>
         <td>{activity.distance}</td>
         <td>{activity.elevation}</td>

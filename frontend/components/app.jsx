@@ -26,7 +26,7 @@ const App = () => {
         <AuthRoute path="/login" component={LoginFormContainer} />
         <AuthRoute path="/signup" component={SignupFormContainer} />
         <ProtectedRoute path="/dashboard" component={DashboardContainer} />
-        <ProtectedRoute path="/athlete" component={AthleteContainer}/>
+        <ProtectedRoute path="/athlete" component={ActivityIndex}/>
         <ProtectedRoute path="/route/new" component={MapContainer}/>
         <ProtectedRoute path="/route/:routeId" component={RouteShow}/>
         <ProtectedRoute path="/maptest" component={MapTest}/>

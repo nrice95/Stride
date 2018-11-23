@@ -15,7 +15,7 @@
 #
 
 class Route < ApplicationRecord
-  validates :polyline, :activity_type, :title, :center_lat, :center_lng, :distance, presence: true
+  validates :polyline, :activity_type, :title, :center_lat, :center_lng, :distance, :description, presence: true
 
   belongs_to :athlete,
     foreign_key: :athlete_id,

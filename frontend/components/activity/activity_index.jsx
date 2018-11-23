@@ -20,18 +20,28 @@ class ActivityIndex extends React.Component {
     return (
       <div>
         <Header />
-        <table className="activities-table">
-          <tbody>
-            <tr>
-              <th>Sport</th>
-              <th>Title</th>
-              <th>Time</th>
-              <th>Distance</th>
-              <th>Elevation</th>
-            </tr>
-          </tbody>
-          {activities}
-        </table>
+        <div className="activities-index-body">
+          <div className="my-activities-title">
+            <div>{`My Activities`}</div>
+          </div>
+          <div className="num-activities">
+            <div>
+              {`${activities.length} Activities`}
+            </div>
+          </div>
+          <table className="activities-table">
+            <tbody>
+              <tr>
+                <th>Sport</th>
+                <th>Title</th>
+                <th>Time</th>
+                <th>Distance</th>
+                <th>Elevation</th>
+              </tr>
+            </tbody>
+            {activities}
+          </table>
+        </div>
       </div>
     )
   }

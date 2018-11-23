@@ -863,9 +863,15 @@ function (_React$Component) {
           activity: activity
         });
       });
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_header_header_container__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_header_header_container__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "activities-index-body"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "my-activities-title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "My Activities")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "num-activities"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "".concat(activities.length, " Activities"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
         className: "activities-table"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Sport"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Title"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Time"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Distance"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Elevation"))), activities));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Sport"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Title"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Time"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Distance"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Elevation"))), activities)));
     }
   }]);
 
@@ -965,7 +971,11 @@ __webpack_require__.r(__webpack_exports__);
 var ActivityTableElement = function ActivityTableElement(_ref) {
   var activity = _ref.activity;
   var duration = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_1__["renderTime"])(activity);
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, activity.activity_type), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, activity.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, duration), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, activity.distance), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, activity.elevation)));
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", {
+    className: "index-table-element"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, activity.activity_type), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    href: "#/activity/".concat(activity.id)
+  }, activity.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, duration), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, activity.distance), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, activity.elevation)));
 };
 
 /***/ }),
@@ -1151,7 +1161,7 @@ var App = function App() {
     component: _dashboard_dashboard_container__WEBPACK_IMPORTED_MODULE_5__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_16__["ProtectedRoute"], {
     path: "/athlete",
-    component: _athlete_athlete_container__WEBPACK_IMPORTED_MODULE_6__["default"]
+    component: _activity_activity_index_container__WEBPACK_IMPORTED_MODULE_12__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_16__["ProtectedRoute"], {
     path: "/route/new",
     component: _map_map_container__WEBPACK_IMPORTED_MODULE_7__["default"]
@@ -1812,7 +1822,7 @@ function (_React$Component) {
       }, "Log Out")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "+"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "add-action"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "#/map",
+        href: "#/route/new",
         className: "dashboard-map-title"
       }, "Create a route")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "#/activity/new",
@@ -2818,7 +2828,7 @@ function (_React$Component) {
       var _this = this;
 
       debugger;
-      var routes = this.props.routes.map(function (route) {
+      var routes = this.props.routes.reverse().map(function (route) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_map_route_index_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
           key: route.id,
           route: route,
@@ -2933,7 +2943,8 @@ function (_React$Component) {
     _this.state = {
       polyline: _this.props.polyline,
       activity_type: "Run",
-      title: "title",
+      title: "",
+      description: "",
       athlete_id: _this.props.currentAthlete.id,
       centerLat: _this.props.centerLat,
       centerLng: _this.props.centerLng,
@@ -2978,14 +2989,23 @@ function (_React$Component) {
         onSubmit: this.handleSubmit
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Enter a name and description for your route below."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "route-save-label"
-      }, "Route Name (required)"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, "Route Name (required)"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         className: "save-input",
         value: this.state.title,
         onChange: this.update("title")
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "route-save-label"
+      }, "Description"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+        className: "save-description",
+        value: this.state.description,
+        onChange: this.update("description")
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "signup-submit-holder"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "cancel-route",
+        onClick: this.props.closeModal
+      }, "Cancel"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "route-save-submit",
         type: "submit"
       }, "Save")))));
@@ -3120,7 +3140,8 @@ function (_React$Component) {
       debugger;
       var route = this.props.route || {
         polyline: "",
-        distance: 0
+        distance: 0,
+        elevation: 0
       }; // mappy = this.refs.map;
       // map = new google.maps.Map(mappy, {
       //   zoom: 16,
@@ -3157,7 +3178,6 @@ function (_React$Component) {
         });
       }
 
-      debugger;
       var path = new google.maps.Polyline({
         path: coords,
         geodesic: true,
@@ -3181,12 +3201,35 @@ function (_React$Component) {
         position: coords[0],
         map: map
       });
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_header_header_container__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      debugger;
+      var elevation = route.elevation;
+
+      if (typeof route.elevation === "undefined") {
+        elevation = 0;
+      }
+
+      ;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_header_header_container__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "route-show-content"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "#/routes"
-      }, "My Routes"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "map",
+      }, "My Routes/"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, route.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "route-title"
+      }, route.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "map-and-user"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "med-map",
         ref: "map"
-      }), route.distance);
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "user-stuff"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#/athlete",
+        className: "route-avatar"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "route-avatar-char"
+      }, this.props.athlete.username.charAt(0).toUpperCase())), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "By ".concat(this.props.athlete.username))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "".concat(Math.round(0.0621371 * route.distance) / 100, "mi")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Distance")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "0m"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Elevation Gain"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "description-route"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, route.description))))));
     }
   }]);
 
@@ -4232,7 +4275,8 @@ var createRoute = function createRoute(data) {
         distance: data.distance,
         athlete_id: data.athlete_id,
         activity_type: data.activity_type,
-        title: data.title
+        title: data.title,
+        description: data.description
       }
     }
   });

@@ -1,0 +1,144 @@
+.med-map {
+  height: 625px;
+  width: 100%;
+}
+
+.route-title{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding-top: 30px;
+  font-size: 32px;
+  font-weight: 300;
+  padding-bottom: 30px;
+}
+
+.map-and-user {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  padding: 0;
+}
+
+.user-stuff {
+  width: 400px;
+  height: 325px;
+  /* background-color: gray; */
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+}
+
+.user-stuff > div:first-of-type{
+  padding-bottom: 30px;
+  border-bottom: 1px solid #ccc;
+}
+
+.user-stuff > div:first-of-type {
+  display: flex;
+  flex-direction: row;
+}
+
+.user-stuff > div > div:last-of-type{
+  padding-left: 20px;
+  font-size: 24px;
+  font-weight: 300;
+}
+
+.user-stuff > div:nth-of-type(2){
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: flex-start;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+}
+
+.user-stuff > div:nth-of-type(2) > div {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.user-stuff > div:nth-of-type(2) > div > div:first-of-type {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.user-stuff > div:nth-of-type(2) > div > div:last-of-type {
+  font-size: 12px;
+  font-weight: 300;
+  color: #9b9a9d;
+}
+
+.user-stuff > div:nth-of-type(3) {
+  display: flex;
+  flex-direction: row;
+  /* justify-content: flex-start; */
+  width: 100%;
+  padding: 0;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+}
+
+.user-stuff > div:nth-of-type(3) > div{
+  font-size: 14px;
+  padding: 0;
+  padding-top: 20px;
+  font-weight: 400;
+  width: 100%;
+}
+
+.description-route{
+  width: 100%;
+}
+
+.route-show-content {
+  padding-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-left: 15%;
+  padding-right: 15%;
+}
+
+.route-show-content > div:first-of-type{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.route-show-content > div:first-of-type > a {
+  text-decoration: none;
+  font-size: 12px;
+  color: #606065;
+}
+
+.route-show-content > div:first-of-type > a:hover {
+  text-decoration: underline;
+}
+
+.route-show-content > div:first-of-type > div {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.route-avatar{
+  text-decoration: none;
+  top: -65px;
+  z-index: 0.5;
+  height: 100px;
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #bf3825;
+  color: white;
+  font-size: 48px;
+  border-radius: 100%;
+}
