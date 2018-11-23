@@ -50,7 +50,7 @@ export const logout = () => dispatch => {
 };
 
 export const signup = (athlete) => dispatch => {
-  debugger
+  // debugger
   return APIUtil.signup(athlete).then(athlete => (
     // //debugger
     dispatch(receiveCurrentAthlete(athlete))

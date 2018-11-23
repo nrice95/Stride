@@ -11,7 +11,7 @@ class ActivityForm extends React.Component {
 
   update(field) {
     return (e) => {
-      debugger
+      // debugger
       this.setState({[field]: e.target.value});
     }
   }
@@ -20,7 +20,7 @@ class ActivityForm extends React.Component {
     // debugger
     e.preventDefault();
     this.props.action({activity: this.state}).then(thing => {
-      debugger
+      // debugger
       this.props.history.push(`/activity/${thing.activity.id}`);
     })
 

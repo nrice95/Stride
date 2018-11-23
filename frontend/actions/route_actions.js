@@ -5,7 +5,7 @@ export const RECEIVE_ROUTE = "RECEIVE_ROUTE";
 export const RECEIVE_ROUTE_ERRORS = "RECEIVE_ROUTE_ERRORS";
 
 export const createRoute = route => dispatch => {
-  debugger
+  // debugger
   return APIUtil.createRoute(route).then(route => {
     // debugger
     return dispatch(receiveRoute(route))
@@ -25,7 +25,7 @@ export const fetchRoutes = () => dispatch => {
 };
 
 export const receiveRoute = route => {
-  debugger
+  // debugger
   return {
     type: RECEIVE_ROUTE,
     route

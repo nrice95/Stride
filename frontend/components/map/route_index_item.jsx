@@ -7,7 +7,7 @@ let map;
 let route;
 class RouteIndexItem extends React.Component {
   componentDidMount(){
-    debugger
+    // debugger
     route = this.props.route;
     mapRef = this.refs.map;
     map = new google.maps.Map(mapRef, {

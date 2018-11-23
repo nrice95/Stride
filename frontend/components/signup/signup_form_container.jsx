@@ -7,7 +7,7 @@ import { closeModal } from "../../actions/modal_actions";
 
 
 const msp = ({ errors }) => {
-  debugger
+  // debugger
   return {
     errors,
     formType: "Sign Up",

@@ -22,8 +22,8 @@ class RouteShow extends React.Component {
   }
 
   render(){
-    debugger
-    debugger
+    // debugger
+    // debugger
     const route = this.props.route || {polyline: "", distance: 0, elevation: 0};
     // mappy = this.refs.map;
     // map = new google.maps.Map(mappy, {
@@ -84,7 +84,7 @@ class RouteShow extends React.Component {
       position: coords[0],
       map
     })
-    debugger
+    // debugger
     let elevation = route.elevation;
     if (typeof route.elevation === "undefined"){
       elevation = 0;

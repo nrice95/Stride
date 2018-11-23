@@ -30,7 +30,7 @@ class Map extends React.Component {
     this.setState({distance: 0});
     pathLengthStack = [];
     allSnaps = [];
-        debugger
+        // debugger
     // const map = this.refs.map;
     // this.map = new google.maps.Map(map, mapOptions);
     mappy = this.refs.map;
@@ -39,7 +39,7 @@ class Map extends React.Component {
         center: {lat: 40.7374579, lng: -74.49510900000001},
         mapTypeId: 'terrain'
     });
-    debugger
+    // debugger
 
 
     // Adds a Places search box. Searching for a place will center the map on that
@@ -92,7 +92,7 @@ class Map extends React.Component {
 
     drawingManager.addListener('markercomplete', (marker) =>{
       this.setState({colorOfFill: "white"});
-      debugger
+      // debugger
       markers.push(marker);
       if (markers.length > 1){
         let newPoly = new google.maps.Polyline({
@@ -173,8 +173,8 @@ class Map extends React.Component {
   handleSubmit(e){
     e.preventDefault();
     const encode = google.maps.geometry.encoding.encodePath(allSnaps);
-    debugger
-    debugger
+    // debugger
+    // debugger
     let centerLat = allSnaps[allSnaps.length-1].lat();
     let centerLng = allSnaps[allSnaps.length-1].lng();
     let finalDistance = Math.round(this.state.distance*100)/100;
@@ -269,13 +269,13 @@ const drawSnappedPolyline = () => {
     strokeColor: 'red',
     strokeWeight: 6
   });
-  debugger
+  // debugger
 
   snappedPolyline.setMap(map);
   polylines.unshift(snappedPolyline);
   let polies = snappedPolyline.latLngs.j[0].j;
   let tmpDist = 0;
-  debugger
+  // debugger
   for (let i = 0; i < polies.length - 1; i++){
     const dist = google.maps.geometry.spherical.computeDistanceBetween(polies[i], polies[i+1]);
     tmpDist += dist;

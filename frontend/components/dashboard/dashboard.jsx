@@ -29,7 +29,7 @@ class Dashboard extends React.Component {
       }
     });
     let latestActivity = (activities.length === 0 ? {title: ""} : this.props.activities[0]);
-    debugger
+    // debugger
     return(
       <div className="dashboard">
         <Header />

@@ -4,7 +4,7 @@ import { openRouteModal } from '../../actions/modal_actions';
 import Map from "./map";
 
 const msp = state => {
-  debugger
+  // debugger
   return ({
     current_athlete_id: state.session.id
   })

@@ -8,7 +8,7 @@ class RouteIndex extends React.Component {
   }
 
   render(){
-    debugger
+    // debugger
     const routes = this.props.routes.reverse().map(route => {
       return (
         <RouteIndexItem

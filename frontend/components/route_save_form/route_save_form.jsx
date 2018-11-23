@@ -24,13 +24,13 @@ import { withRouter } from "react-router-dom";
   }
 
   handleSubmit(e){
-    debugger
+    // debugger
     e.preventDefault();
     this.props.createRoute(this.state).then(thing => {
-      debugger
+      // debugger
       this.props.history.push(`/route/${thing.route.id}`)
     }).then(this.props.closeModal);
-    debugger
+    // debugger
   }
 
   render() {

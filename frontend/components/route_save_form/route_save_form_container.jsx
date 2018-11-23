@@ -6,7 +6,7 @@ import RouteSaveForm from "./route_save_form";
 import { closeModal } from "../../actions/modal_actions";
 
 const msp = state => {
-  debugger
+  // debugger
   return({
     polyline: state.ui.modal.polyline,
     currentAthlete: state.entities.athletes[state.session.id],

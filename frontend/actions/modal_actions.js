@@ -3,7 +3,7 @@ export const OPEN_USER_MODAL = "OPEN_USER_MODAL";
 export const CLOSE_MODAL = 'CLOSE_MODAL';
 
 export const openRouteModal = (modal, polyline, centerLat, centerLng, distance) => {
-  debugger
+  // debugger
   return {
     type: OPEN_ROUTE_MODAL,
     modal,
@@ -15,7 +15,7 @@ export const openRouteModal = (modal, polyline, centerLat, centerLng, distance) 
 };
 
 export const openUserModal = modal => {
-  debugger
+  // debugger
   return {
     type: OPEN_USER_MODAL,
     modal,
@@ -23,7 +23,7 @@ export const openUserModal = modal => {
 };
 
 export const closeModal = () => {
-  debugger
+  // debugger
   return {
     type: CLOSE_MODAL
   };

@@ -23,7 +23,7 @@ class TestMap extends React.Component {
           center: {lat: 0, lng: -180},
           mapTypeId: 'terrain'
         });
-        debugger
+        // debugger
         const x = google.maps.geometry.encoding.decodePath("wrswF`zueMbC}@??_BuLe@{C_@Q}HpYlD{A??pDsAkU~DNTdA~A??VAFAHCbEiB??f@S");
 
         var coords =[];

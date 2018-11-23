@@ -1,5 +1,5 @@
 export const fetchRoutes = data => {
-  debugger
+  // debugger
   return $.ajax({
     method: "GET",
     url: "api/routes",
@@ -15,7 +15,7 @@ export const fetchRoute = id => {
 }
 
 export const createRoute = data => {
-  debugger
+  // debugger
   return $.ajax({
     method: "POST",
     url: "api/routes",
