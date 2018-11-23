@@ -4,7 +4,6 @@ import { renderTime } from "../../reducers/selectors";
 const ActivityTableElement = ({activity}) => {
   const duration = renderTime(activity);
 
-
   return(
     <tr>
       <td>{activity.activity_type}</td>
