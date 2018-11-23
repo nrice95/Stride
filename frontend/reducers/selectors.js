@@ -59,7 +59,7 @@ const timeToFloat = (hours,minutes,seconds) => {
 }
 
 
-const renderTime = (activity) => {
+export const renderTime = (activity) => {
   let hours = activity.duration_hours;
   let minutes = activity.duration_minutes;
   let seconds = activity.duration_seconds;

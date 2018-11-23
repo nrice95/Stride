@@ -1,5 +1,5 @@
 import React from "react";
-import ActivityIndexItem from "./activity_index_item";
+import { ActivityTableElement } from "./activity_table_element";
 import Header from "../header/header_container";
 
 class ActivityIndex extends React.Component {
@@ -11,7 +11,7 @@ class ActivityIndex extends React.Component {
     debugger
     const activities = this.props.activities.map(activity => {
       return (
-        <ActivityIndexItem
+        <ActivityTableElement
           key={activity.id}
           activity={activity} />
       )
@@ -20,9 +20,18 @@ class ActivityIndex extends React.Component {
     return (
       <div>
         <Header />
-        <ul>
+        <table className="activities-table">
+          <tbody>
+            <tr>
+              <th>Sport</th>
+              <th>Title</th>
+              <th>Time</th>
+              <th>Distance</th>
+              <th>Elevation</th>
+            </tr>
+          </tbody>
           {activities}
-        </ul>
+        </table>
       </div>
     )
   }

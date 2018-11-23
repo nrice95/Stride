@@ -1,5 +1,6 @@
 .dashboard {
   height: 100%;
+  background-color: #f5f5fa;
 }
 
 .dashboard-stride-title {
@@ -14,10 +15,6 @@
 .dashboard-user{
   display: flex;
   list-style: none;
-}
-
-.dashboard {
-  height: 100%;
 }
 
 .summary-column{
@@ -169,7 +166,7 @@
   margin-top: 75px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
 }
 
@@ -177,6 +174,8 @@
   margin-left: 400px;
   list-style: none;
   margin-top: 0;
+  /* height: 100%; */
+  background-color: #f5f5fa;
 }
 
 .dashboard-activity{

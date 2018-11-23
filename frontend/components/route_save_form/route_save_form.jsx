@@ -26,7 +26,10 @@ class RouteSaveForm extends React.Component {
   handleSubmit(e){
     debugger
     e.preventDefault();
-    this.props.createRoute(this.state).then(this.props.closeModal); //.then(this.props.history.push("/routes"));
+    this.props.createRoute(this.state).then(thing => {
+      debugger
+      this.props.history.push(`/route/${thing.route.id}`)
+    }).then(this.props.closeModal);
     debugger
   }
 

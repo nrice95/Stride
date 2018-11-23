@@ -813,7 +813,7 @@ function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _activity_index_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./activity_index_item */ "./frontend/components/activity/activity_index_item.jsx");
+/* harmony import */ var _activity_table_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./activity_table_element */ "./frontend/components/activity/activity_table_element.jsx");
 /* harmony import */ var _header_header_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../header/header_container */ "./frontend/components/header/header_container.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -858,12 +858,14 @@ function (_React$Component) {
     value: function render() {
       debugger;
       var activities = this.props.activities.map(function (activity) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_activity_index_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_activity_table_element__WEBPACK_IMPORTED_MODULE_1__["ActivityTableElement"], {
           key: activity.id,
           activity: activity
         });
       });
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_header_header_container__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, activities));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_header_header_container__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
+        className: "activities-table"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Sport"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Title"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Time"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Distance"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Elevation"))), activities));
     }
   }]);
 
@@ -910,32 +912,6 @@ var mdp = function mdp(dispatch) {
 
 /***/ }),
 
-/***/ "./frontend/components/activity/activity_index_item.jsx":
-/*!**************************************************************!*\
-  !*** ./frontend/components/activity/activity_index_item.jsx ***!
-  \**************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
-
-
-
-var ActivityIndexItem = function ActivityIndexItem(_ref) {
-  var activity = _ref.activity;
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-    to: "/activity/".concat(activity.id)
-  }, activity.title));
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (ActivityIndexItem);
-
-/***/ }),
-
 /***/ "./frontend/components/activity/activity_show_container.jsx":
 /*!******************************************************************!*\
   !*** ./frontend/components/activity/activity_show_container.jsx ***!
@@ -968,6 +944,29 @@ var mdp = function mdp(dispatch) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_activity__WEBPACK_IMPORTED_MODULE_1__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/activity/activity_table_element.jsx":
+/*!*****************************************************************!*\
+  !*** ./frontend/components/activity/activity_table_element.jsx ***!
+  \*****************************************************************/
+/*! exports provided: ActivityTableElement */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ActivityTableElement", function() { return ActivityTableElement; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _reducers_selectors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../reducers/selectors */ "./frontend/reducers/selectors.js");
+
+
+var ActivityTableElement = function ActivityTableElement(_ref) {
+  var activity = _ref.activity;
+  var duration = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_1__["renderTime"])(activity);
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, activity.activity_type), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, activity.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, duration), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, activity.distance), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, activity.elevation)));
+};
 
 /***/ }),
 
@@ -1565,7 +1564,7 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "+"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "dashboard-add-action"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "#/map",
+        href: "#/route/new",
         className: "dashboard-dashboard-map-title"
       }, "Create a route")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "#/activity/new",
@@ -2956,10 +2955,15 @@ function (_React$Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
+      var _this3 = this;
+
       debugger;
       e.preventDefault();
-      this.props.createRoute(this.state).then(this.props.closeModal); //.then(this.props.history.push("/routes"));
+      this.props.createRoute(this.state).then(function (thing) {
+        debugger;
 
+        _this3.props.history.push("/route/".concat(thing.route.id));
+      }).then(this.props.closeModal);
       debugger;
     }
   }, {
@@ -3854,12 +3858,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /*!****************************************!*\
   !*** ./frontend/reducers/selectors.js ***!
   \****************************************/
-/*! exports provided: activityData */
+/*! exports provided: activityData, renderTime */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "activityData", function() { return activityData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "renderTime", function() { return renderTime; });
 var activityData = function activityData(activity) {
   var unitAbbrs = {
     "kilometers": "km",
