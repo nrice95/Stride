@@ -519,8 +519,7 @@ function (_React$Component) {
 
       if (typeof activity.date !== "undefined") {
         dateT = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["parseDateTime"])(activity, "show");
-        ;
-        debugger;
+        ; // debugger
       }
 
       var description;
@@ -534,9 +533,9 @@ function (_React$Component) {
         description = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "activity-description"
         }, activity.description);
-      }
+      } // debugger
 
-      debugger;
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_header_header_container__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "activity-show"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1076,8 +1075,8 @@ var ActivityIndexItem = function ActivityIndexItem(_ref) {
   var second_render_title = data.second_render_title;
   var third_render = data.third_render;
   var third_render_title = data.third_render_title;
-  var dateT = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_2__["parseDateTime"])(activity, "index");
-  debugger;
+  var dateT = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_2__["parseDateTime"])(activity, "index"); // debugger
+
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "dashboard-activity"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

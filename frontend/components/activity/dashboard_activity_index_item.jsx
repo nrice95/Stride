@@ -12,7 +12,7 @@ const ActivityIndexItem = ({ activity, currentAthlete }) => {
   const third_render_title = data.third_render_title;
 
   const dateT = parseDateTime(activity,"index");
-  debugger
+  // debugger
   return (
     <li className="dashboard-activity">
       <div className="dashboard-activity-content">

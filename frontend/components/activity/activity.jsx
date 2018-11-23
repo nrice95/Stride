@@ -26,7 +26,7 @@ class ActivityShow extends React.Component {
     let dateT = ""
     if (typeof activity.date !== "undefined"){
       dateT = parseDateTime(activity, "show");;
-      debugger
+      // debugger
     }
     let description;
     if (activity.description === ""){
@@ -34,7 +34,7 @@ class ActivityShow extends React.Component {
     }else{
       description = <div className="activity-description">{activity.description}</div>;
     }
-    debugger
+    // debugger
     return(
       <div>
         <Header />
