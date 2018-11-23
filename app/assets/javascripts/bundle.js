@@ -126,11 +126,9 @@ var fetchActivity = function fetchActivity(id) {
 };
 var createActivity = function createActivity(activity) {
   return function (dispatch) {
-    debugger;
     return _util_activity_api_util__WEBPACK_IMPORTED_MODULE_0__["createActivity"](activity).then(function (activity) {
-      dispatch(receiveActivity(activity));
+      return dispatch(receiveActivity(activity));
     }, function (err) {
-      debugger;
       return dispatch(receiveErrors(err.responseJSON));
     });
   };
@@ -198,12 +196,15 @@ __webpack_require__.r(__webpack_exports__);
 var OPEN_ROUTE_MODAL = 'OPEN_ROUTE_MODAL';
 var OPEN_USER_MODAL = "OPEN_USER_MODAL";
 var CLOSE_MODAL = 'CLOSE_MODAL';
-var openRouteModal = function openRouteModal(modal, polyline) {
+var openRouteModal = function openRouteModal(modal, polyline, centerLat, centerLng, distance) {
   debugger;
   return {
     type: OPEN_ROUTE_MODAL,
     modal: modal,
-    polyline: polyline
+    polyline: polyline,
+    centerLat: centerLat,
+    centerLng: centerLng,
+    distance: distance
   };
 };
 var openUserModal = function openUserModal(modal) {
@@ -247,7 +248,7 @@ var RECEIVE_ROUTE = "RECEIVE_ROUTE";
 var RECEIVE_ROUTE_ERRORS = "RECEIVE_ROUTE_ERRORS";
 var createRoute = function createRoute(route) {
   return function (dispatch) {
-    // debugger
+    debugger;
     return _util_route_api_util__WEBPACK_IMPORTED_MODULE_0__["createRoute"](route).then(function (route) {
       // debugger
       return dispatch(receiveRoute(route));
@@ -652,12 +653,14 @@ function (_React$Component) {
     value: function handleSubmit(e) {
       var _this3 = this;
 
-      debugger;
+      // debugger
       e.preventDefault();
       this.props.action({
         activity: this.state
-      }).then(function () {
-        return _this3.props.history.push("/activities");
+      }).then(function (thing) {
+        debugger;
+
+        _this3.props.history.push("/activity/".concat(thing.activity.id));
       });
     }
   }, {
@@ -1151,7 +1154,7 @@ var App = function App() {
     path: "/athlete",
     component: _athlete_athlete_container__WEBPACK_IMPORTED_MODULE_6__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_16__["ProtectedRoute"], {
-    path: "/map",
+    path: "/route/new",
     component: _map_map_container__WEBPACK_IMPORTED_MODULE_7__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_16__["ProtectedRoute"], {
     path: "/route/:routeId",
@@ -1166,11 +1169,11 @@ var App = function App() {
     path: "/activity/new",
     component: _activity_create_activity_form_container__WEBPACK_IMPORTED_MODULE_11__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_16__["ProtectedRoute"], {
-    path: "/activities",
-    component: _activity_activity_index_container__WEBPACK_IMPORTED_MODULE_12__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_16__["ProtectedRoute"], {
     path: "/activity/:activityId",
     component: _activity_activity_show_container__WEBPACK_IMPORTED_MODULE_13__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_16__["ProtectedRoute"], {
+    path: "/activities",
+    component: _activity_activity_index_container__WEBPACK_IMPORTED_MODULE_12__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_16__["AuthRoute"], {
     path: "/",
     component: _home_home_container__WEBPACK_IMPORTED_MODULE_4__["default"]
@@ -1305,7 +1308,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
-/* harmony import */ var _header_header_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../header/header_container */ "./frontend/components/header/header_container.jsx");
+/* harmony import */ var _dashboard_header_dashboard_header_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../dashboard_header/dashboard_header_container */ "./frontend/components/dashboard_header/dashboard_header_container.jsx");
 /* harmony import */ var _activity_dashboard_activity_index_item__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../activity/dashboard_activity_index_item */ "./frontend/components/activity/dashboard_activity_index_item.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -1339,8 +1342,6 @@ function (_React$Component) {
   _createClass(Dashboard, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      //debugger
-      // this.props[this.props.match.params.id];
       this.props.fetchActivities();
     }
   }]);
@@ -1358,7 +1359,7 @@ function (_React$Component) {
       var _this$props = this.props,
           currentAthlete = _this$props.currentAthlete,
           logout = _this$props.logout;
-      var activities = this.props.activities.reverse().slice(0, 6).map(function (activity) {
+      var activities = this.props.activities.reverse().map(function (activity) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_activity_dashboard_activity_index_item__WEBPACK_IMPORTED_MODULE_4__["default"], {
           key: activity.id,
           activity: activity,
@@ -1369,9 +1370,13 @@ function (_React$Component) {
           activities = "No recent activities";
         }
       });
+      var latestActivity = activities.length === 0 ? {
+        title: ""
+      } : this.props.activities[0];
+      debugger;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dashboard"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_header_header_container__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_dashboard_header_dashboard_header_container__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dashboard-body"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "summary-column"
@@ -1385,7 +1390,16 @@ function (_React$Component) {
       }, currentAthlete.username.charAt(0).toUpperCase())), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "#/athlete",
         className: "dashboard-username"
-      }, currentAthlete.username))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, currentAthlete.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "activity-count-column"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Activities"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, activities.length)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "latest-activity-column"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Latest Activity"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#/activity/".concat(latestActivity.id)
+      }, latestActivity.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#/activities",
+        className: "your-training-log"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Your Training Log"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, ">")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "activities-feed"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "activities-list"
@@ -1444,6 +1458,165 @@ var mdp = function mdp(dispatch) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_dashboard__WEBPACK_IMPORTED_MODULE_1__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/dashboard_header/dashboard-header.jsx":
+/*!*******************************************************************!*\
+  !*** ./frontend/components/dashboard_header/dashboard-header.jsx ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var Header =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Header, _React$Component);
+
+  function Header() {
+    _classCallCheck(this, Header);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Header).apply(this, arguments));
+  }
+
+  _createClass(Header, [{
+    key: "render",
+    value: function render() {
+      // const route = this.props.currentAthlete.username.slice() || {polyline: ""};
+      // mappy = this.refs.map;
+      var currentAthlete = this.props.currentAthlete;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
+        className: "dashboard-dashboard-header"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
+        className: "dashboard-dashboard-header-items"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "dashboard-left-items"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#/dashboard",
+        className: "dashboard-dashboard-stride-title"
+      }, "STRIDE"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#/dashboard",
+        className: "dashboard-left-dashboard-list"
+      }, "Dashboard"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "dashboard-dashboard-list"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "dashboard-routes-li"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#/dashboard"
+      }, "Activity Feed")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#routes"
+      }, "Routes")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#/activities",
+        className: "dashboard-left-dashboard-list"
+      }, "Training"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "dashboard-training-list"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#activities"
+      }, "My Activities"))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "dashboard-right-items"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "dashboard-avatar-dropdown"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dashboard-header-avatar-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#/athlete",
+        className: "dashboard-dashboard-header-avatar"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dashboard-dashboard-header-initial"
+      }, currentAthlete.username.charAt(0).toUpperCase()))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "dashboard-user-actions"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#/athlete"
+      }, "My Profile")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "dashboard-logout-li"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "dashboard-header-button",
+        onClick: this.props.logout
+      }, "Log Out")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "avis-class"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "+"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "dashboard-add-action"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#/map",
+        className: "dashboard-dashboard-map-title"
+      }, "Create a route")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#/activity/new",
+        className: "dashboard-header-new-activity"
+      }, "Add manual entry")))))));
+    }
+  }]);
+
+  return Header;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (Header);
+
+/***/ }),
+
+/***/ "./frontend/components/dashboard_header/dashboard_header_container.jsx":
+/*!*****************************************************************************!*\
+  !*** ./frontend/components/dashboard_header/dashboard_header_container.jsx ***!
+  \*****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _dashboard_header__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dashboard-header */ "./frontend/components/dashboard_header/dashboard-header.jsx");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
+
+
+
+
+
+var msp = function msp(state) {
+  // debugger
+  return {
+    currentAthlete: state.entities.athletes[state.session.id]
+  };
+};
+
+var mdp = function mdp(dispatch) {
+  return {
+    receiveCurrentAthlete: function receiveCurrentAthlete(athlete) {
+      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_2__["receiveCurrentAthlete"])(athlete));
+    },
+    logout: function logout() {
+      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_2__["logout"])());
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_dashboard_header__WEBPACK_IMPORTED_MODULE_1__["default"]));
 
 /***/ }),
 
@@ -1912,9 +2085,10 @@ function (_React$Component) {
       // polyline. Each click will add a new vertice. Double-click to stop drawing.
 
       drawingManager = new google.maps.drawing.DrawingManager({
+        drawingControl: true,
         drawingControlOptions: {
           position: google.maps.ControlPosition.TOP_CENTER,
-          drawingModes: [google.maps.drawing.OverlayType.MARKER, google.maps.drawing.OverlayType.POLYLINE]
+          drawingModes: [google.maps.drawing.OverlayType.MARKER]
         },
         polylineOptions: {
           strokeWeight: 2
@@ -2011,17 +2185,23 @@ function (_React$Component) {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
-      var encode = google.maps.geometry.encoding.encodePath(allSnaps); // debugger
-
+      var encode = google.maps.geometry.encoding.encodePath(allSnaps);
+      debugger;
+      debugger;
+      var centerLat = allSnaps[allSnaps.length - 1].lat();
+      var centerLng = allSnaps[allSnaps.length - 1].lng();
+      var finalDistance = Math.round(this.state.distance * 100) / 100;
       var newRoute = {
         polyline: encode,
+        centerLat: centerLat,
+        centerLng: centerLng,
+        distance: finalDistance,
         athlete_id: this.props.current_athlete_id,
         activity_type: "Run",
         title: "tests"
-      };
-      debugger; // this.props.createRoute(newRoute).then(() => this.props.history.push("/routes"));
+      }; // this.props.createRoute(newRoute).then(() => this.props.history.push("/routes"));
 
-      this.props.openRouteModal("saveRoute", newRoute.polyline);
+      this.props.openRouteModal("saveRoute", newRoute.polyline, centerLat, centerLng, finalDistance);
     }
   }, {
     key: "render",
@@ -2187,13 +2367,143 @@ var mdp = function mdp(dispatch) {
     createRoute: function createRoute(route) {
       return dispatch(Object(_actions_route_actions__WEBPACK_IMPORTED_MODULE_1__["createRoute"])(route));
     },
-    openRouteModal: function openRouteModal(modal, polyline) {
-      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__["openRouteModal"])(modal, polyline));
+    openRouteModal: function openRouteModal(modal, polyline, centerLat, centerLng, distance) {
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__["openRouteModal"])(modal, polyline, centerLat, centerLng, distance));
     }
   };
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_map__WEBPACK_IMPORTED_MODULE_3__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/map/route_index_item.jsx":
+/*!******************************************************!*\
+  !*** ./frontend/components/map/route_index_item.jsx ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var mapRef;
+var map;
+var route;
+
+var RouteIndexItem =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(RouteIndexItem, _React$Component);
+
+  function RouteIndexItem() {
+    _classCallCheck(this, RouteIndexItem);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(RouteIndexItem).apply(this, arguments));
+  }
+
+  _createClass(RouteIndexItem, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      debugger;
+      route = this.props.route;
+      mapRef = this.refs.map;
+      map = new google.maps.Map(mapRef, {
+        zoom: 14,
+        center: {
+          lat: route.center_lat,
+          lng: route.center_lng
+        },
+        mapTypeId: 'terrain'
+      });
+      var coords = [];
+      var route = route || {
+        polyline: "",
+        distance: 0
+      };
+      google.maps.geometry.encoding.decodePath(route.polyline).forEach(function (coord) {
+        var laty = coord.lat();
+        var lngx = coord.lng();
+        coords.push({
+          lat: laty,
+          lng: lngx
+        });
+      });
+      var path = new google.maps.Polyline({
+        path: coords,
+        geodesic: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 6
+      });
+      path.setMap(map);
+      var startMarker = new google.maps.Marker({
+        position: coords[coords.length - 1],
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          fillColor: "green",
+          scale: 8,
+          fillOpacity: 1,
+          strokeWeight: 3
+        },
+        map: map
+      });
+      var endMarker = new google.maps.Marker({
+        position: coords[0],
+        map: map
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var renderRoute = this.props.route;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "route-index-item"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#/route/".concat(renderRoute.id)
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "mini-map",
+        ref: "map"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "mini-map-label"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "mini-map-title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#/route/".concat(renderRoute.id)
+      }, renderRoute.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "distance-text"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, Math.round(renderRoute.distance * 0.0621371) / 100), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "mi")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "distance-label"
+      }, "Distance")));
+    }
+  }]);
+
+  return RouteIndexItem;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (RouteIndexItem);
 
 /***/ }),
 
@@ -2463,7 +2773,7 @@ var Root = function Root(_ref) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _route_index_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./route_index_item */ "./frontend/components/route_index/route_index_item.jsx");
+/* harmony import */ var _map_route_index_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../map/route_index_item */ "./frontend/components/map/route_index_item.jsx");
 /* harmony import */ var _header_header_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../header/header_container */ "./frontend/components/header/header_container.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -2506,15 +2816,29 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this = this;
+
+      debugger;
       var routes = this.props.routes.map(function (route) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_route_index_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_map_route_index_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
           key: route.id,
-          route: route
+          route: route,
+          refs: _this.refs.map
         });
       });
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_header_header_container__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "#/map"
-      }, "Create Route"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, routes));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_header_header_container__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "route-index"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "route-index-body"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "route-index-elements"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "my-routes-title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "My Routes"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#/route/new"
+      }, "Create New Route")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "route-items"
+      }, routes)))));
     }
   }]);
 
@@ -2558,32 +2882,6 @@ var mdp = function mdp(dispatch) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_route_index__WEBPACK_IMPORTED_MODULE_1__["default"]));
-
-/***/ }),
-
-/***/ "./frontend/components/route_index/route_index_item.jsx":
-/*!**************************************************************!*\
-  !*** ./frontend/components/route_index/route_index_item.jsx ***!
-  \**************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
-
-
-
-var RouteIndexItem = function RouteIndexItem(_ref) {
-  var route = _ref.route;
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-    to: "/route/".concat(route.id)
-  }, route.title), "\xA0");
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (RouteIndexItem);
 
 /***/ }),
 
@@ -2637,7 +2935,10 @@ function (_React$Component) {
       polyline: _this.props.polyline,
       activity_type: "Run",
       title: "title",
-      athlete_id: _this.props.currentAthlete.id
+      athlete_id: _this.props.currentAthlete.id,
+      centerLat: _this.props.centerLat,
+      centerLng: _this.props.centerLng,
+      distance: _this.props.distance
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
@@ -2721,7 +3022,10 @@ var msp = function msp(state) {
   debugger;
   return {
     polyline: state.ui.modal.polyline,
-    currentAthlete: state.entities.athletes[state.session.id]
+    currentAthlete: state.entities.athletes[state.session.id],
+    centerLat: state.ui.modal.centerLat,
+    centerLng: state.ui.modal.centerLng,
+    distance: state.ui.modal.distance
   };
 };
 
@@ -2809,8 +3113,10 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       debugger;
+      debugger;
       var route = this.props.route || {
-        polyline: ""
+        polyline: "",
+        distance: 0
       }; // mappy = this.refs.map;
       // map = new google.maps.Map(mappy, {
       //   zoom: 16,
@@ -2840,6 +3146,14 @@ function (_React$Component) {
       }); // console.log((maxLat-minLat)/2);
       // console.log((maxLng-minLng)/2);
 
+      if (typeof map !== "undefined") {
+        map.setCenter({
+          lat: route.center_lat,
+          lng: route.center_lng
+        });
+      }
+
+      debugger;
       var path = new google.maps.Polyline({
         path: coords,
         geodesic: true,
@@ -2868,7 +3182,7 @@ function (_React$Component) {
       }, "My Routes"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "map",
         ref: "map"
-      }), this.props.athlete.username);
+      }), route.distance);
     }
   }]);
 
@@ -3432,13 +3746,16 @@ __webpack_require__.r(__webpack_exports__);
 function modalReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments.length > 1 ? arguments[1] : undefined;
+  debugger;
 
-  // debugger
   switch (action.type) {
     case _actions_modal_actions__WEBPACK_IMPORTED_MODULE_0__["OPEN_ROUTE_MODAL"]:
       return lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, {
         modalType: action.modal,
-        polyline: action.polyline
+        polyline: action.polyline,
+        centerLat: action.centerLat,
+        centerLng: action.centerLng,
+        distance: action.distance
       });
 
     case _actions_modal_actions__WEBPACK_IMPORTED_MODULE_0__["OPEN_USER_MODAL"]:
@@ -3898,12 +4215,16 @@ var fetchRoute = function fetchRoute(id) {
   });
 };
 var createRoute = function createRoute(data) {
+  debugger;
   return $.ajax({
     method: "POST",
     url: "api/routes",
     data: {
       route: {
         polyline: data.polyline,
+        center_lat: data.centerLat,
+        center_lng: data.centerLng,
+        distance: data.distance,
         athlete_id: data.athlete_id,
         activity_type: data.activity_type,
         title: data.title

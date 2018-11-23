@@ -9,7 +9,11 @@ const msp = state => {
   debugger
   return({
     polyline: state.ui.modal.polyline,
-    currentAthlete: state.entities.athletes[state.session.id]
+    currentAthlete: state.entities.athletes[state.session.id],
+    centerLat: state.ui.modal.centerLat,
+    centerLng: state.ui.modal.centerLng,
+    distance: state.ui.modal.distance
+
   })
 }
 

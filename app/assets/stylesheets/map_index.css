@@ -1,0 +1,56 @@
+.route-index{
+  display: flex;
+  justify-content: center;
+}
+
+.route-index-body {
+  display: flex;
+  flex-direction: column;
+  width: 1218px;
+  margin-bottom: 30px;
+}
+
+.route-index-elements{
+  display: flex;
+  flex-direction: column;
+}
+
+.my-routes-title {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #ccccd1;
+  height: 150px;
+}
+
+.my-routes-title > div {
+  font-size: 28px;
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+
+.my-routes-title > a{
+  width: 151px;
+  height: 40px;
+  border: 0;
+  color: white;
+  background-color: #ed4b30;
+  border-radius: 3px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.my-routes-title > a:hover{
+  background-color: #e43114;
+}
+
+.route-items{
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0;
+  padding-right: 0;
+  /* padding-top: 30px; */
+}

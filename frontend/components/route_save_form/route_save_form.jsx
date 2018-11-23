@@ -9,6 +9,10 @@ class RouteSaveForm extends React.Component {
       activity_type: "Run",
       title: "title",
       athlete_id: this.props.currentAthlete.id,
+      centerLat: this.props.centerLat,
+      centerLng: this.props.centerLng,
+      distance: this.props.distance
+
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   };

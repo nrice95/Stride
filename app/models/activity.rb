@@ -15,6 +15,9 @@
 #  run_type         :string
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
+#  elevation        :float
+#  elevation_units  :string
+#  distance_units   :string
 #
 
 class Activity < ApplicationRecord

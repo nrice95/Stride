@@ -1,13 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { logout } from "../../actions/session_actions";
-import Header from "../header/header_container";
+import Header from "../dashboard_header/dashboard_header_container";
 import ActivityIndexItem from "../activity/dashboard_activity_index_item";
 
 class Dashboard extends React.Component {
   componentDidMount(){
-    //debugger
-    // this.props[this.props.match.params.id];
     this.props.fetchActivities();
   }
 
@@ -19,7 +17,7 @@ class Dashboard extends React.Component {
   render(){
     //debugger
     const { currentAthlete, logout } = this.props;
-    let activities = this.props.activities.reverse().slice(0,6).map(activity => {
+    let activities = this.props.activities.reverse().map(activity => {
       return (
         <ActivityIndexItem
           key={activity.id}
@@ -30,6 +28,8 @@ class Dashboard extends React.Component {
         activities = "No recent activities"
       }
     });
+    let latestActivity = (activities.length === 0 ? {title: ""} : this.props.activities[0]);
+    debugger
     return(
       <div className="dashboard">
         <Header />
@@ -43,6 +43,18 @@ class Dashboard extends React.Component {
               </a>
               <a href="#/athlete" className="dashboard-username">
                 {currentAthlete.username}
+              </a>
+              <div className="activity-count-column">
+                <div>{`Activities`}</div>
+                <div>{activities.length}</div>
+              </div>
+              <div className="latest-activity-column">
+                <div>{`Latest Activity`}</div>
+                <a href={`#/activity/${latestActivity.id}`}>{latestActivity.title}</a>
+              </div>
+              <a href="#/activities" className="your-training-log">
+                <div>{`Your Training Log`}</div>
+                <div>{`>`}</div>
               </a>
             </div>
           </div>

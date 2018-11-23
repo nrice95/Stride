@@ -12,18 +12,19 @@ class RouteShow extends React.Component {
 
   componentDidMount() {
     this.props.fetchRoute(this.props.match.params.routeId);
+
     mappy = this.refs.map;
     map = new google.maps.Map(mappy, {
       zoom: 16,
       center: {lat: 40.7374579, lng: -74.49510900000001},
       mapTypeId: 'terrain'
     });
-
   }
 
   render(){
     debugger
-    const route = this.props.route || {polyline: ""};
+    debugger
+    const route = this.props.route || {polyline: "", distance: 0};
     // mappy = this.refs.map;
     // map = new google.maps.Map(mappy, {
     //   zoom: 16,
@@ -53,6 +54,11 @@ class RouteShow extends React.Component {
 
     // console.log((maxLat-minLat)/2);
     // console.log((maxLng-minLng)/2);
+
+    if (typeof map !== "undefined"){
+      map.setCenter({lat: route.center_lat, lng: route.center_lng});
+    }
+    debugger
 
 
     var path = new google.maps.Polyline({
@@ -84,7 +90,7 @@ class RouteShow extends React.Component {
         <Header />
         <a href="#/routes">My Routes</a>
         <div className="map" ref="map"></div>
-        {this.props.athlete.username}
+        {route.distance}
       </div>
     )
   }

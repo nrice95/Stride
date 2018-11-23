@@ -1,5 +1,5 @@
 import React from "react";
-import RouteIndexItem from "./route_index_item";
+import RouteIndexItem from "../map/route_index_item";
 import Header from "../header/header_container";
 
 class RouteIndex extends React.Component {
@@ -8,21 +8,32 @@ class RouteIndex extends React.Component {
   }
 
   render(){
+    debugger
     const routes = this.props.routes.map(route => {
       return (
         <RouteIndexItem
           key={route.id}
-          route={route} />
+          route={route}
+          refs={this.refs.map}/>
       );
     });
 
     return (
       <div>
         <Header />
-        <a href="#/map">Create Route</a>
-        <ul>
-          {routes}
-        </ul>
+        <div className="route-index">
+          <div className="route-index-body">
+            <div className="route-index-elements">
+              <div className="my-routes-title">
+                <div>My Routes</div>
+                <a href="#/route/new">Create New Route</a>
+              </div>
+              <ul className="route-items">
+                {routes}
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }

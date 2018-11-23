@@ -27,13 +27,13 @@ const App = () => {
         <AuthRoute path="/signup" component={SignupFormContainer} />
         <ProtectedRoute path="/dashboard" component={DashboardContainer} />
         <ProtectedRoute path="/athlete" component={AthleteContainer}/>
-        <ProtectedRoute path="/map" component={MapContainer}/>
+        <ProtectedRoute path="/route/new" component={MapContainer}/>
         <ProtectedRoute path="/route/:routeId" component={RouteShow}/>
         <ProtectedRoute path="/maptest" component={MapTest}/>
         <ProtectedRoute path="/routes" component={RouteIndex}/>
         <ProtectedRoute path="/activity/new" component={ActivityForm}/>
-        <ProtectedRoute path="/activities" component={ActivityIndex}/>
         <ProtectedRoute path="/activity/:activityId" component={ActivityShow}/>
+        <ProtectedRoute path="/activities" component={ActivityIndex}/>
         <AuthRoute path="/" component={HomeContainer} />
       </Switch>
     </>

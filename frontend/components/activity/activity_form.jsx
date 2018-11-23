@@ -17,9 +17,13 @@ class ActivityForm extends React.Component {
   }
 
   handleSubmit(e){
-    debugger
+    // debugger
     e.preventDefault();
-    this.props.action({activity: this.state}).then(() => this.props.history.push("/activities"));
+    this.props.action({activity: this.state}).then(thing => {
+      debugger
+      this.props.history.push(`/activity/${thing.activity.id}`);
+    })
+
   }
 
   renderErrors(){

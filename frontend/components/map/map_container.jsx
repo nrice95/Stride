@@ -14,7 +14,7 @@ const mdp = dispatch => {
   // debugger
   return ({
     createRoute: route => dispatch(createRoute(route)),
-    openRouteModal: (modal, polyline) => dispatch(openRouteModal(modal, polyline))
+    openRouteModal: (modal, polyline, centerLat, centerLng, distance) => dispatch(openRouteModal(modal, polyline, centerLat, centerLng, distance))
   })
 }
 

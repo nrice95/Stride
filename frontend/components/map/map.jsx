@@ -66,11 +66,12 @@ class Map extends React.Component {
     // Enables the polyline drawing control. Click on the map to start drawing a
     // polyline. Each click will add a new vertice. Double-click to stop drawing.
     drawingManager = new google.maps.drawing.DrawingManager({
+      drawingControl: true,
       drawingControlOptions: {
         position: google.maps.ControlPosition.TOP_CENTER,
         drawingModes: [
           google.maps.drawing.OverlayType.MARKER,
-          google.maps.drawing.OverlayType.POLYLINE
+          // google.maps.drawing.OverlayType.POLYLINE
         ]
       },
       polylineOptions: {
@@ -172,11 +173,14 @@ class Map extends React.Component {
   handleSubmit(e){
     e.preventDefault();
     const encode = google.maps.geometry.encoding.encodePath(allSnaps);
-    // debugger
-    const newRoute = {polyline: encode, athlete_id: this.props.current_athlete_id, activity_type: "Run", title: "tests"};
     debugger
+    debugger
+    let centerLat = allSnaps[allSnaps.length-1].lat();
+    let centerLng = allSnaps[allSnaps.length-1].lng();
+    let finalDistance = Math.round(this.state.distance*100)/100;
+    const newRoute = {polyline: encode, centerLat: centerLat, centerLng: centerLng, distance: finalDistance, athlete_id: this.props.current_athlete_id, activity_type: "Run", title: "tests"};
     // this.props.createRoute(newRoute).then(() => this.props.history.push("/routes"));
-    this.props.openRouteModal("saveRoute", newRoute.polyline);
+    this.props.openRouteModal("saveRoute", newRoute.polyline, centerLat, centerLng, finalDistance);
   }
 
   render() {

@@ -8,10 +8,14 @@
 #  activity_type :string           not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#  title         :string           not null
+#  center_lat    :float
+#  center_lng    :float
+#  distance      :float
 #
 
 class Route < ApplicationRecord
-  validates :polyline, :activity_type, :title, presence: true
+  validates :polyline, :activity_type, :title, :center_lat, :center_lng, :distance, presence: true
 
   belongs_to :athlete,
     foreign_key: :athlete_id,

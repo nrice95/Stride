@@ -32,10 +32,13 @@
   display: flex;
   flex-direction: row;
   background-color: #f5f5fa;
+  padding-top: 50px;
   /* height: 100%; */
 }
 
 .dashboard-profile-summary{
+  position: fixed;
+  margin-left: 100px;
   padding-top: 30px;
   margin-top: 75px;
   width: 275px;
@@ -73,10 +76,89 @@
   display: flex;
   justify-content: center;
   position: relative;
+  /* align-items: flex-start; */
   top: -50px;
   width: 100%;
-  height: 60px;
-  border-bottom: 1px solid #e6e6ea;
+  /* height: px; */
+  /* border-bottom: 1px solid #e6e6ea; */
+}
+
+.activity-count-column{
+  position: relative;
+  top: -30px;
+  height: 40px;
+  width: 87px;
+  padding-left: 15px;
+  margin: 0;
+  border-left: 1px solid #e6e6ea;
+  border-right: 1px solid #e6e6ea;
+}
+
+.activity-count-column > div:first-of-type{
+  padding-left: 5px;
+  font-size: 14px;
+  font-weight: 300;
+  color: #606065;
+}
+
+.activity-count-column > div:last-of-type{
+  font-size: 18px;
+  font-weight: 300;
+  padding-left: 20px;
+}
+
+.latest-activity-column{
+  width: 235px;
+  border-top: 1px solid #e6e6ea;
+  padding: 20px;
+}
+
+.latest-activity-column > div{
+  font-size: 12px;
+}
+
+.latest-activity-column > a {
+  font-size: 12px;
+  text-decoration: none;
+  color: black;
+}
+
+.latest-activity-column > a:hover {
+  color: #2b87bf;
+}
+
+.your-training-log{
+  text-decoration: none;
+  color: black;
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 235px;
+  border-top: 1px solid #e6e6ea;
+  padding-top: 5px;
+  justify-content: space-between;
+}
+
+.your-training-log:hover > div:first-of-type {
+  transition: 0.2s;
+  color: #2b87bf;
+}
+
+.your-training-log > div:first-of-type{
+  font-size: 14px;
+}
+
+.your-training-log:hover > div:last-of-type{
+  transition: 0.2s;
+  position: relative;
+  left: 5px;
+}
+
+.your-training-log > div:last-of-type{
+  font-size: 24px;
+  /* padding-bottom: 20px; */
+  color: #808082;
 }
 
 .dashboard-username:hover{
@@ -85,10 +167,14 @@
 
 .activities-feed {
   margin-top: 75px;
-  display: flex
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .activities-list {
+  margin-left: 400px;
   list-style: none;
   margin-top: 0;
 }
