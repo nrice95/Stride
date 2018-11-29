@@ -89,10 +89,10 @@ class Map extends React.Component {
     },
   );
     drawingManager.setMap(map);
-
+    // debugger
     drawingManager.addListener('markercomplete', (marker) =>{
       this.setState({colorOfFill: "white"});
-      // debugger
+      debugger
       markers.push(marker);
       if (markers.length > 1){
         let newPoly = new google.maps.Polyline({
@@ -116,10 +116,12 @@ class Map extends React.Component {
 
         // debugger
       }
+      debugger
       // console.log(polylines.length);
     });
 
     $('.clear').click(function(ev) {
+      debugger
       for (var i = 0; i < polylines.length; ++i) {
         polylines[i].setMap(null);
       }
@@ -128,7 +130,7 @@ class Map extends React.Component {
         markers[i].setMap(null);
       }
       markers = [];
-      distance = 0;
+      distance = 1000;
       // this.setState({distance: distance});
       distanceStack = [];
       allSnaps = [];
@@ -255,7 +257,7 @@ function processSnapToRoadResponse(data) {
 // Draws the snapped polyline (after processing snap-to-road response).
 
 const drawSnappedPolyline = () => {
-  // debugger
+  debugger
   let newSnaps = [];
   allSnaps.unshift(...snappedCoordinates.slice(1));
   newSnaps.unshift(...snappedCoordinates.slice(1));
@@ -280,8 +282,8 @@ const drawSnappedPolyline = () => {
     const dist = google.maps.geometry.spherical.computeDistanceBetween(polies[i], polies[i+1]);
     tmpDist += dist;
   }
+  distance += tmpDist
   distanceStack.push(tmpDist);
-  distance += distanceStack[distanceStack.length-1]
   return distance;
   // debugger
 }

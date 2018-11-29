@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import MapTest from './map_test';
+import MapTest from '../map/test_map';
 
 
 export default connect(

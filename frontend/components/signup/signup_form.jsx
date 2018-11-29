@@ -6,9 +6,14 @@ class SignupForm extends React.Component {
     super(props);
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      errors: props.errors
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount(){
+    this.setState({errors: []})
   }
 
   updateUsername(e){
@@ -20,7 +25,8 @@ class SignupForm extends React.Component {
   }
 
   renderErrors(){
-    if (this.props.errors.length > 0){
+    // debugger
+    if (this.state.errors.length > 0 ){
       return(
         <ul className="auth-errors">
           {this.props.errors.map((error,i) => (
@@ -40,7 +46,6 @@ class SignupForm extends React.Component {
   }
 
   render(){
-    // debugger
     return(
       <div className="bg">
 

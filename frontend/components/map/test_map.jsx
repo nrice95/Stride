@@ -15,38 +15,84 @@ import { withRouter } from 'react-router-dom';
 //   zoom: 17
 // };
 // Handles click events on a map, and adds a new point to the Polyline.
-
+let mappy;
+let map;
+let drawingManager;
+let markers;
+let snappedCoords;
 class TestMap extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {distance: 0}
+  }
+
   componentDidMount() {
-    var map = new google.maps.Map(this.refs.map, {
-          zoom: 3,
-          center: {lat: 0, lng: -180},
-          mapTypeId: 'terrain'
-        });
-        // debugger
-        const x = google.maps.geometry.encoding.decodePath("wrswF`zueMbC}@??_BuLe@{C_@Q}HpYlD{A??pDsAkU~DNTdA~A??VAFAHCbEiB??f@S");
+    debugger
+    markers = [];
+    snappedCoords = [];
+    var directionsService = new google.maps.DirectionsService;
+    var directionsDisplay = new google.maps.DirectionsRenderer;
+    mappy = this.refs.map;
+    map = new google.maps.Map(mappy, {
+      zoom: 16,
+      center: {lat: 40.7374579, lng: -74.49510900000001},
+        mapTypeId: 'terrain'
+    });
+    directionsDisplay.setMap(map);
+    this.setState({distance: 0})
+    // calculateAndDisplayRoute(directionsService, directionsDisplay, this.setState.bind(this));
 
-        var coords =[];
+    drawingManager = new google.maps.drawing.DrawingManager({
+      drawingControl: true,
+      drawingControlOptions: {
+        position: google.maps.ControlPosition.TOP_CENTER,
+        drawingModes: [
+          google.maps.drawing.OverlayType.MARKER,
+          // google.maps.drawing.OverlayType.POLYLINE
+        ]
+      },
+      polylineOptions: {
+        strokeWeight: 2
+      },
+      markerOptions: {
+        icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            fillColor: this.state.colorOfFill,
+            scale: 8,
+            fillOpacity: 1,
+            strokeWeight: 3
+          },
+        },
+      },
+    );
 
-        for (let i = 0; i < x.length; i++){
-            coords.push({lat: x[i].lat(), lng: x[i].lng()})
-        }
+    map.addListener("click", e => {
+      // debugger
+      const newMarker = new google.maps.Marker({
+        position: e.latLng,
+        map: map,
+        icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            fillColor: "white",
+            scale: 8,
+            fillOpacity: 1,
+            strokeWeight: 3
+          },
+      });
+      markers.push(newMarker);
+      debugger
+      if (markers.length > 1){
+        calculateAndDisplayRoute(directionsService, directionsDisplay, this.setState.bind(this), this.state);
+      }
+    });
+  }
 
-        var flightPath = new google.maps.Polyline({
-          path: coords,
-          geodesic: true,
-          strokeColor: '#FF0000',
-          strokeOpacity: 1.0,
-          strokeWeight: 2
-        });
-
-        flightPath.setMap(map);
-    }
 
   render() {
 
     return (
       <div>
+        {this.state.distance * 0.000621371}
         <div className="map" ref="map">
         </div>
       </div>
@@ -54,4 +100,26 @@ class TestMap extends React.Component {
   }
 }
 
+function calculateAndDisplayRoute(directionsService, directionsDisplay, setState, state) {
+  directionsService.route({
+    origin: markers[markers.length-2].position,
+    destination: markers[markers.length-1].position,
+    travelMode: 'WALKING'
+  }, function(response, status) {
+    if (status === 'OK') {
+      const newRouteData = response.routes[0];
+      const newCoords = response.routes[0].overview_path;
+      var snappedPolyline = new google.maps.Polyline({
+        path: newCoords,
+        strokeColor: 'red',
+        strokeWeight: 6
+      });
+      snappedPolyline.setMap(map);
+      setState({distance: state.distance + newRouteData.legs[0].distance.value})
+      // directionsDisplay.setDirections(response);
+    } else {
+      window.alert('Directions request failed due to ' + status);
+    }
+  });
+}
 export default withRouter(TestMap);

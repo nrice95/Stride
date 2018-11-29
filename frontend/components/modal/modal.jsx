@@ -31,8 +31,9 @@ function Modal({modal, closeModal}) {
 }
 
 const mapStateToProps = state => {
-  // debugger
+  debugger
   return {
+    errors: state.errors,
     modal: state.ui.modal.modalType
   };
 };

@@ -2135,13 +2135,14 @@ function (_React$Component) {
           }
         }
       });
-      drawingManager.setMap(map);
+      drawingManager.setMap(map); // debugger
+
       drawingManager.addListener('markercomplete', function (marker) {
         _this2.setState({
           colorOfFill: "white"
-        }); // debugger
+        });
 
-
+        debugger;
         markers.push(marker);
 
         if (markers.length > 1) {
@@ -2160,10 +2161,13 @@ function (_React$Component) {
           // debugger
           // setTimeout(this.setState({distance: this.state.distance + distanceStack[distanceStack.length-1]}), 5000);
           // debugger
-        } // console.log(polylines.length);
+        }
 
+        debugger; // console.log(polylines.length);
       });
       $('.clear').click(function (ev) {
+        debugger;
+
         for (var i = 0; i < polylines.length; ++i) {
           polylines[i].setMap(null);
         }
@@ -2175,7 +2179,7 @@ function (_React$Component) {
         }
 
         markers = [];
-        distance = 0; // this.setState({distance: distance});
+        distance = 1000; // this.setState({distance: distance});
 
         distanceStack = [];
         allSnaps = [];
@@ -2329,7 +2333,7 @@ function processSnapToRoadResponse(data) {
 var drawSnappedPolyline = function drawSnappedPolyline() {
   var _allSnaps;
 
-  // debugger
+  debugger;
   var newSnaps = [];
 
   (_allSnaps = allSnaps).unshift.apply(_allSnaps, _toConsumableArray(snappedCoordinates.slice(1)));
@@ -2358,8 +2362,8 @@ var drawSnappedPolyline = function drawSnappedPolyline() {
     tmpDist += dist;
   }
 
+  distance += tmpDist;
   distanceStack.push(tmpDist);
-  distance += distanceStack[distanceStack.length - 1];
   return distance; // debugger
 };
 
@@ -2586,52 +2590,97 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 // };
 // Handles click events on a map, and adds a new point to the Polyline.
 
+var mappy;
+var map;
+var drawingManager;
+var markers;
+var snappedCoords;
+
 var TestMap =
 /*#__PURE__*/
 function (_React$Component) {
   _inherits(TestMap, _React$Component);
 
-  function TestMap() {
+  function TestMap(props) {
+    var _this;
+
     _classCallCheck(this, TestMap);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(TestMap).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(TestMap).call(this, props));
+    _this.state = {
+      distance: 0
+    };
+    return _this;
   }
 
   _createClass(TestMap, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var map = new google.maps.Map(this.refs.map, {
-        zoom: 3,
+      var _this2 = this;
+
+      debugger;
+      markers = [];
+      snappedCoords = [];
+      var directionsService = new google.maps.DirectionsService();
+      var directionsDisplay = new google.maps.DirectionsRenderer();
+      mappy = this.refs.map;
+      map = new google.maps.Map(mappy, {
+        zoom: 16,
         center: {
-          lat: 0,
-          lng: -180
+          lat: 40.7374579,
+          lng: -74.49510900000001
         },
         mapTypeId: 'terrain'
-      }); // debugger
-
-      var x = google.maps.geometry.encoding.decodePath("wrswF`zueMbC}@??_BuLe@{C_@Q}HpYlD{A??pDsAkU~DNTdA~A??VAFAHCbEiB??f@S");
-      var coords = [];
-
-      for (var i = 0; i < x.length; i++) {
-        coords.push({
-          lat: x[i].lat(),
-          lng: x[i].lng()
-        });
-      }
-
-      var flightPath = new google.maps.Polyline({
-        path: coords,
-        geodesic: true,
-        strokeColor: '#FF0000',
-        strokeOpacity: 1.0,
-        strokeWeight: 2
       });
-      flightPath.setMap(map);
+      directionsDisplay.setMap(map);
+      this.setState({
+        distance: 0
+      }); // calculateAndDisplayRoute(directionsService, directionsDisplay, this.setState.bind(this));
+
+      drawingManager = new google.maps.drawing.DrawingManager({
+        drawingControl: true,
+        drawingControlOptions: {
+          position: google.maps.ControlPosition.TOP_CENTER,
+          drawingModes: [google.maps.drawing.OverlayType.MARKER]
+        },
+        polylineOptions: {
+          strokeWeight: 2
+        },
+        markerOptions: {
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            fillColor: this.state.colorOfFill,
+            scale: 8,
+            fillOpacity: 1,
+            strokeWeight: 3
+          }
+        }
+      });
+      map.addListener("click", function (e) {
+        // debugger
+        var newMarker = new google.maps.Marker({
+          position: e.latLng,
+          map: map,
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            fillColor: "white",
+            scale: 8,
+            fillOpacity: 1,
+            strokeWeight: 3
+          }
+        });
+        markers.push(newMarker);
+        debugger;
+
+        if (markers.length > 1) {
+          calculateAndDisplayRoute(directionsService, directionsDisplay, _this2.setState.bind(_this2), _this2.state);
+        }
+      });
     }
   }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.distance * 0.000621371, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "map",
         ref: "map"
       }));
@@ -2641,32 +2690,31 @@ function (_React$Component) {
   return TestMap;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
+function calculateAndDisplayRoute(directionsService, directionsDisplay, setState, state) {
+  directionsService.route({
+    origin: markers[markers.length - 2].position,
+    destination: markers[markers.length - 1].position,
+    travelMode: 'WALKING'
+  }, function (response, status) {
+    if (status === 'OK') {
+      var newRouteData = response.routes[0];
+      var newCoords = response.routes[0].overview_path;
+      var snappedPolyline = new google.maps.Polyline({
+        path: newCoords,
+        strokeColor: 'red',
+        strokeWeight: 6
+      });
+      snappedPolyline.setMap(map);
+      setState({
+        distance: state.distance + newRouteData.legs[0].distance.value
+      }); // directionsDisplay.setDirections(response);
+    } else {
+      window.alert('Directions request failed due to ' + status);
+    }
+  });
+}
+
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(TestMap));
-
-/***/ }),
-
-/***/ "./frontend/components/map_demo/map_test.jsx":
-/*!***************************************************!*\
-  !*** ./frontend/components/map_demo/map_test.jsx ***!
-  \***************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _map_test_map__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../map/test_map */ "./frontend/components/map/test_map.jsx");
-
-
-
-var MapTest = function MapTest() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "user-pane"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_map_test_map__WEBPACK_IMPORTED_MODULE_1__["default"], null));
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (MapTest);
 
 /***/ }),
 
@@ -2680,10 +2728,10 @@ var MapTest = function MapTest() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _map_test__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./map_test */ "./frontend/components/map_demo/map_test.jsx");
+/* harmony import */ var _map_test_map__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../map/test_map */ "./frontend/components/map/test_map.jsx");
 
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(null, null)(_map_test__WEBPACK_IMPORTED_MODULE_1__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(null, null)(_map_test_map__WEBPACK_IMPORTED_MODULE_1__["default"]));
 
 /***/ }),
 
@@ -2745,8 +2793,9 @@ function Modal(_ref) {
 }
 
 var mapStateToProps = function mapStateToProps(state) {
-  // debugger
+  debugger;
   return {
+    errors: state.errors,
     modal: state.ui.modal.modalType
   };
 };
@@ -3419,6 +3468,7 @@ function (_React$Component) {
   }, {
     key: "renderErrors",
     value: function renderErrors() {
+      // debugger
       if (this.props.errors.length > 0) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           className: "auth-errors"
@@ -3544,13 +3594,21 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(SignupForm).call(this, props));
     _this.state = {
       username: "",
-      password: ""
+      password: "",
+      errors: props.errors
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
   _createClass(SignupForm, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.setState({
+        errors: []
+      });
+    }
+  }, {
     key: "updateUsername",
     value: function updateUsername(e) {
       this.setState({
@@ -3567,7 +3625,8 @@ function (_React$Component) {
   }, {
     key: "renderErrors",
     value: function renderErrors() {
-      if (this.props.errors.length > 0) {
+      // debugger
+      if (this.state.errors.length > 0) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           className: "auth-errors"
         }, this.props.errors.map(function (error, i) {
@@ -3588,7 +3647,6 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      // debugger
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "bg"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -3661,7 +3719,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var msp = function msp(_ref) {
   var errors = _ref.errors;
-  // debugger
+  debugger;
   return {
     errors: errors,
     formType: "Sign Up",
@@ -3826,6 +3884,7 @@ function modalReducer() {
       });
 
     case _actions_modal_actions__WEBPACK_IMPORTED_MODULE_0__["OPEN_USER_MODAL"]:
+      debugger;
       return lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, {
         modalType: action.modal
       });
