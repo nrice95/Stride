@@ -2179,7 +2179,7 @@ function (_React$Component) {
         }
 
         markers = [];
-        distance = 1000; // this.setState({distance: distance});
+        distance = 0; // this.setState({distance: distance});
 
         distanceStack = [];
         allSnaps = [];
@@ -2333,7 +2333,7 @@ function processSnapToRoadResponse(data) {
 var drawSnappedPolyline = function drawSnappedPolyline() {
   var _allSnaps;
 
-  debugger;
+  // debugger
   var newSnaps = [];
 
   (_allSnaps = allSnaps).unshift.apply(_allSnaps, _toConsumableArray(snappedCoordinates.slice(1)));
@@ -2576,25 +2576,13 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
- // const getCoordsObj = latLng => ({
-//   lat: latLng.lat(),
-//   lng: latLng.lng()
-// });
-//
-// const mapOptions = {
-//   center: {
-//     lat: 40.7512817,
-//     lng: -73.98399010000003
-//   }, // San Francisco coords
-//   zoom: 17
-// };
-// Handles click events on a map, and adds a new point to the Polyline.
 
-var mappy;
+var mapRef;
 var map;
 var drawingManager;
 var markers;
 var snappedCoords;
+var iconColor;
 
 var TestMap =
 /*#__PURE__*/
@@ -2608,7 +2596,10 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(TestMap).call(this, props));
     _this.state = {
-      distance: 0
+      distance: 0,
+      firstMarker: false,
+      iconColor: "green" // this.addAndPlaceMarker.bind(this);
+
     };
     return _this;
   }
@@ -2618,13 +2609,13 @@ function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      debugger;
       markers = [];
       snappedCoords = [];
+      mapRef = this.refs.map;
+      iconColor = "green";
       var directionsService = new google.maps.DirectionsService();
       var directionsDisplay = new google.maps.DirectionsRenderer();
-      mappy = this.refs.map;
-      map = new google.maps.Map(mappy, {
+      map = new google.maps.Map(mapRef, {
         zoom: 16,
         center: {
           lat: 40.7374579,
@@ -2633,86 +2624,183 @@ function (_React$Component) {
         mapTypeId: 'terrain'
       });
       directionsDisplay.setMap(map);
-      this.setState({
-        distance: 0
-      }); // calculateAndDisplayRoute(directionsService, directionsDisplay, this.setState.bind(this));
+      map.addListener("click", function (e) {
+        _this2.addAndPlaceMarker(e.latLng, iconColor);
 
-      drawingManager = new google.maps.drawing.DrawingManager({
-        drawingControl: true,
-        drawingControlOptions: {
-          position: google.maps.ControlPosition.TOP_CENTER,
-          drawingModes: [google.maps.drawing.OverlayType.MARKER]
-        },
-        polylineOptions: {
-          strokeWeight: 2
-        },
-        markerOptions: {
-          icon: {
-            path: google.maps.SymbolPath.CIRCLE,
-            fillColor: this.state.colorOfFill,
-            scale: 8,
-            fillOpacity: 1,
-            strokeWeight: 3
-          }
+        if (_this2.state.firstMarker) {
+          _this2.calculateAndDisplayRoute(directionsService, directionsDisplay, _this2.setState.bind(_this2), _this2.state);
+        } else {
+          _this2.setState({
+            firstMarker: true
+          });
+
+          iconColor = "white";
         }
       });
-      map.addListener("click", function (e) {
-        // debugger
-        var newMarker = new google.maps.Marker({
-          position: e.latLng,
-          map: map,
-          icon: {
-            path: google.maps.SymbolPath.CIRCLE,
-            fillColor: "white",
-            scale: 8,
-            fillOpacity: 1,
-            strokeWeight: 3
-          }
-        });
-        markers.push(newMarker);
-        debugger;
+      map.controls[google.maps.ControlPosition.RIGHT_TOP].push(this.refs.bar);
+      var autocomplete = new google.maps.places.Autocomplete(this.refs.autoc);
+      autocomplete.bindTo('bounds', map);
+      autocomplete.addListener('place_changed', function () {
+        var place = autocomplete.getPlace();
 
-        if (markers.length > 1) {
-          calculateAndDisplayRoute(directionsService, directionsDisplay, _this2.setState.bind(_this2), _this2.state);
+        if (place.geometry.viewport) {
+          map.fitBounds(place.geometry.viewport);
+        } else {
+          map.setCenter(place.geometry.location);
+          map.setZoom(17);
         }
       });
     }
   }, {
+    key: "addAndPlaceMarker",
+    value: function addAndPlaceMarker(latLng, iconColor) {
+      var newMarker = new google.maps.Marker({
+        position: latLng,
+        map: map,
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          fillColor: iconColor,
+          scale: 5,
+          fillOpacity: 1,
+          strokeWeight: 3
+        }
+      });
+      markers.push(newMarker);
+    }
+  }, {
+    key: "addAndPlacePolyline",
+    value: function addAndPlacePolyline(coords) {
+      var snappedPolyline = new google.maps.Polyline({
+        path: coords,
+        strokeColor: 'red',
+        strokeWeight: 6
+      });
+      snappedCoords = snappedCoords.concat(coords);
+      snappedPolyline.setMap(map);
+      debugger;
+    }
+  }, {
+    key: "removeLatestMarker",
+    value: function removeLatestMarker() {
+      markers[markers.length - 1].setMap(null);
+      markers.pop;
+    }
+  }, {
+    key: "removeFirstMarker",
+    value: function removeFirstMarker() {
+      markers[0].setMap(null);
+      markers.shift();
+    }
+  }, {
+    key: "calculateAndDisplayRoute",
+    value: function calculateAndDisplayRoute(directionsService, directionsDisplay, setState, state) {
+      var that = this;
+      directionsService.route({
+        origin: markers[markers.length - 2].position,
+        destination: markers[markers.length - 1].position,
+        travelMode: 'WALKING'
+      }, function (response, status) {
+        if (status === 'OK') {
+          var addedDistance = that.extendRouteWithPolyline(response);
+          setState({
+            distance: state.distance + addedDistance
+          });
+        } else {
+          window.alert('Directions request failed due to ' + status);
+        }
+      });
+    }
+  }, {
+    key: "extendRouteWithPolyline",
+    value: function extendRouteWithPolyline(response) {
+      var newRouteData = response.routes[0];
+      var newCoords = response.routes[0].overview_path;
+      debugger;
+
+      if (snappedCoords.length === 0) {
+        this.snapFirstMarker(newCoords[0]);
+      }
+
+      this.addAndPlacePolyline(newCoords);
+      this.snapLatestMarker(newCoords[newCoords.length - 1]);
+      return newRouteData.legs[0].distance.value;
+    }
+  }, {
+    key: "snapLatestMarker",
+    value: function snapLatestMarker(latestCoord) {
+      this.removeLatestMarker();
+      this.addAndPlaceMarker(latestCoord, iconColor);
+    }
+  }, {
+    key: "snapFirstMarker",
+    value: function snapFirstMarker(firstCoord) {
+      this.removeFirstMarker();
+      var newMarker = new google.maps.Marker({
+        position: firstCoord,
+        map: map,
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          fillColor: "green",
+          scale: 5,
+          fillOpacity: 1,
+          strokeWeight: 3
+        }
+      });
+      markers.unshift(newMarker);
+    }
+  }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.distance * 0.000621371, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "map-header-items"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "left-map-header"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#/dashboard",
+        className: "map-stride-title"
+      }, "STRIDE"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "route-builder"
+      }, "ROUTE BUILDER")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#/routes",
+        className: "exit-builder"
+      }, "Exit Builder"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
+        className: "sub-header"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "left-sub-header"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "auto"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        className: "autoc",
+        placeholder: "New York, New York, United States",
+        ref: "autoc"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "map-history-buttons"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        className: "undo",
+        href: "#/map"
+      }, "Undo")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        className: "clear",
+        href: "#/map"
+      }, "Clear"))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "map",
         ref: "map"
-      }));
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "map-footer"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "distance-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "distance-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "distance"
+      }, Math.round(this.state.distance * 0.0621371) / 100), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "miles"
+      }, "mi")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Distance"))));
     }
   }]);
 
   return TestMap;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
-
-function calculateAndDisplayRoute(directionsService, directionsDisplay, setState, state) {
-  directionsService.route({
-    origin: markers[markers.length - 2].position,
-    destination: markers[markers.length - 1].position,
-    travelMode: 'WALKING'
-  }, function (response, status) {
-    if (status === 'OK') {
-      var newRouteData = response.routes[0];
-      var newCoords = response.routes[0].overview_path;
-      var snappedPolyline = new google.maps.Polyline({
-        path: newCoords,
-        strokeColor: 'red',
-        strokeWeight: 6
-      });
-      snappedPolyline.setMap(map);
-      setState({
-        distance: state.distance + newRouteData.legs[0].distance.value
-      }); // directionsDisplay.setDirections(response);
-    } else {
-      window.alert('Directions request failed due to ' + status);
-    }
-  });
-}
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(TestMap));
 

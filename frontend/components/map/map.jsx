@@ -130,7 +130,7 @@ class Map extends React.Component {
         markers[i].setMap(null);
       }
       markers = [];
-      distance = 1000;
+      distance = 0;
       // this.setState({distance: distance});
       distanceStack = [];
       allSnaps = [];
@@ -257,7 +257,7 @@ function processSnapToRoadResponse(data) {
 // Draws the snapped polyline (after processing snap-to-road response).
 
 const drawSnappedPolyline = () => {
-  debugger
+  // debugger
   let newSnaps = [];
   allSnaps.unshift(...snappedCoordinates.slice(1));
   newSnaps.unshift(...snappedCoordinates.slice(1));
