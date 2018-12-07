@@ -2566,13 +2566,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 
 
@@ -2582,7 +2582,13 @@ var map;
 var drawingManager;
 var markers;
 var snappedCoords;
-var iconColor;
+var iconProps;
+var polylines;
+var redoPolylineStack;
+var redoMarkerStack;
+var distanceStack;
+var redoDistanceStack;
+var directionsService;
 
 var TestMap =
 /*#__PURE__*/
@@ -2598,9 +2604,21 @@ function (_React$Component) {
     _this.state = {
       distance: 0,
       firstMarker: false,
-      iconColor: "green" // this.addAndPlaceMarker.bind(this);
-
+      iconProps: {
+        color: "#64b717",
+        stroke: "white",
+        scale: 8
+      },
+      redoAvailable: false,
+      travelMode: "BICYCLING"
     };
+    _this.clear = _this.clear.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.undo = _this.undo.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.redo = _this.redo.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.toggle = _this.toggle.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.ride = _this.ride.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.run = _this.run.bind(_assertThisInitialized(_assertThisInitialized(_this))); // this.addAndPlaceMarker.bind(this);
+
     return _this;
   }
 
@@ -2609,32 +2627,48 @@ function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
+      redoDistanceStack = [];
+      distanceStack = [];
+      redoPolylineStack = [];
+      redoMarkerStack = [];
+      polylines = [];
       markers = [];
       snappedCoords = [];
       mapRef = this.refs.map;
-      iconColor = "green";
-      var directionsService = new google.maps.DirectionsService();
-      var directionsDisplay = new google.maps.DirectionsRenderer();
+      iconProps = {
+        color: "#64b717",
+        stroke: "white",
+        scale: 8
+      };
+      directionsService = new google.maps.DirectionsService(); // const directionsDisplay = new google.maps.DirectionsRenderer;
+
       map = new google.maps.Map(mapRef, {
-        zoom: 16,
+        zoom: 18,
+        // center: {lat: 40.7374579, lng: -74.49510900000001},
         center: {
-          lat: 40.7374579,
-          lng: -74.49510900000001
+          lat: 40.751484,
+          lng: -73.983898
         },
         mapTypeId: 'terrain'
-      });
-      directionsDisplay.setMap(map);
+      }); // directionsDisplay.setMap(map);
+
       map.addListener("click", function (e) {
-        _this2.addAndPlaceMarker(e.latLng, iconColor);
+        debugger;
+
+        _this2.addAndPlaceMarker(e.latLng, e.pixel, iconProps);
 
         if (_this2.state.firstMarker) {
-          _this2.calculateAndDisplayRoute(directionsService, directionsDisplay, _this2.setState.bind(_this2), _this2.state);
+          _this2.calculateAndDisplayRoute(directionsService, _this2.setState.bind(_this2), _this2.state);
         } else {
           _this2.setState({
             firstMarker: true
           });
 
-          iconColor = "white";
+          iconProps = {
+            color: "white",
+            stroke: "black",
+            scale: 5
+          };
         }
       });
       map.controls[google.maps.ControlPosition.RIGHT_TOP].push(this.refs.bar);
@@ -2653,37 +2687,42 @@ function (_React$Component) {
     }
   }, {
     key: "addAndPlaceMarker",
-    value: function addAndPlaceMarker(latLng, iconColor) {
+    value: function addAndPlaceMarker(latLng, pixel, iconProps) {
       var newMarker = new google.maps.Marker({
         position: latLng,
         map: map,
         icon: {
           path: google.maps.SymbolPath.CIRCLE,
-          fillColor: iconColor,
-          scale: 5,
+          fillColor: iconProps.color,
+          strokeColor: iconProps.stroke,
+          scale: iconProps.scale,
           fillOpacity: 1,
           strokeWeight: 3
         }
       });
       markers.push(newMarker);
+      if (pixel !== null && this.needsRecenter(pixel)) map.panTo(newMarker.position);
     }
   }, {
     key: "addAndPlacePolyline",
     value: function addAndPlacePolyline(coords) {
       var snappedPolyline = new google.maps.Polyline({
         path: coords,
-        strokeColor: 'red',
+        strokeColor: 'rgb(102,102,102,0.95)',
         strokeWeight: 6
       });
-      snappedCoords = snappedCoords.concat(coords);
+      snappedCoords.push(coords);
+      polylines.push(snappedPolyline);
       snappedPolyline.setMap(map);
+      markers;
       debugger;
     }
   }, {
     key: "removeLatestMarker",
     value: function removeLatestMarker() {
+      debugger;
       markers[markers.length - 1].setMap(null);
-      markers.pop;
+      markers.pop();
     }
   }, {
     key: "removeFirstMarker",
@@ -2693,18 +2732,30 @@ function (_React$Component) {
     }
   }, {
     key: "calculateAndDisplayRoute",
-    value: function calculateAndDisplayRoute(directionsService, directionsDisplay, setState, state) {
+    value: function calculateAndDisplayRoute(directionsService, setState, state) {
       var that = this;
+
+      if (this.state.redoAvailable) {
+        this.setState({
+          redoAvailable: false
+        });
+        redoMarkerStack = [];
+        redoPolylineStack = [];
+        redoDistanceStack = [];
+      }
+
       directionsService.route({
         origin: markers[markers.length - 2].position,
         destination: markers[markers.length - 1].position,
-        travelMode: 'WALKING'
+        travelMode: that.state.travelMode
       }, function (response, status) {
         if (status === 'OK') {
-          var addedDistance = that.extendRouteWithPolyline(response);
-          setState({
-            distance: state.distance + addedDistance
+          var addedDistance = that.extendRouteWithPolyline(response, false);
+          that.setState({
+            distance: that.state.distance + addedDistance
           });
+          debugger;
+          distanceStack.push(addedDistance);
         } else {
           window.alert('Directions request failed due to ' + status);
         }
@@ -2712,24 +2763,35 @@ function (_React$Component) {
     }
   }, {
     key: "extendRouteWithPolyline",
-    value: function extendRouteWithPolyline(response) {
+    value: function extendRouteWithPolyline(response, toggled) {
       var newRouteData = response.routes[0];
       var newCoords = response.routes[0].overview_path;
       debugger;
 
-      if (snappedCoords.length === 0) {
+      if (!toggled && snappedCoords.length === 0) {
         this.snapFirstMarker(newCoords[0]);
       }
 
       this.addAndPlacePolyline(newCoords);
-      this.snapLatestMarker(newCoords[newCoords.length - 1]);
+      if (!toggled) this.snapLatestMarker(newCoords[newCoords.length - 1]);
       return newRouteData.legs[0].distance.value;
     }
   }, {
     key: "snapLatestMarker",
     value: function snapLatestMarker(latestCoord) {
       this.removeLatestMarker();
-      this.addAndPlaceMarker(latestCoord, iconColor);
+      this.addAndPlaceMarker(latestCoord, null, iconProps);
+    }
+  }, {
+    key: "needsRecenter",
+    value: function needsRecenter(pixel) {
+      debugger;
+      var x = pixel.x;
+      var y = pixel.y;
+      var w = window.innerWidth;
+      var h = window.innerHeight;
+      if (x < 50 || x > w - 50) return true;
+      if (y < 50 || y > h - 50) return true;
     }
   }, {
     key: "snapFirstMarker",
@@ -2740,13 +2802,179 @@ function (_React$Component) {
         map: map,
         icon: {
           path: google.maps.SymbolPath.CIRCLE,
-          fillColor: "green",
-          scale: 5,
+          fillColor: "#64b717",
+          strokeColor: "white",
+          scale: 8,
           fillOpacity: 1,
           strokeWeight: 3
         }
       });
       markers.unshift(newMarker);
+    }
+  }, {
+    key: "clear",
+    value: function clear() {
+      markers.forEach(function (marker) {
+        marker.setMap(null);
+      });
+      debugger;
+      polylines.forEach(function (poly) {
+        poly.setMap(null);
+      });
+      this.setState({
+        distance: 0,
+        iconProps: {
+          color: "#64b717",
+          stroke: "white",
+          scale: 8
+        },
+        firstMarker: false
+      });
+      markers = [];
+      snappedCoords = [];
+      iconProps = {
+        color: "#64b717",
+        stroke: "white",
+        scale: 8
+      };
+      polylines = [];
+    }
+  }, {
+    key: "undo",
+    value: function undo() {
+      if (this.state.redoAvailable) this.setState({
+        redoAvailable: true
+      });
+      debugger;
+
+      if (markers.length > 0) {
+        this.setState({
+          redoAvailable: true
+        });
+
+        if (markers.length === 1) {
+          this.setState({
+            distance: 0,
+            iconProps: {
+              color: "#64b717",
+              stroke: "white",
+              scale: 8
+            },
+            firstMarker: false
+          });
+          iconProps = {
+            color: "#64b717",
+            stroke: "white",
+            scale: 8
+          };
+        } else {
+          debugger;
+          var lastDistance = distanceStack.pop();
+          redoDistanceStack.push(lastDistance);
+          this.setState({
+            distance: this.state.distance - lastDistance
+          });
+        }
+
+        var lastMarker = markers.pop();
+        redoMarkerStack.push(lastMarker);
+        lastMarker.setMap(null);
+      }
+
+      if (polylines.length > 0) {
+        var lastPolyline = polylines.pop();
+        redoPolylineStack.push(lastPolyline);
+        lastPolyline.setMap(null);
+        snappedCoords.pop();
+      }
+
+      debugger;
+    }
+  }, {
+    key: "redo",
+    value: function redo() {
+      debugger;
+
+      if (this.state.redoAvailable) {
+        if (markers.length > 0) {
+          var redonePoly = redoPolylineStack.pop();
+          var redoneDistance = redoDistanceStack.pop();
+          redonePoly.setMap(map);
+          this.setState({
+            distance: this.state.distance + redoneDistance
+          });
+          snappedCoords.push(redonePoly.latLngs.j[0].j);
+          polylines.push(redonePoly);
+          distanceStack.push(redoneDistance);
+          if (markers.length === 0) this.setState({
+            redoAvailable: false
+          });
+        }
+
+        if (redoMarkerStack.length > 0) {
+          var redoneMarker = redoMarkerStack.pop();
+          redoneMarker.setMap(map);
+          markers.push(redoneMarker);
+        }
+      }
+    }
+  }, {
+    key: "ride",
+    value: function ride() {
+      debugger;
+
+      if (this.state.travelMode === "WALKING") {
+        this.setState({
+          travelMode: "BICYCLING"
+        });
+        this.toggle("BICYCLING");
+      }
+    }
+  }, {
+    key: "run",
+    value: function run() {
+      debugger;
+
+      if (this.state.travelMode === "BICYCLING") {
+        this.setState({
+          travelMode: "WALKING"
+        });
+        this.toggle("WALKING");
+      }
+    }
+  }, {
+    key: "toggle",
+    value: function toggle(type) {
+      polylines.forEach(function (poly) {
+        poly.setMap(null);
+      });
+      var that = this;
+      debugger;
+      this.setState({
+        distance: 0
+      });
+
+      for (var i = 0; i < markers.length - 1; i++) {
+        debugger;
+        directionsService.route({
+          origin: markers[i].position,
+          destination: markers[i + 1].position,
+          travelMode: type
+        }, function (response, status) {
+          if (status === 'OK') {
+            debugger;
+            var addedDistance = that.extendRouteWithPolyline(response, true);
+            that.setState({
+              distance: that.state.distance + addedDistance
+            });
+            distanceStack.push(addedDistance);
+          } else {
+            window.alert('Directions request failed due to ' + status);
+          }
+        });
+      }
+
+      debugger;
     }
   }, {
     key: "render",
@@ -2776,7 +3004,22 @@ function (_React$Component) {
         ref: "autoc"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "map-history-buttons"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "clear",
+        onClick: this.clear
+      }, "Clear"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "undo",
+        onClick: this.undo
+      }, "Undo"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "redo",
+        onClick: this.redo
+      }, "Redo"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "ride",
+        onClick: this.ride
+      }, "Ride"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "run",
+        onClick: this.run
+      }, "Run"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         className: "undo",
         href: "#/map"
       }, "Undo")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -2795,7 +3038,15 @@ function (_React$Component) {
         className: "distance"
       }, Math.round(this.state.distance * 0.0621371) / 100), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "miles"
-      }, "mi")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Distance"))));
+      }, "mi")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Distance")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "distance-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "distance-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "distance"
+      }, this.state.travelMode), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "miles"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Travel Type"))));
     }
   }]);
 
