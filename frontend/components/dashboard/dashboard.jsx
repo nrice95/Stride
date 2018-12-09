@@ -22,7 +22,9 @@ class Dashboard extends React.Component {
         <ActivityIndexItem
           key={activity.id}
           activity={activity}
-          currentAthlete={currentAthlete} />
+          currentAthlete={currentAthlete}
+          updateActivity={this.props.updateActivity}
+          deleteActivity={this.props.deleteActivity} />
       )
       if (activities.length === 0) {
         activities = "No recent activities"

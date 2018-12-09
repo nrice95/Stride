@@ -46,9 +46,14 @@
 }
 
 .left-items > li > a{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-decoration: none;
   color: #717176;
   font-size: 15px;
+  height: 100%;
+  width: 100%;
 }
 
 .left-items > li:hover > a{
@@ -100,7 +105,10 @@ li:hover .dashboard-list, li:hover .training-list{
 .dashboard-list > li > a, .training-list > li > a {
   display: flex;
   align-items: center;
+  justify-content: center;
   text-decoration: none;
+  min-height: 100%;
+  min-width: 100%;
   color: #717176;
 }
 
@@ -184,6 +192,8 @@ li:hover .user-actions, li:hover .add-action {
 .user-actions > li > a, .add-action > li > a {
   display: flex;
   align-items: center;
+  height: 100%;
+  width: 100%;
   text-decoration: none;
   color: #717176;
 }
@@ -195,6 +205,14 @@ li:hover .user-actions, li:hover .add-action {
   justify-content: flex-start;
   padding-left: 12px;
   color:  #717176;
+}
+
+.boop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
 }
 
 
@@ -296,6 +314,13 @@ li:hover .user-actions, li:hover .add-action {
   border: 2px solid #eb4f2f;
   border-radius: 100%;
   font-weight: 500;
+}
+
+.right-items > li > a > div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .right-items > li:hover > a{

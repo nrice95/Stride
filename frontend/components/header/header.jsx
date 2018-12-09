@@ -18,7 +18,7 @@ class Header extends React.Component {
               <a href="#/dashboard" className="left-dashboard-list">Dashboard</a>
               <ul className="dashboard-list">
                 <li className="routes-li">
-                  <a href="#/dashboard">Activity Feed</a>
+                  <a className="boop" href="#/dashboard">Activity Feed</a>
                 </li>
                 <li>
                   <a href="#routes">Routes</a>
@@ -58,10 +58,10 @@ class Header extends React.Component {
 
 
             <li>
-              <a>{`+`}</a>
+              <a><div>{`+`}</div></a>
               <ul className="add-action">
-                <li>
-                  <a href="#/route/new" className="dashboard-map-title">Create a route</a>
+                <li href="#/route/new">
+                  <a className="dashboard-map-title">Create a route</a>
                 </li>
                 <li>
                   <a href="#/activity/new" className="header-new-activity">Add manual entry</a>

@@ -1,8 +1,17 @@
 import { connect } from "react-redux";
 import ActivityForm from "./activity_form";
 import { createActivity } from "../../actions/activity_actions";
+import { currentTime, currentDate } from "../../reducers/selectors";
 
 const msp = (state, ownProps) => {
+  const date = new Date();
+  let month = date.getUTCMonth() + 1;
+  if (month < 10) month = `0${month}`;
+  let day = date.getDate();
+  if (day < 10) day = `0${day}`;
+  const currentDate = `${date.getUTCFullYear()}-${month}-${day}`
+  const currentTime = `${date.getHours()}:${date.getMinutes()}`;
+  debugger
   return ({
     errors: state.errors,
     activity: {
@@ -18,8 +27,8 @@ const msp = (state, ownProps) => {
       athlete_id: state.session.id,
       elevation: 0,
       elevation_units: "feet",
-      date: "",
-      time: ""
+      date: currentDate,
+      time: currentTime
     },
     formType: "Create",
   })

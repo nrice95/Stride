@@ -79,6 +79,16 @@ export const renderTime = (activity) => {
 
 const months = {"01": "January", "02": "February", "03": "March", "04": "April", "05": "May", "06": "June", "07": "July", "08": "August", "09": "September", "10": "October", "11": "November", "12": "December"}
 
+export const currentDate = () => {
+  const date = new Date();
+  return `${date.getUTCFullYear()}-${date.getUTCMonth() + 1}-${date.getDate}`
+}
+
+export const currentTime = () => {
+  const time = new Date();
+  return `${date.getMinutes()}:${date.getHours()}`
+}
+
 export const parseDateTime = (activity, type) => {
   let dateString = activity.date.split("-");
   let year = dateString[0];

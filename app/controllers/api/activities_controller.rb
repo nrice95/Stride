@@ -20,6 +20,28 @@ class Api::ActivitiesController < ApplicationController
     render :index
   end
 
+  def update
+    @activity = Activity.find(params[:id])
+
+      # debugger
+    if @activity.update(activity_params)
+      # debugger
+      render :show
+    else
+      render json: @activity.errors.full_messages, status: 422
+    end
+  end
+
+  def destroy
+    @activity = Activity.find(params[:id])
+
+    if @activity.destroy
+      render :show
+    else
+      render json: @post.errors.full_messages, status: 422
+    end
+  end
+
   private
 
   def activity_params

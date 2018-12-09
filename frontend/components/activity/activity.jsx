@@ -4,6 +4,11 @@ import Header from "../header/header_container";
 import { activityData, parseDateTime } from "../../reducers/selectors";
 
 class ActivityShow extends React.Component {
+  constructor(props){
+    super(props)
+    //
+  }
+
   componentDidMount(){
     this.props.fetchActivity(this.props.match.params.activityId);
   }
@@ -30,16 +35,19 @@ class ActivityShow extends React.Component {
     }
     let description;
     if (activity.description === ""){
-      description = <a className="add-description" href="#/activity/new">Add a description</a>;
+      debugger
+      description = <a className="add-description" href={`#/activities/${this.props.match.params.activityId}/edit`}>Add a description</a>;
     }else{
       description = <div className="activity-description">{activity.description}</div>;
     }
-    // debugger
     return(
       <div>
         <Header />
         <div className="activity-show">
           <div className="activity-body">
+          <button onClick={() => this.props.deleteActivity(this.props.activity.id).then(thing => {
+            this.props.history.push(`/dashboard`);})}>Delete</button>
+          <button onClick={() => this.props.history.push(`/activities/${this.props.activity.id}/edit`)}>Edit</button>
           <div className="activity-field">
             <div className="activity-header">
               <a href="#/athlete">{`${username}`}</a> – {`${activity.activity_type}`}

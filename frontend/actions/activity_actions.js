@@ -24,8 +24,10 @@ export const createActivity = activity => dispatch => {
 };
 
 export const updateActivity = activity => dispatch => {
-  return ActivityApiUtil.updateActivity(activity).then(
-    activity => dispatch(receiveActivity(activity)))
+  debugger
+  return ActivityApiUtil.updateActivity(activity).then(activity => {
+    return dispatch(receiveActivity(activity))
+  })
 };
 
 export const deleteActivity = activityId => dispatch => {

@@ -21,11 +21,12 @@ export const createActivity = data => {
   })
 }
 
-export const updateActivity = activity => {
+export const updateActivity = payload => {
+  debugger
   return $.ajax({
     method: "PATCH",
-    url: `api/activities/${activity.id}/edit`,
-    data: { activity }
+    url: `api/activities/${payload.activity.id}`,
+    data: payload
   })
 }
 

@@ -5,7 +5,7 @@ import configureStore from "./store/store";
 import * as APIUtil from './util/session_api_util'; //TEST
 import { login, logout, signup, demoLogin } from "./actions/session_actions";
 import { createRoute } from "./actions/route_actions";
-import { createActivity } from "./actions/activity_actions";
+import { createActivity, deleteActivity } from "./actions/activity_actions";
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -38,3 +38,4 @@ window.logout = logout;
 window.demoLogin = demoLogin;
 window.createRoute = createRoute;
 window.createActivity = createActivity;
+window.deleteActivity = deleteActivity;

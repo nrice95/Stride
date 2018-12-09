@@ -4,6 +4,7 @@ import Header from "../header/header_container";
 
 class ActivityForm extends React.Component {
   constructor(props) {
+    debugger
     super(props);
     this.state = this.props.activity;
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -17,14 +18,26 @@ class ActivityForm extends React.Component {
   }
 
   handleSubmit(e){
-    // debugger
     e.preventDefault();
-    this.props.action({activity: this.state}).then(thing => {
-      // debugger
-      this.props.history.push(`/activity/${thing.activity.id}`);
-    })
+    // if (this.props.formType === "Create"){
+      debugger
+      this.props.action({activity: this.state}).then(thing => {
+        this.props.history.push(`/activity/${thing.activity.id}`);
+      })
+    // }
+
 
   }
+
+  componentDidMount() {
+    debugger
+  }
+
+  // componentWillReceiveProps(nextProps) {
+  //   if (typeof this.props.activity.id === "undefined" || this.props.activity.id != nextProps.activity.id) {
+  //     this.setState(nextProps.activity);
+  //   }
+  // }
 
   renderErrors(){
     if (this.props.errors.length > 0){
@@ -52,7 +65,7 @@ class ActivityForm extends React.Component {
             <label>Distance
               <div className="distance">
                 <input className="distance-input" type="text" value={this.state.distance} onChange={this.update("distance")}/>
-                <select className="distance-unit" onChange={this.update("distance_units")}>
+                <select className="distance-unit" onChange={this.update("distance_units")} value={this.state.distance_units}>
                   <option value="miles">miles</option>
                   <option value="kilometers">kilometers</option>
                   <option value="meters">meters</option>
@@ -82,7 +95,7 @@ class ActivityForm extends React.Component {
             <label>Elevation
               <div className="elevation">
                 <input className="elevation-input" type="text" value={this.state.elevation} onChange={this.update("elevation")}/>
-                <select className="elevation-unit" onChange={this.update("elevation_units")}>
+                <select className="elevation-unit" onChange={this.update("elevation_units")} value={this.state.elevation_units}>
                   <option value="feet">feet</option>
                   <option value="meters">meters</option>
                 </select>
@@ -91,23 +104,23 @@ class ActivityForm extends React.Component {
           </div>
           <div className="activity-row-two">
             <label>Sport
-              <select className="sport" onChange={this.update("activity_type")}>
+              <select className="sport" onChange={this.update("activity_type")} value={this.state.activity_type}>
                 <option value="Run">Run</option>
                 <option value="Ride">Ride</option>
               </select>
             </label>
             <label>Run Type
-              <select className="type" onChange={this.update("run_type")}>
+              <select className="type" onChange={this.update("run_type")} value={this.state.run_type}>
                 <option value=""></option>
-                <option value="Ride">Race</option>
-                <option value="Run">Long Run</option>
-                <option value="Ride">Workout</option>
+                <option value="Race">Race</option>
+                <option value="Long Run">Long Run</option>
+                <option value="Workout">Workout</option>
               </select>
             </label>
             <label>Date&Time
               <div className="datetime">
-                <input type="date" onChange={this.update("date")}></input>
-                <input type="time" onChange={this.update("time")}></input>
+                <input type="date" onChange={this.update("date")} value={this.state.date}></input>
+                <input type="time" onChange={this.update("time")} value={this.state.time}></input>
               </div>
             </label>
             </div>
@@ -120,7 +133,7 @@ class ActivityForm extends React.Component {
               </label>
             </div>
           <div className="action-form-buttons">
-            <input className="activity-submit" type="submit" value="Create"/>
+            <input className="activity-submit" type="submit" value={this.props.formType}/>
             <a href="#/dashboard" className="action-cancel">Cancel</a>
           </div>
         </form>

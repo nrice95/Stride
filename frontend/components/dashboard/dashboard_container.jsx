@@ -17,7 +17,9 @@ const mdp = dispatch => {
   return ({
     receiveCurrentAthlete: athlete => dispatch(receiveCurrentAthlete(athlete)),
     logout: () => dispatch(logout()),
-    fetchActivities: () => dispatch(fetchActivities())
+    fetchActivities: () => dispatch(fetchActivities()),
+    deleteActivity: id => dispatch(deleteActivity(id)),
+    updateActivity: activity => dispatch(updateActivity(activity))
   });
 };
 

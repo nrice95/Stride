@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import ActivityIndex from "./activity_index";
-import { fetchActivities } from "../../actions/activity_actions";
+import { fetchActivities, deleteActivity, updateActivity } from "../../actions/activity_actions";
 
 const msp = state => {
   return ({
@@ -10,7 +10,9 @@ const msp = state => {
 
 const mdp = dispatch => {
   return ({
-    fetchActivities: () => dispatch(fetchActivities())
+    fetchActivities: () => dispatch(fetchActivities()),
+    deleteActivity: id => dispatch(deleteActivity(id)),
+    updateActivity: activity => dispatch(updateActivity(activity))
   })
 }
 

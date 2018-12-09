@@ -1,5 +1,5 @@
 import React from "react";
-import { ActivityTableElement } from "./activity_table_element";
+import ActivityTableElement from "./activity_table_element";
 import Header from "../header/header_container";
 
 class ActivityIndex extends React.Component {
@@ -13,7 +13,8 @@ class ActivityIndex extends React.Component {
       return (
         <ActivityTableElement
           key={activity.id}
-          activity={activity} />
+          activity={activity}
+          deleteActivity={this.props.deleteActivity}/>
       )
     })
 
@@ -35,8 +36,9 @@ class ActivityIndex extends React.Component {
                 <th>Sport</th>
                 <th>Title</th>
                 <th>Time</th>
-                <th>DistanFce</th>
+                <th>Distance</th>
                 <th>Elevation</th>
+                <th></th>
               </tr>
             </tbody>
             {activities}

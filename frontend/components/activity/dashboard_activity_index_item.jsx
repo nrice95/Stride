@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { activityData, parseDateTime } from "../../reducers/selectors";
 
-const ActivityIndexItem = ({ activity, currentAthlete }) => {
+const ActivityIndexItem = ({ activity, currentAthlete, updateActivity, deleteActivity }) => {
   const data = activityData(activity);
   const first_render = data.first_render;
   const first_render_title = data.first_render_title;
