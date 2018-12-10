@@ -180,9 +180,11 @@ class Map extends React.Component {
     let centerLat = allSnaps[allSnaps.length-1].lat();
     let centerLng = allSnaps[allSnaps.length-1].lng();
     let finalDistance = Math.round(this.state.distance*100)/100;
+    let activityType = "Run";
     const newRoute = {polyline: encode, centerLat: centerLat, centerLng: centerLng, distance: finalDistance, athlete_id: this.props.current_athlete_id, activity_type: "Run", title: "tests"};
     // this.props.createRoute(newRoute).then(() => this.props.history.push("/routes"));
-    this.props.openRouteModal("saveRoute", newRoute.polyline, centerLat, centerLng, finalDistance);
+    debugger
+    this.props.openRouteModal("saveRoute", newRoute.polyline, centerLat, centerLng, finalDistance, activityType);
   }
 
   render() {
@@ -238,6 +240,7 @@ function runSnapToRoad(path, setState) {
     processSnapToRoadResponse(data);
     const dist = drawSnappedPolyline();
     setState({distance: dist});
+    console.log(dist)
   });
 }
 

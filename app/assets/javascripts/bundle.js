@@ -197,15 +197,16 @@ __webpack_require__.r(__webpack_exports__);
 var OPEN_ROUTE_MODAL = 'OPEN_ROUTE_MODAL';
 var OPEN_USER_MODAL = "OPEN_USER_MODAL";
 var CLOSE_MODAL = 'CLOSE_MODAL';
-var openRouteModal = function openRouteModal(modal, polyline, centerLat, centerLng, distance) {
-  // debugger
+var openRouteModal = function openRouteModal(modal, polyline, centerLat, centerLng, distance, activityType) {
+  debugger;
   return {
     type: OPEN_ROUTE_MODAL,
     modal: modal,
     polyline: polyline,
     centerLat: centerLat,
     centerLng: centerLng,
-    distance: distance
+    distance: distance,
+    activityType: activityType
   };
 };
 var openUserModal = function openUserModal(modal) {
@@ -273,7 +274,7 @@ var fetchRoutes = function fetchRoutes() {
   };
 };
 var receiveRoute = function receiveRoute(route) {
-  // debugger
+  debugger;
   return {
     type: RECEIVE_ROUTE,
     route: route
@@ -2650,6 +2651,7 @@ function (_React$Component) {
       var centerLat = allSnaps[allSnaps.length - 1].lat();
       var centerLng = allSnaps[allSnaps.length - 1].lng();
       var finalDistance = Math.round(this.state.distance * 100) / 100;
+      var activityType = "Run";
       var newRoute = {
         polyline: encode,
         centerLat: centerLat,
@@ -2660,7 +2662,8 @@ function (_React$Component) {
         title: "tests"
       }; // this.props.createRoute(newRoute).then(() => this.props.history.push("/routes"));
 
-      this.props.openRouteModal("saveRoute", newRoute.polyline, centerLat, centerLng, finalDistance);
+      debugger;
+      this.props.openRouteModal("saveRoute", newRoute.polyline, centerLat, centerLng, finalDistance, activityType);
     }
   }, {
     key: "render",
@@ -2737,6 +2740,7 @@ function runSnapToRoad(path, setState) {
     setState({
       distance: dist
     });
+    console.log(dist);
   });
 } // Store snapped polyline returned by the snap-to-road service.
 
@@ -2825,8 +2829,8 @@ var mdp = function mdp(dispatch) {
     createRoute: function createRoute(route) {
       return dispatch(Object(_actions_route_actions__WEBPACK_IMPORTED_MODULE_1__["createRoute"])(route));
     },
-    openRouteModal: function openRouteModal(modal, polyline, centerLat, centerLng, distance) {
-      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__["openRouteModal"])(modal, polyline, centerLat, centerLng, distance));
+    openRouteModal: function openRouteModal(modal, polyline, centerLat, centerLng, distance, activityType) {
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__["openRouteModal"])(modal, polyline, centerLat, centerLng, distance, activityType));
     }
   };
 };
@@ -2876,20 +2880,29 @@ var RouteIndexItem =
 function (_React$Component) {
   _inherits(RouteIndexItem, _React$Component);
 
-  function RouteIndexItem() {
+  function RouteIndexItem(props) {
+    var _this;
+
     _classCallCheck(this, RouteIndexItem);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(RouteIndexItem).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(RouteIndexItem).call(this, props));
+    _this.state = {
+      route: props.route
+    };
+    return _this;
   }
 
   _createClass(RouteIndexItem, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      // debugger
+      this.setState({
+        route: this.props.route
+      }); // debugger
+
       route = this.props.route;
       mapRef = this.refs.map;
       map = new google.maps.Map(mapRef, {
-        zoom: 14,
+        zoom: 12,
         center: {
           lat: route.center_lat,
           lng: route.center_lng
@@ -2936,7 +2949,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var renderRoute = this.props.route;
+      var renderRoute = this.state.route;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "route-index-item"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -3040,7 +3053,8 @@ function (_React$Component) {
     _this.redo = _this.redo.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.toggle = _this.toggle.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.ride = _this.ride.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.run = _this.run.bind(_assertThisInitialized(_assertThisInitialized(_this))); // this.addAndPlaceMarker.bind(this);
+    _this.run = _this.run.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this))); // this.addAndPlaceMarker.bind(this);
 
     return _this;
   }
@@ -3400,6 +3414,38 @@ function (_React$Component) {
       debugger;
     }
   }, {
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      var travelTypes = {
+        "BICYCLING": "Ride",
+        "WALKING": "Run"
+      };
+      e.preventDefault();
+      var allSnaps = [];
+      snappedCoords.forEach(function (list) {
+        allSnaps = allSnaps.concat(list);
+      });
+      var encode = google.maps.geometry.encoding.encodePath(allSnaps); // debugger
+      // debugger
+
+      var centerLat = allSnaps[0].lat();
+      var centerLng = allSnaps[0].lng();
+      var finalDistance = Math.round(this.state.distance * 100) / 100;
+      var activityType = "Run";
+      var newRoute = {
+        polyline: encode,
+        centerLat: centerLat,
+        centerLng: centerLng,
+        distance: finalDistance,
+        athlete_id: this.props.current_athlete_id,
+        activity_type: travelTypes[this.state.travelMode],
+        title: "tests"
+      }; // this.props.createRoute(newRoute).then(() => this.props.history.push("/routes"));
+
+      debugger;
+      this.props.openRouteModal("saveRoute", newRoute.polyline, centerLat, centerLng, finalDistance, activityType);
+    }
+  }, {
     key: "render",
     value: function render() {
       var travelTypes = {
@@ -3448,7 +3494,10 @@ function (_React$Component) {
       }, "Ride"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "run",
         onClick: this.run
-      }, "Run")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Run"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "new-route-button",
+        onClick: this.handleSubmit
+      }, "Save")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "map",
         ref: "map"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -3775,15 +3824,17 @@ function (_React$Component) {
     _classCallCheck(this, RouteSaveForm);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(RouteSaveForm).call(this, props));
+    debugger;
     _this.state = {
       polyline: _this.props.polyline,
-      activity_type: "Run",
+      activity_type: _this.props.activityType,
       title: "",
       description: "",
       athlete_id: _this.props.currentAthlete.id,
       centerLat: _this.props.centerLat,
       centerLng: _this.props.centerLng,
-      distance: _this.props.distance
+      distance: _this.props.distance,
+      current_date: new Date().toString()
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
@@ -3803,7 +3854,7 @@ function (_React$Component) {
     value: function handleSubmit(e) {
       var _this3 = this;
 
-      // debugger
+      debugger;
       e.preventDefault();
       this.props.createRoute(this.state).then(function (thing) {
         // debugger
@@ -3876,13 +3927,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var msp = function msp(state) {
-  // debugger
+  debugger;
   return {
     polyline: state.ui.modal.polyline,
     currentAthlete: state.entities.athletes[state.session.id],
     centerLat: state.ui.modal.centerLat,
     centerLng: state.ui.modal.centerLng,
-    distance: state.ui.modal.distance
+    distance: state.ui.modal.distance,
+    activityType: state.ui.modal.activityType
   };
 };
 
@@ -3914,6 +3966,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 /* harmony import */ var _header_header_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../header/header_container */ "./frontend/components/header/header_container.jsx");
+/* harmony import */ var _reducers_selectors__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../reducers/selectors */ "./frontend/reducers/selectors.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3935,6 +3988,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var mappy;
 var map;
 
@@ -3943,22 +3997,19 @@ var RouteShow =
 function (_React$Component) {
   _inherits(RouteShow, _React$Component);
 
-  function RouteShow() {
+  function RouteShow(props) {
     _classCallCheck(this, RouteShow);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(RouteShow).apply(this, arguments));
+    return _possibleConstructorReturn(this, _getPrototypeOf(RouteShow).call(this, props));
   }
 
   _createClass(RouteShow, [{
     key: "componentDidMount",
-    // constructor(props){
-    //   super(props);
-    // }
     value: function componentDidMount() {
       this.props.fetchRoute(this.props.match.params.routeId);
       mappy = this.refs.map;
       map = new google.maps.Map(mappy, {
-        zoom: 16,
+        zoom: 15,
         center: {
           lat: 40.7374579,
           lng: -74.49510900000001
@@ -3969,19 +4020,13 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      // debugger
-      // debugger
+      debugger;
       var route = this.props.route || {
         polyline: "",
         distance: 0,
         elevation: 0
-      }; // mappy = this.refs.map;
-      // map = new google.maps.Map(mappy, {
-      //   zoom: 16,
-      //   center: {lat: 40.7374579, lng: -74.49510900000001},
-      //   mapTypeId: 'terrain'
-      // });
-
+      };
+      var createDate = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["parseRouteDate"])(route.current_date);
       var coords = [];
       var maxLat = -90;
       var maxLng = -180;
@@ -3993,16 +4038,8 @@ function (_React$Component) {
         coords.push({
           lat: laty,
           lng: lngx
-        }); // if (laty > maxLat){
-        //   maxLat = laty;
-        // }if (laty < minLat){
-        //   minLat = laty
-        // }if (lngx > maxLat){
-        //   maxLat = lngx;
-        // }if (lngx < minLat){
-        //   minLat = lngx
-      }); // console.log((maxLat-minLat)/2);
-      // console.log((maxLng-minLng)/2);
+        });
+      });
 
       if (typeof map !== "undefined") {
         map.setCenter({
@@ -4060,7 +4097,9 @@ function (_React$Component) {
         className: "route-avatar"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "route-avatar-char"
-      }, this.props.athlete.username.charAt(0).toUpperCase())), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "By ".concat(this.props.athlete.username))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "".concat(Math.round(0.0621371 * route.distance) / 100, "mi")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Distance")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "0m"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Elevation Gain"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.props.athlete.username.charAt(0).toUpperCase())), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "initial-map-info"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "By ".concat(this.props.athlete.username)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Created on ".concat(createDate)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "".concat(Math.round(0.0621371 * route.distance) / 100, "mi")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Distance")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, route.activity_type), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Sport")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "0m"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Elevation Gain"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "description-route"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, route.description))))));
     }
@@ -4090,7 +4129,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var msp = function msp(state, ownProps) {
-  // debugger
+  debugger;
   return {
     athlete: state.entities.athletes[state.session.id],
     route: state.entities.routes[ownProps.match.params.routeId],
@@ -4644,7 +4683,8 @@ function modalReducer() {
         polyline: action.polyline,
         centerLat: action.centerLat,
         centerLng: action.centerLng,
-        distance: action.distance
+        distance: action.distance,
+        activityType: action.activityType
       });
 
     case _actions_modal_actions__WEBPACK_IMPORTED_MODULE_0__["OPEN_USER_MODAL"]:
@@ -4744,7 +4784,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /*!****************************************!*\
   !*** ./frontend/reducers/selectors.js ***!
   \****************************************/
-/*! exports provided: activityData, findRelativeDay, renderTime, currentDate, currentTime, parseDateTime */
+/*! exports provided: activityData, findRelativeDay, renderTime, currentDate, currentTime, parseRouteDate, parseDateTime */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4754,6 +4794,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "renderTime", function() { return renderTime; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "currentDate", function() { return currentDate; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "currentTime", function() { return currentTime; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "parseRouteDate", function() { return parseRouteDate; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "parseDateTime", function() { return parseDateTime; });
 var activityData = function activityData(activity) {
   var unitAbbrs = {
@@ -4894,6 +4935,17 @@ var currentDate = function currentDate() {
 var currentTime = function currentTime() {
   var time = new Date();
   return "".concat(date.getMinutes(), ":").concat(date.getHours());
+};
+var parseRouteDate = function parseRouteDate(routeDate) {
+  if (typeof routeDate === "undefined") return "";
+  var date = new Date(routeDate);
+  var month = date.getMonth().toString();
+  debugger;
+  if (month.length === 1) month = "0" + month;
+  month = months[month];
+  var day = date.getDate();
+  var year = date.getUTCFullYear();
+  return "".concat(month, " ").concat(day, ", ").concat(year);
 };
 var parseDateTime = function parseDateTime(activity, type) {
   var dateString = activity.date.split("-");
@@ -5182,7 +5234,7 @@ var fetchRoute = function fetchRoute(id) {
   });
 };
 var createRoute = function createRoute(data) {
-  // debugger
+  debugger;
   return $.ajax({
     method: "POST",
     url: "api/routes",
@@ -5195,7 +5247,8 @@ var createRoute = function createRoute(data) {
         athlete_id: data.athlete_id,
         activity_type: data.activity_type,
         title: data.title,
-        description: data.description
+        description: data.description,
+        current_date: data.current_date
       }
     }
   });

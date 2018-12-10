@@ -18,6 +18,8 @@
 #  elevation        :float
 #  elevation_units  :string
 #  distance_units   :string
+#  date             :string
+#  time             :string
 #
 
 class Activity < ApplicationRecord

@@ -30,6 +30,7 @@ class TestMap extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.ride = this.ride.bind(this);
     this.run = this.run.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     // this.addAndPlaceMarker.bind(this);
   }
 
@@ -298,8 +299,29 @@ class TestMap extends React.Component {
     debugger
   }
 
-  render() {
+  handleSubmit(e){
     const travelTypes = {"BICYCLING": "Ride", "WALKING": "Run"}
+    e.preventDefault();
+    let allSnaps = [];
+    snappedCoords.forEach(list => {
+      allSnaps = allSnaps.concat(list);
+    })
+    const encode = google.maps.geometry.encoding.encodePath(allSnaps);
+    // debugger
+    // debugger
+    let centerLat = allSnaps[0].lat();
+    let centerLng = allSnaps[0].lng();
+    let finalDistance = Math.round(this.state.distance*100)/100;
+    let activityType = "Run";
+    const newRoute = {polyline: encode, centerLat: centerLat, centerLng: centerLng, distance: finalDistance, athlete_id: this.props.current_athlete_id, activity_type: travelTypes[this.state.travelMode], title: "tests"};
+    // this.props.createRoute(newRoute).then(() => this.props.history.push("/routes"));
+    debugger
+    this.props.openRouteModal("saveRoute", newRoute.polyline, centerLat, centerLng, finalDistance, activityType);
+  }
+
+
+  render() {
+    const travelTypes = {"BICYCLING": "Ride", "WALKING": "Run"};
     return (
       <div>
         <header>
@@ -324,6 +346,7 @@ class TestMap extends React.Component {
               <button className="run" onClick={this.run}>Run</button>
             </div>
           </div>
+          <button className="new-route-button" onClick={this.handleSubmit}>Save</button>
 
         </nav>
         <div className="map" ref="map">

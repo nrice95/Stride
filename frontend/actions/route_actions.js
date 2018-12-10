@@ -25,7 +25,7 @@ export const fetchRoutes = () => dispatch => {
 };
 
 export const receiveRoute = route => {
-  // debugger
+  debugger
   return {
     type: RECEIVE_ROUTE,
     route

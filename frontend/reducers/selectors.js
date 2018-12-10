@@ -110,6 +110,19 @@ export const currentTime = () => {
   return `${date.getMinutes()}:${date.getHours()}`
 }
 
+export const parseRouteDate = (routeDate) => {
+  if (typeof routeDate === "undefined") return "";
+  const date = new Date(routeDate);
+  let month = date.getMonth().toString();
+  debugger
+  if (month.length === 1) month = "0" + month;
+  month = months[month];
+  const day = date.getDate();
+  const year = date.getUTCFullYear();
+  return `${month} ${day}, ${year}`;
+
+}
+
 export const parseDateTime = (activity, type) => {
   let dateString = activity.date.split("-");
   let year = dateString[0];

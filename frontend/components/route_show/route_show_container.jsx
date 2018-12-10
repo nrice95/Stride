@@ -4,7 +4,7 @@ import {fetchRoute} from "../../actions/route_actions";
 import RouteShow from "./route_show";
 
 const msp = (state, ownProps) => {
-  // debugger
+  debugger
   return ({
     athlete: state.entities.athletes[state.session.id],
     route: state.entities.routes[ownProps.match.params.routeId],

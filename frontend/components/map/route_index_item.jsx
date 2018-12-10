@@ -6,12 +6,18 @@ let mapRef;
 let map;
 let route;
 class RouteIndexItem extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {route: props.route}
+  }
+
   componentDidMount(){
+    this.setState({route:this.props.route});
     // debugger
     route = this.props.route;
     mapRef = this.refs.map;
     map = new google.maps.Map(mapRef, {
-      zoom: 14,
+      zoom: 12,
       center: {lat: route.center_lat, lng: route.center_lng},
       mapTypeId: 'terrain'
     });
@@ -52,7 +58,7 @@ class RouteIndexItem extends React.Component {
 
 
   render(){
-    let renderRoute = this.props.route;
+    let renderRoute = this.state.route;
     return(
       <div className="route-index-item">
         <a href={`#/route/${renderRoute.id}`}>

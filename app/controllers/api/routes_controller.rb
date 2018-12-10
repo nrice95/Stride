@@ -5,13 +5,14 @@ class Api::RoutesController < ApplicationController
   end
 
   def create
+    debugger
     @route = Route.new(route_params)
-    # debugger
+    debugger
     if @route.save
-      # debugger
+      debugger
       render :show
     else
-      # debugger
+      debugger
       render json: @route.errors.full_messages, status: 422
     end
   end
@@ -21,10 +22,9 @@ class Api::RoutesController < ApplicationController
     render :index
   end
 
-
   private
 
   def route_params
-    params.require(:route).permit(:athlete_id, :polyline, :activity_type, :title, :center_lat, :center_lng, :distance, :description)
+    params.require(:route).permit(:athlete_id, :polyline, :activity_type, :title, :center_lat, :center_lng, :distance, :description, :current_date)
   end
 end

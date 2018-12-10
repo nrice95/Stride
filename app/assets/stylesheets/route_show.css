@@ -23,7 +23,7 @@
 }
 
 .user-stuff {
-  width: 400px;
+  width: 500px;
   height: 325px;
   /* background-color: gray; */
   display: flex;
@@ -141,4 +141,13 @@
   color: white;
   font-size: 48px;
   border-radius: 100%;
+}
+
+.initial-map-info > div:first-of-type{
+  font-size: 20px;
+}
+
+.initial-map-info > div:last-of-type{
+  font-size: 14px;
+  color: #99999e;
 }

@@ -4,15 +4,17 @@ import { withRouter } from "react-router-dom";
   class RouteSaveForm extends React.Component {
   constructor(props){
     super(props);
+    debugger
     this.state = {
       polyline: this.props.polyline,
-      activity_type: "Run",
+      activity_type: this.props.activityType,
       title: "",
       description: "",
       athlete_id: this.props.currentAthlete.id,
       centerLat: this.props.centerLat,
       centerLng: this.props.centerLng,
-      distance: this.props.distance
+      distance: this.props.distance,
+      current_date: new Date().toString()
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   };
@@ -24,7 +26,7 @@ import { withRouter } from "react-router-dom";
   }
 
   handleSubmit(e){
-    // debugger
+    debugger
     e.preventDefault();
     this.props.createRoute(this.state).then(thing => {
       // debugger

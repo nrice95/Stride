@@ -1,36 +1,30 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Header from "../header/header_container";
+import { parseRouteDate } from "../../reducers/selectors";
 
 
 let mappy;
 let map;
 class RouteShow extends React.Component {
-  // constructor(props){
-  //   super(props);
-  // }
+  constructor(props){
+    super(props);
+  }
 
   componentDidMount() {
     this.props.fetchRoute(this.props.match.params.routeId);
-
     mappy = this.refs.map;
     map = new google.maps.Map(mappy, {
-      zoom: 16,
+      zoom: 15,
       center: {lat: 40.7374579, lng: -74.49510900000001},
       mapTypeId: 'terrain'
     });
   }
 
   render(){
-    // debugger
-    // debugger
+    debugger
     const route = this.props.route || {polyline: "", distance: 0, elevation: 0};
-    // mappy = this.refs.map;
-    // map = new google.maps.Map(mappy, {
-    //   zoom: 16,
-    //   center: {lat: 40.7374579, lng: -74.49510900000001},
-    //   mapTypeId: 'terrain'
-    // });
+    const createDate = parseRouteDate(route.current_date);
     var coords = [];
     let maxLat = -90;
     let maxLng = -180;
@@ -42,23 +36,11 @@ class RouteShow extends React.Component {
       const laty = coord.lat();
       const lngx = coord.lng();
       coords.push({lat: laty, lng: lngx});
-      // if (laty > maxLat){
-      //   maxLat = laty;
-      // }if (laty < minLat){
-      //   minLat = laty
-      // }if (lngx > maxLat){
-      //   maxLat = lngx;
-      // }if (lngx < minLat){
-      //   minLat = lngx
     })
-
-    // console.log((maxLat-minLat)/2);
-    // console.log((maxLng-minLng)/2);
 
     if (typeof map !== "undefined"){
       map.setCenter({lat: route.center_lat, lng: route.center_lng});
     }
-
 
     var path = new google.maps.Polyline({
       path: coords,
@@ -109,7 +91,10 @@ class RouteShow extends React.Component {
                     {this.props.athlete.username.charAt(0).toUpperCase()}
                   </div>
                 </a>
-                <div>{`By ${this.props.athlete.username}`}</div>
+                <div className="initial-map-info">
+                  <div>{`By ${this.props.athlete.username}`}</div>
+                  <div>{`Created on ${createDate}`}</div>
+                </div>
               </div>
               <div>
                 <div>
@@ -117,6 +102,12 @@ class RouteShow extends React.Component {
                     {`${Math.round(0.0621371 * route.distance)/100}mi`}
                   </div>
                   <div>Distance</div>
+                </div>
+                <div>
+                  <div>
+                    {route.activity_type}
+                  </div>
+                  <div>Sport</div>
                 </div>
                 <div>
                   <div>

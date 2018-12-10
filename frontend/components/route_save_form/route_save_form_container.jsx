@@ -6,14 +6,14 @@ import RouteSaveForm from "./route_save_form";
 import { closeModal } from "../../actions/modal_actions";
 
 const msp = state => {
-  // debugger
+  debugger
   return({
     polyline: state.ui.modal.polyline,
     currentAthlete: state.entities.athletes[state.session.id],
     centerLat: state.ui.modal.centerLat,
     centerLng: state.ui.modal.centerLng,
-    distance: state.ui.modal.distance
-
+    distance: state.ui.modal.distance,
+    activityType: state.ui.modal.activityType,
   })
 }
 
