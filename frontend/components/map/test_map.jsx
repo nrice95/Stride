@@ -299,6 +299,7 @@ class TestMap extends React.Component {
   }
 
   render() {
+    const travelTypes = {"BICYCLING": "Ride", "WALKING": "Run"}
     return (
       <div>
         <header>
@@ -317,10 +318,10 @@ class TestMap extends React.Component {
               <button className="clear" onClick={this.clear}>Clear</button>
               <button className="undo" onClick={this.undo}>Undo</button>
               <button className="redo" onClick={this.redo}>Redo</button>
+            </div>
+            <div className="map-toggle-buttons">
               <button className="ride" onClick={this.ride}>Ride</button>
               <button className="run" onClick={this.run}>Run</button>
-              <p><a className="undo" href="#/map">Undo</a></p>
-              <p><a className="clear" href="#/map">Clear</a></p>
             </div>
           </div>
 
@@ -337,7 +338,7 @@ class TestMap extends React.Component {
           </div>
           <div className="distance-container">
             <div className="distance-group">
-              <p className="distance">{this.state.travelMode}</p>
+              <p className="distance">{travelTypes[this.state.travelMode]}</p>
               <p className="miles"></p>
             </div>
             <p>Travel Type</p>

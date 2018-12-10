@@ -160,3 +160,26 @@
   font-size: 12px;
   color: #6f6f6f;
 }
+
+.activity-buttons {
+  padding-right: 30px;
+}
+
+.activity-buttons > button {
+  border: 1px solid #e6e6ea;
+  height: 40px;
+  width: 76px;
+  background-color: white;
+  color: #8d8d8d;
+  font-weight: 500;
+}
+
+.activity-buttons > button:last-of-type {
+  border-left: none;
+}
+
+.activity-buttons > button:hover {
+  cursor: pointer;
+  background-color: #f5f5fa;
+  transition: 0.3s;
+}

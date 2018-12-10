@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { logout } from "../../actions/session_actions";
 import Header from "../dashboard_header/dashboard_header_container";
 import ActivityIndexItem from "../activity/dashboard_activity_index_item";
+import { findRelativeDay } from "../../reducers/selectors";
 
 class Dashboard extends React.Component {
   componentDidMount(){
@@ -31,6 +32,7 @@ class Dashboard extends React.Component {
       }
     });
     let latestActivity = (activities.length === 0 ? {title: ""} : this.props.activities[0]);
+    let relativeDay = findRelativeDay(latestActivity);
     // debugger
     return(
       <div className="dashboard">
@@ -52,7 +54,7 @@ class Dashboard extends React.Component {
               </div>
               <div className="latest-activity-column">
                 <div>{`Latest Activity`}</div>
-                <a href={`#/activity/${latestActivity.id}`}>{latestActivity.title}</a>
+                <a href={`#/activity/${latestActivity.id}`}>{`${latestActivity.title} • ${relativeDay}`}</a>
               </div>
               <a href="#/activities" className="your-training-log">
                 <div>{`Your Training Log`}</div>

@@ -123,6 +123,7 @@
 
 .latest-activity-column > a:hover {
   color: #2b87bf;
+  transition: 0.3s;
 }
 
 .your-training-log{

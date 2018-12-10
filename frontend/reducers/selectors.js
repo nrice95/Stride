@@ -30,6 +30,27 @@ export const activityData = (activity) => {
   return {first_render, first_render_title, second_render, second_render_title, third_render, third_render_title};
 }
 
+const parseDate = (date) => {
+  debugger
+  const splitDate = date.split("-");
+  const month = months[splitDate[1]];
+  return `${month} ${splitDate[2]}, ${splitDate[0]}`
+}
+
+export const findRelativeDay = (activity) => {
+  debugger
+  if (activity.title === "") return "";
+  const currentDate = new Date();
+  const startOfToday = new Date(currentDate.toDateString() + " 00:00")
+  const activityDate = new Date(activity.date + " " + activity.time);
+  if (startOfToday - activityDate <= 0){
+    return "Today"
+  }else if (startOfToday - activityDate <= 86400000){
+    return "Yesterday"
+  }else{
+    return parseDate(activity.date);
+  }
+}
 
 const calculatePace = (distance,time) => {
   let minutes = Math.floor(time/distance);

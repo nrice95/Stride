@@ -14,7 +14,8 @@ class ActivityIndex extends React.Component {
         <ActivityTableElement
           key={activity.id}
           activity={activity}
-          deleteActivity={this.props.deleteActivity}/>
+          deleteActivity={this.props.deleteActivity}
+          history={this.props.history}/>
       )
     })
 

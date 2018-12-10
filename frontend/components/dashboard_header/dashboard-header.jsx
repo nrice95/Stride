@@ -58,7 +58,7 @@ class Header extends React.Component {
 
 
             <li className="avis-class">
-              <a>{`+`}</a>
+              <a href="#/activity/new">{`+`}</a>
               <ul className="dashboard-add-action">
                 <li>
                   <a href="#/route/new" className="dashboard-dashboard-map-title">Create a route</a>

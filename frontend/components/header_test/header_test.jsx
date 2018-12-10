@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { logout } from '../../actions/session_actions';
 
 
-class Header extends React.Component {
+class HeaderTest extends React.Component {
 
   render(){
     // const route = this.props.currentAthlete.username.slice() || {polyline: ""};
@@ -73,4 +73,4 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+export default HeaderTest;

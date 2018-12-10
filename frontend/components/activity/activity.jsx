@@ -6,11 +6,20 @@ import { activityData, parseDateTime } from "../../reducers/selectors";
 class ActivityShow extends React.Component {
   constructor(props){
     super(props)
-    //
+    this.state = this.props.activity;
   }
 
   componentDidMount(){
     this.props.fetchActivity(this.props.match.params.activityId);
+  }
+
+  alert(){
+    if (confirm("Are you sure? Deleting an activity cannot be undone.")){
+      this.props.deleteActivity(this.state.id).then(() => {
+        debugger
+        this.props.history.push(`/dashboard`)
+      })
+    }
   }
 
   render(){
@@ -45,9 +54,10 @@ class ActivityShow extends React.Component {
         <Header />
         <div className="activity-show">
           <div className="activity-body">
-          <button onClick={() => this.props.deleteActivity(this.props.activity.id).then(thing => {
-            this.props.history.push(`/dashboard`);})}>Delete</button>
-          <button onClick={() => this.props.history.push(`/activities/${this.props.activity.id}/edit`)}>Edit</button>
+            <div className="activity-buttons">
+              <button onClick={() => this.alert()}>Delete</button>
+                <button onClick={() => this.props.history.push(`/activities/${this.props.activity.id}/edit`)}>Edit</button>
+              </div>
           <div className="activity-field">
             <div className="activity-header">
               <a href="#/athlete">{`${username}`}</a> – {`${activity.activity_type}`}
@@ -68,7 +78,6 @@ class ActivityShow extends React.Component {
                 </div>
                 <div className="bottom-bar"></div>
               </div>
-
               <div className="right-activity">
                 <div className="right-activity-info">
                   <div>
@@ -89,7 +98,6 @@ class ActivityShow extends React.Component {
           </div>
         </div>
         <div className="activity-footer">
-
         </div>
       </div>
     </div>

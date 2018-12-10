@@ -10,7 +10,11 @@ const msp = (state, ownProps) => {
   let day = date.getDate();
   if (day < 10) day = `0${day}`;
   const currentDate = `${date.getUTCFullYear()}-${month}-${day}`
-  const currentTime = `${date.getHours()}:${date.getMinutes()}`;
+  let currentHour = `${date.getHours()}`;
+  if (currentHour.length === 1) currentHour = "0" + currentHour;
+  let currentMinute = `${date.getMinutes()}`;
+  if (currentMinute.length === 1) currentMinute = "0" + currentMinute;
+  const currentTime = `${currentHour}:${currentMinute}`;
   debugger
   return ({
     errors: state.errors,

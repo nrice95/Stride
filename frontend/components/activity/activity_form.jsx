@@ -25,19 +25,11 @@ class ActivityForm extends React.Component {
         this.props.history.push(`/activity/${thing.activity.id}`);
       })
     // }
-
-
   }
 
   componentDidMount() {
     debugger
   }
-
-  // componentWillReceiveProps(nextProps) {
-  //   if (typeof this.props.activity.id === "undefined" || this.props.activity.id != nextProps.activity.id) {
-  //     this.setState(nextProps.activity);
-  //   }
-  // }
 
   renderErrors(){
     if (this.props.errors.length > 0){

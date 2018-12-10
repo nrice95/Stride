@@ -471,9 +471,13 @@ function (_React$Component) {
   _inherits(ActivityShow, _React$Component);
 
   function ActivityShow(props) {
+    var _this;
+
     _classCallCheck(this, ActivityShow);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(ActivityShow).call(this, props)); //
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ActivityShow).call(this, props));
+    _this.state = _this.props.activity;
+    return _this;
   }
 
   _createClass(ActivityShow, [{
@@ -482,9 +486,22 @@ function (_React$Component) {
       this.props.fetchActivity(this.props.match.params.activityId);
     }
   }, {
+    key: "alert",
+    value: function alert() {
+      var _this2 = this;
+
+      if (confirm("Are you sure? Deleting an activity cannot be undone.")) {
+        this.props.deleteActivity(this.state.id).then(function () {
+          debugger;
+
+          _this2.props.history.push("/dashboard");
+        });
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this = this;
+      var _this3 = this;
 
       var username = this.props.currentAthlete.username || "";
       var activity = this.props.activity || {
@@ -543,17 +560,17 @@ function (_React$Component) {
         className: "activity-show"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "activity-body"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "activity-buttons"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: function onClick() {
-          return _this.props.deleteActivity(_this.props.activity.id).then(function (thing) {
-            _this.props.history.push("/dashboard");
-          });
+          return _this3.alert();
         }
       }, "Delete"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: function onClick() {
-          return _this.props.history.push("/activities/".concat(_this.props.activity.id, "/edit"));
+          return _this3.props.history.push("/activities/".concat(_this3.props.activity.id, "/edit"));
         }
-      }, "Edit"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Edit")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "activity-field"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "activity-header"
@@ -689,12 +706,7 @@ function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       debugger;
-    } // componentWillReceiveProps(nextProps) {
-    //   if (typeof this.props.activity.id === "undefined" || this.props.activity.id != nextProps.activity.id) {
-    //     this.setState(nextProps.activity);
-    //   }
-    // }
-
+    }
   }, {
     key: "renderErrors",
     value: function renderErrors() {
@@ -910,7 +922,8 @@ function (_React$Component) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_activity_table_element__WEBPACK_IMPORTED_MODULE_1__["default"], {
           key: activity.id,
           activity: activity,
-          deleteActivity: _this.props.deleteActivity
+          deleteActivity: _this.props.deleteActivity,
+          history: _this.props.history
         });
       });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_header_header_container__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1059,33 +1072,41 @@ function (_React$Component) {
     _classCallCheck(this, ActivityTableElement);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(ActivityTableElement).call(this, props));
+    debugger;
     _this.state = _this.props.activity;
     return _this;
   }
 
   _createClass(ActivityTableElement, [{
-    key: "render",
-    value: function render() {
+    key: "alert",
+    value: function alert() {
       var _this2 = this;
 
-      var alert = function alert() {
-        if (confirm("Are you sure? Deleting an activity cannot be undone.")) {
-          _this2.props.deleteActivity(_this2.state.id);
-        }
-      };
+      if (confirm("Are you sure? Deleting an activity cannot be undone.")) {
+        this.props.deleteActivity(this.state.id).then(function () {
+          debugger;
+
+          _this2.props.history.push("/dashboard");
+        });
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
 
       var duration = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_1__["renderTime"])(this.state);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", {
         className: "index-table-element"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, this.state.activity_type), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "#/activity/".concat(this.state.id)
-      }, this.state.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, duration), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, this.state.distance), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, this.state.elevation), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      }, this.state.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, duration), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, this.state.distance, " ", this.state.distance_units), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, this.state.elevation), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "#/activities/".concat(this.state.id, "/edit")
-      }, "edit"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, "Edit"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: function onClick() {
-          return alert();
+          return _this3.alert();
         }
-      }, "delete"))));
+      }, "Delete"))));
     }
   }]);
 
@@ -1121,7 +1142,11 @@ var msp = function msp(state, ownProps) {
   var day = date.getDate();
   if (day < 10) day = "0".concat(day);
   var currentDate = "".concat(date.getUTCFullYear(), "-").concat(month, "-").concat(day);
-  var currentTime = "".concat(date.getHours(), ":").concat(date.getMinutes());
+  var currentHour = "".concat(date.getHours());
+  if (currentHour.length === 1) currentHour = "0" + currentHour;
+  var currentMinute = "".concat(date.getMinutes());
+  if (currentMinute.length === 1) currentMinute = "0" + currentMinute;
+  var currentTime = "".concat(currentHour, ":").concat(currentMinute);
   debugger;
   return {
     errors: state.errors,
@@ -1542,6 +1567,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
 /* harmony import */ var _dashboard_header_dashboard_header_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../dashboard_header/dashboard_header_container */ "./frontend/components/dashboard_header/dashboard_header_container.jsx");
 /* harmony import */ var _activity_dashboard_activity_index_item__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../activity/dashboard_activity_index_item */ "./frontend/components/activity/dashboard_activity_index_item.jsx");
+/* harmony import */ var _reducers_selectors__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../reducers/selectors */ "./frontend/reducers/selectors.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1559,6 +1585,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -1608,7 +1635,8 @@ function (_React$Component) {
       });
       var latestActivity = activities.length === 0 ? {
         title: ""
-      } : this.props.activities[0]; // debugger
+      } : this.props.activities[0];
+      var relativeDay = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_5__["findRelativeDay"])(latestActivity); // debugger
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dashboard"
@@ -1632,7 +1660,7 @@ function (_React$Component) {
         className: "latest-activity-column"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Latest Activity"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "#/activity/".concat(latestActivity.id)
-      }, latestActivity.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      }, "".concat(latestActivity.title, " \u2022 ").concat(relativeDay))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "#/activities",
         className: "your-training-log"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Your Training Log"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, ">")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1824,7 +1852,9 @@ function (_React$Component) {
         onClick: this.props.logout
       }, "Log Out")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "avis-class"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "+"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#/activity/new"
+      }, "+"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "dashboard-add-action"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "#/route/new",
@@ -2046,7 +2076,7 @@ function (_React$Component) {
         href: "#/dashboard"
       }, "Activity Feed")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "#routes"
-      }, "Routes")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      }, "My Routes")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "#/activities",
         className: "left-dashboard-list"
       }, "Training"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
@@ -2073,11 +2103,12 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "header-button",
         onClick: this.props.logout
-      }, "Log Out")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "+")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      }, "Log Out")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#/activity/new"
+      }, "+"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "add-action"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        href: "#/route/new"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#/route/new",
         className: "dashboard-map-title"
       }, "Create a route")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "#/activity/new",
@@ -2129,6 +2160,166 @@ var mdp = function mdp(dispatch) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_header__WEBPACK_IMPORTED_MODULE_1__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/header_test/header_test.jsx":
+/*!*********************************************************!*\
+  !*** ./frontend/components/header_test/header_test.jsx ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var HeaderTest =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(HeaderTest, _React$Component);
+
+  function HeaderTest() {
+    _classCallCheck(this, HeaderTest);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(HeaderTest).apply(this, arguments));
+  }
+
+  _createClass(HeaderTest, [{
+    key: "render",
+    value: function render() {
+      // const route = this.props.currentAthlete.username.slice() || {polyline: ""};
+      // mappy = this.refs.map;
+      var currentAthlete = this.props.currentAthlete;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
+        className: "dashboard-header"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
+        className: "dashboard-header-items"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "left-items"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#/dashboard",
+        className: "dashboard-stride-title"
+      }, "STRIDE"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#/dashboard",
+        className: "left-dashboard-list"
+      }, "Dashboard"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "dashboard-list"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "routes-li"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        className: "boop",
+        href: "#/dashboard"
+      }, "Activity Feed")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#routes"
+      }, "My Routes")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#/activities",
+        className: "left-dashboard-list"
+      }, "Training"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "training-list"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#activities"
+      }, "My Activities"))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "right-items"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "avatar-dropdown"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "header-avatar-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#/athlete",
+        className: "dashboard-header-avatar"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dashboard-header-initial"
+      }, currentAthlete.username.charAt(0).toUpperCase()))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "user-actions"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#/athlete"
+      }, "My Profile")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "logout-li"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "header-button",
+        onClick: this.props.logout
+      }, "Log Out")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#/activity/new"
+      }, "+"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "add-action"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#/route/new",
+        className: "dashboard-map-title"
+      }, "Create a route")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#/activity/new",
+        className: "header-new-activity"
+      }, "Add manual entry")))))));
+    }
+  }]);
+
+  return HeaderTest;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (HeaderTest);
+
+/***/ }),
+
+/***/ "./frontend/components/header_test/header_test_container.jsx":
+/*!*******************************************************************!*\
+  !*** ./frontend/components/header_test/header_test_container.jsx ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _header_test__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./header_test */ "./frontend/components/header_test/header_test.jsx");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
+
+
+
+
+
+var msp = function msp(state) {
+  // debugger
+  return {
+    currentAthlete: state.entities.athletes[state.session.id]
+  };
+};
+
+var mdp = function mdp(dispatch) {
+  return {
+    receiveCurrentAthlete: function receiveCurrentAthlete(athlete) {
+      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_2__["receiveCurrentAthlete"])(athlete));
+    },
+    logout: function logout() {
+      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_2__["logout"])());
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_header_test__WEBPACK_IMPORTED_MODULE_1__["default"]));
 
 /***/ }),
 
@@ -3211,6 +3402,10 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var travelTypes = {
+        "BICYCLING": "Ride",
+        "WALKING": "Run"
+      };
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "map-header-items"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -3245,19 +3440,15 @@ function (_React$Component) {
       }, "Undo"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "redo",
         onClick: this.redo
-      }, "Redo"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, "Redo")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "map-toggle-buttons"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "ride",
         onClick: this.ride
       }, "Ride"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "run",
         onClick: this.run
-      }, "Run"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        className: "undo",
-        href: "#/map"
-      }, "Undo")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        className: "clear",
-        href: "#/map"
-      }, "Clear"))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Run")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "map",
         ref: "map"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -3276,7 +3467,7 @@ function (_React$Component) {
         className: "distance-group"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "distance"
-      }, this.state.travelMode), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      }, travelTypes[this.state.travelMode]), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "miles"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Travel Type"))));
     }
@@ -3425,7 +3616,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _map_route_index_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../map/route_index_item */ "./frontend/components/map/route_index_item.jsx");
-/* harmony import */ var _header_header_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../header/header_container */ "./frontend/components/header/header_container.jsx");
+/* harmony import */ var _header_test_header_test_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../header_test/header_test_container */ "./frontend/components/header_test/header_test_container.jsx");
+/* harmony import */ var _header_header_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../header/header_container */ "./frontend/components/header/header_container.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3443,6 +3635,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -3477,7 +3670,7 @@ function (_React$Component) {
           refs: _this.refs.map
         });
       });
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_header_header_container__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_header_header_container__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "route-index"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "route-index-body"
@@ -4551,12 +4744,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /*!****************************************!*\
   !*** ./frontend/reducers/selectors.js ***!
   \****************************************/
-/*! exports provided: activityData, renderTime, currentDate, currentTime, parseDateTime */
+/*! exports provided: activityData, findRelativeDay, renderTime, currentDate, currentTime, parseDateTime */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "activityData", function() { return activityData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "findRelativeDay", function() { return findRelativeDay; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "renderTime", function() { return renderTime; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "currentDate", function() { return currentDate; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "currentTime", function() { return currentTime; });
@@ -4601,6 +4795,29 @@ var activityData = function activityData(activity) {
     third_render: third_render,
     third_render_title: third_render_title
   };
+};
+
+var parseDate = function parseDate(date) {
+  debugger;
+  var splitDate = date.split("-");
+  var month = months[splitDate[1]];
+  return "".concat(month, " ").concat(splitDate[2], ", ").concat(splitDate[0]);
+};
+
+var findRelativeDay = function findRelativeDay(activity) {
+  debugger;
+  if (activity.title === "") return "";
+  var currentDate = new Date();
+  var startOfToday = new Date(currentDate.toDateString() + " 00:00");
+  var activityDate = new Date(activity.date + " " + activity.time);
+
+  if (startOfToday - activityDate <= 0) {
+    return "Today";
+  } else if (startOfToday - activityDate <= 86400000) {
+    return "Yesterday";
+  } else {
+    return parseDate(activity.date);
+  }
 };
 
 var calculatePace = function calculatePace(distance, time) {

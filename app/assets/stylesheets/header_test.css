@@ -1,24 +1,20 @@
-  .dashboard-dashboard-header {
+/* .dashboard-header {
   position: relative;
-  z-index: 1;
   display: flex;
   justify-content: space-around;
   align-items: center;
   border-bottom: 1px solid #e6e6ea;
   height: 50px;
-  position: fixed;
-  width: 100%;
-  background-color: white;
+  z-index: 0;
 }
 
-.dashboard-dashboard-header-items{
-  position: fixed;
+.dashboard-header-items{
   width: 1200px;
   display: flex;
   justify-content: space-between;
 }
 
-.dashboard-left-items {
+.left-items {
   margin: 0;
   padding: 0;
   display:flex;
@@ -26,19 +22,14 @@
   align-items: center;
 }
 
-.dashboard-right-items {
+.right-items {
   display: flex;
   flex-direction: row;
   align-items: center;
 
 }
-.dashboard-left-items {
-  list-style: none;
-  display: flex;
-  flex-direction: row;
-}
 
-.dashboard-left-items > li{
+.left-items > li{
   position: relative;
   text-decoration: none;
   width: 112px;
@@ -46,9 +37,14 @@
   justify-content: center;
   align-items: center;
   height: 50px;
+  z-index: 2;
 }
 
-.dashboard-left-items > li > a{
+.left-dashboard-list{
+  position: relative;
+}
+
+.left-items > li > a{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -59,17 +55,22 @@
   width: 100%;
 }
 
-.dashboard-left-items > li:hover > a{
+.left-items > li:hover > a{
   color: #eb4f2f;
 }
 
-.dashboard-left-items > li:hover{
+.left-items > li:hover{
+  position: relative;
+  z-index: 2;
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
   width: 110px;
+  height: 65px;
+  bottom: 0px;
+  background: purple;
 }
 
-.dashboard-dashboard-stride-title{
+.dashboard-stride-title{
   border: 0;
   margin: 0;
   padding: 0;
@@ -81,10 +82,10 @@
   margin-right: 20px;
 }
 
-
-.dashboard-dashboard-list, .dashboard-training-list {
+.dashboard-list, .training-list {
   display: none;
-  width: 110px;
+  width: 150px;
+  left: -1px;
   padding: 0;
   position: absolute;
   font-size: 14px;
@@ -93,38 +94,41 @@
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc;
   overflow: hidden;
   z-index: 1;
   list-style: none;
   text-decoration: none;
 }
 
-li:hover .dashboard-dashboard-list, li:hover .dashboard-training-list{
+li .dashboard-list, li:hover .training-list{
   display: flex;
   flex-direction: column;
-  top: 50px;
+  top: 60px;
+  z-index: -1px;
 }
 
-.dashboard-dashboard-list > li > a, .dashboard-training-list > li > a {
+.dashboard-list > li > a, .training-list > li > a {
   display: flex;
   align-items: center;
-  text-decoration: none;
+  justify-content: flex-start;
   padding-left: 10px;
+  text-decoration: none;
   height: 50px;
   color: #717176;
 }
 
-.dashboard-dashboard-list > li, .dashboard-training-list > li {
+.dashboard-list > li, .training-list > li {
   text-decoration: none;
   width: 100%;
   color: #000;
 }
 
-.dashboard-dashboard-list > li:hover, .dashboard-training-list > li:hover {
+.dashboard-list > li:hover, .training-list > li:hover {
   background: #dddddd;
 }
 
-.dashboard-dashboard-header-avatar{
+.dashboard-header-avatar{
   display: flex;
   align-items: center;
   justify-content: center;
@@ -136,29 +140,22 @@ li:hover .dashboard-dashboard-list, li:hover .dashboard-training-list{
   text-decoration: none;
 }
 
-.dashboard-right-items > li{
-  position: relative;
+.right-items > li{
   list-style: none;
   display: flex;
   align-items: center;
   height: 100%;
 }
 
-.dashboard-header-avatar-container{
+.header-avatar-container{
   height: 50px;
   width: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-/*
-.dashboard-header-avatar-container:hover{
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
-  width: 48px;
-} */
 
-.dashboard-user-actions, .dashboard-add-action {
+.user-actions, .add-action {
   display: none;
   width: 110px;
   padding: 0;
@@ -175,30 +172,40 @@ li:hover .dashboard-dashboard-list, li:hover .dashboard-training-list{
   text-decoration: none;
 }
 
-.dashboard-add-action {
+.add-action {
   width: 150px;
 }
 
-li:hover .dashboard-user-actions, li:hover .dashboard-add-action {
-  position: absolute;
+li:hover .user-actions {
+  border-top: 1 px solid #ccc;
   display: flex;
   flex-direction: column;
   top: 50px;
-  right: -1px;
-  z-index: -1;
+  z-index: 0.1;
+  margin-left: -31px;
+}
+
+li:hover .add-action {
+  border-top: 1 px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  top: 50px;
+  z-index: 0.1;
+  margin-left: -51px;
 }
 
 
-.dashboard-user-actions > li > a, .dashboard-add-action > li > a {
+.user-actions > li > a, .add-action > li > a {
+  padding-left: 10px;
   display: flex;
   align-items: center;
-  text-decoration: none;
   height: 50px;
   width: 100%;
+  text-decoration: none;
   color: #717176;
 }
 
-.dashboard-user-actions > li > button {
+.user-actions > li > button {
   height: 50px;
   width: 110px;
   display: flex;
@@ -207,37 +214,31 @@ li:hover .dashboard-user-actions, li:hover .dashboard-add-action {
   color:  #717176;
 }
 
-
-.dashboard-user-actions > li {
-  /* border-top: 1px solid #ccc; */
+.user-actions > li {
   text-decoration: none;
-  padding-left: 10px;
   width: 100%;
   color: #000;
 }
 
-.dashboard-add-action > li {
-  /* border-top: 1px solid #ccc; */
+.add-action > li {
   text-decoration: none;
-  padding-left: 10px;
   width: 100%;
   color: #000;
 }
 
-.dashboard-user-actions > .dashboard-logout-li{
+.user-actions > .logout-li{
   padding: 0;
 }
 
-.dashboard-user-actions > li:hover, .dashboard-add-action > li:hover {
+.user-actions > li:hover, .add-action > li:hover {
   background: #dddddd;
 }
 
-.dashboard-user-actions > li:hover > button{
+.user-actions > li:hover > button{
   background: #dddddd;
 }
 
-.dashboard-right-items > li {
-  position: relative;
+.right-items > li {
   text-decoration: none;
   width: 50px;
   display: flex;
@@ -246,8 +247,7 @@ li:hover .dashboard-user-actions, li:hover .dashboard-add-action {
   height: 50px;
 }
 
-.dashboard-right-items > .dashboard-avatar-dropdown{
-  position: relative;
+.right-items > .avatar-dropdown{
   text-decoration: none;
   width: 50px;
   display: flex;
@@ -256,44 +256,43 @@ li:hover .dashboard-user-actions, li:hover .dashboard-add-action {
   height: 50px;
 }
 
-.dashboard-right-items > .dashboard-avatar-dropdown > a{
+.right-items > .avatar-dropdown > a{
   text-decoration: none;
   color: #717176;
   font-size: 15px;
 }
 
-.dashboard-right-items > li > a{
+.right-items > li > a{
   text-decoration: none;
   color: #717176;
   font-size: 15px;
 }
 
-
-
-.dashboard-right-items > .dashboard-avatar-dropdown:hover{
-  /* position: absolute; */
+.right-items > .avatar-dropdown:hover{
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
-  /* height: 59px; */
-  z-index: 1;
+  z-index: 0;
   width: 48px;
 }
 
-.dashboard-right-items > li:hover{
-  /* position: absolute; */
+.right-items > li:hover{
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
-  /* height: 59px; */
-  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 0.9;
   width: 48px;
+  background-color: white;
+  height: 51px;
 }
 
-.dashboard-header-button {
+.header-button {
   background-color: white;
   border: 0;
 }
 
-.dashboard-right-items > li > a {
+.right-items > li > a {
   text-decoration: none;
   padding-bottom: 2px;
   padding-left: 1px;
@@ -303,20 +302,39 @@ li:hover .dashboard-user-actions, li:hover .dashboard-add-action {
   align-items: center;
   justify-content: center;
   width: 20px;
-  color: #eb4f2f;
   height: 20px;
+  color: #eb4f2f;
   font-size: 24px;
   border: 2px solid #eb4f2f;
   border-radius: 100%;
   font-weight: 500;
 }
 
-.dashboard-right-items > li:hover > a{
+.right-items > li > a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.right-items > li:hover > a{
   color: white;
   background-color: #eb4f2f;
   font-weight: 500;
 }
 
-.dashboard-logout-li > button{
-  cursor: pointer;
+.add-action > li {
+  width: 100%;
+  height: 50px;
+  z-index: 0;
 }
+
+.add-action > li > a {
+  height: 50px;
+  width: 100%;
+  z-index: 0;
+}
+
+.logout-li > button{
+  cursor: pointer;
+} */

@@ -1,12 +1,11 @@
-  .dashboard-header {
+.dashboard-header {
   position: relative;
-  z-index: 1;
+  z-index: 0;
   display: flex;
   justify-content: space-around;
   align-items: center;
   border-bottom: 1px solid #e6e6ea;
   height: 50px;
-  /* position: fixed; */
 }
 
 .dashboard-header-items{
@@ -29,14 +28,8 @@
   align-items: center;
 
 }
-.left-items {
-  list-style: none;
-  display: flex;
-  flex-direction: row;
-}
 
 .left-items > li{
-  position: relative;
   text-decoration: none;
   width: 112px;
   display: flex;
@@ -78,7 +71,6 @@
   margin-right: 20px;
 }
 
-
 .dashboard-list, .training-list {
   display: none;
   width: 110px;
@@ -91,7 +83,7 @@
   border-right: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   overflow: hidden;
-  z-index: 1;
+  z-index: 0;
   list-style: none;
   text-decoration: none;
 }
@@ -105,18 +97,16 @@ li:hover .dashboard-list, li:hover .training-list{
 .dashboard-list > li > a, .training-list > li > a {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  padding-left: 10px;
   text-decoration: none;
-  min-height: 100%;
-  min-width: 100%;
+  height: 50px;
   color: #717176;
 }
 
 .dashboard-list > li, .training-list > li {
-  /* border-top: 1px solid #ccc; */
   text-decoration: none;
   width: 100%;
-  padding: 15px 0px 15px 10px;
   color: #000;
 }
 
@@ -137,7 +127,6 @@ li:hover .dashboard-list, li:hover .training-list{
 }
 
 .right-items > li{
-  position: relative;
   list-style: none;
   display: flex;
   align-items: center;
@@ -151,12 +140,6 @@ li:hover .dashboard-list, li:hover .training-list{
   align-items: center;
   justify-content: center;
 }
-/*
-.header-avatar-container:hover{
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
-  width: 48px;
-} */
 
 .user-actions, .add-action {
   display: none;
@@ -179,20 +162,30 @@ li:hover .dashboard-list, li:hover .training-list{
   width: 150px;
 }
 
-li:hover .user-actions, li:hover .add-action {
-  position: absolute;
+li:hover .user-actions {
+  border-top: 1 px solid #ccc;
   display: flex;
   flex-direction: column;
   top: 50px;
-  right: -1px;
-  z-index: -1;
+  z-index: 0.1;
+  margin-left: -31px;
+}
+
+li:hover .add-action {
+  border-top: 1 px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  top: 50px;
+  z-index: 0.1;
+  margin-left: -51px;
 }
 
 
 .user-actions > li > a, .add-action > li > a {
+  padding-left: 10px;
   display: flex;
   align-items: center;
-  height: 100%;
+  height: 50px;
   width: 100%;
   text-decoration: none;
   color: #717176;
@@ -207,28 +200,15 @@ li:hover .user-actions, li:hover .add-action {
   color:  #717176;
 }
 
-.boop {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-}
-
-
 .user-actions > li {
-  /* border-top: 1px solid #ccc; */
   text-decoration: none;
   width: 100%;
-  padding: 15px 0px 15px 10px;
   color: #000;
 }
 
 .add-action > li {
-  /* border-top: 1px solid #ccc; */
   text-decoration: none;
   width: 100%;
-  padding: 15px 0px 15px 10px;
   color: #000;
 }
 
@@ -245,7 +225,6 @@ li:hover .user-actions, li:hover .add-action {
 }
 
 .right-items > li {
-  position: relative;
   text-decoration: none;
   width: 50px;
   display: flex;
@@ -255,7 +234,6 @@ li:hover .user-actions, li:hover .add-action {
 }
 
 .right-items > .avatar-dropdown{
-  position: relative;
   text-decoration: none;
   width: 50px;
   display: flex;
@@ -276,24 +254,23 @@ li:hover .user-actions, li:hover .add-action {
   font-size: 15px;
 }
 
-
-
 .right-items > .avatar-dropdown:hover{
-  /* position: absolute; */
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
-  /* height: 59px; */
-  z-index: 1;
+  z-index: 0;
   width: 48px;
 }
 
 .right-items > li:hover{
-  /* position: absolute; */
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
-  /* height: 59px; */
-  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 0.9;
   width: 48px;
+  background-color: white;
+  height: 51px;
 }
 
 .header-button {
@@ -302,21 +279,24 @@ li:hover .user-actions, li:hover .add-action {
 }
 
 .right-items > li > a {
-  padding: 0;
+  text-decoration: none;
+  padding-bottom: 2px;
+  padding-left: 1px;
+  padding-right: 1px;
+  margin: 0;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 20px;
-  color: #eb4f2f;
   height: 20px;
+  color: #eb4f2f;
   font-size: 24px;
   border: 2px solid #eb4f2f;
   border-radius: 100%;
   font-weight: 500;
 }
 
-.right-items > li > a > div{
+.right-items > li > a {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -327,4 +307,20 @@ li:hover .user-actions, li:hover .add-action {
   color: white;
   background-color: #eb4f2f;
   font-weight: 500;
+}
+
+.add-action > li {
+  width: 100%;
+  height: 50px;
+  z-index: 0;
+}
+
+.add-action > li > a {
+  height: 50px;
+  width: 100%;
+  z-index: 0;
+}
+
+.logout-li > button{
+  cursor: pointer;
 }
