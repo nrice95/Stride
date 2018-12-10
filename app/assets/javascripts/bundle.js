@@ -1410,13 +1410,13 @@ var App = function App() {
     component: _activity_activity_index_container__WEBPACK_IMPORTED_MODULE_13__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_17__["ProtectedRoute"], {
     path: "/route/new",
+    component: _map_demo_map_test_container__WEBPACK_IMPORTED_MODULE_8__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_17__["ProtectedRoute"], {
+    path: "/oldmap",
     component: _map_map_container__WEBPACK_IMPORTED_MODULE_7__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_17__["ProtectedRoute"], {
     path: "/route/:routeId",
     component: _route_show_route_show_container__WEBPACK_IMPORTED_MODULE_9__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_17__["ProtectedRoute"], {
-    path: "/maptest",
-    component: _map_demo_map_test_container__WEBPACK_IMPORTED_MODULE_8__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_17__["ProtectedRoute"], {
     path: "/routes",
     component: _route_index_route_index_container__WEBPACK_IMPORTED_MODULE_10__["default"]
@@ -3431,19 +3431,11 @@ function (_React$Component) {
       var centerLat = allSnaps[0].lat();
       var centerLng = allSnaps[0].lng();
       var finalDistance = Math.round(this.state.distance * 100) / 100;
-      var activityType = "Run";
-      var newRoute = {
-        polyline: encode,
-        centerLat: centerLat,
-        centerLng: centerLng,
-        distance: finalDistance,
-        athlete_id: this.props.current_athlete_id,
-        activity_type: travelTypes[this.state.travelMode],
-        title: "tests"
-      }; // this.props.createRoute(newRoute).then(() => this.props.history.push("/routes"));
+      var activityType = travelTypes[this.state.travelMode]; // const newRoute = {polyline: encode, centerLat: centerLat, centerLng: centerLng, distance: finalDistance, athlete_id: this.props.current_athlete_id, activity_type: travelTypes[this.state.travelMode], title: "tests"};
+      // this.props.createRoute(newRoute).then(() => this.props.history.push("/routes"));
 
       debugger;
-      this.props.openRouteModal("saveRoute", newRoute.polyline, centerLat, centerLng, finalDistance, activityType);
+      this.props.openRouteModal("saveRoute", encode, centerLat, centerLng, finalDistance, activityType);
     }
   }, {
     key: "render",
@@ -3539,10 +3531,34 @@ function (_React$Component) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _map_test_map__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../map/test_map */ "./frontend/components/map/test_map.jsx");
+/* harmony import */ var _actions_route_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/route_actions */ "./frontend/actions/route_actions.js");
+/* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
+/* harmony import */ var _map_test_map__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../map/test_map */ "./frontend/components/map/test_map.jsx");
 
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(null, null)(_map_test_map__WEBPACK_IMPORTED_MODULE_1__["default"]));
+
+
+
+var msp = function msp(state) {
+  // debugger
+  return {
+    current_athlete_id: state.session.id
+  };
+};
+
+var mdp = function mdp(dispatch) {
+  // debugger
+  return {
+    createRoute: function createRoute(route) {
+      return dispatch(Object(_actions_route_actions__WEBPACK_IMPORTED_MODULE_1__["createRoute"])(route));
+    },
+    openRouteModal: function openRouteModal(modal, polyline, centerLat, centerLng, distance, activityType) {
+      return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__["openRouteModal"])(modal, polyline, centerLat, centerLng, distance, activityType));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_map_test_map__WEBPACK_IMPORTED_MODULE_3__["default"]));
 
 /***/ }),
 
@@ -4057,7 +4073,7 @@ function (_React$Component) {
       });
       path.setMap(map);
       var startMarker = new google.maps.Marker({
-        position: coords[coords.length - 1],
+        position: coords[0],
         icon: {
           path: google.maps.SymbolPath.CIRCLE,
           fillColor: "green",
@@ -4068,7 +4084,7 @@ function (_React$Component) {
         map: map
       });
       var endMarker = new google.maps.Marker({
-        position: coords[0],
+        position: coords[coords.length - 1],
         map: map
       }); // debugger
 

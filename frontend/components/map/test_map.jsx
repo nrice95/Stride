@@ -312,13 +312,12 @@ class TestMap extends React.Component {
     let centerLat = allSnaps[0].lat();
     let centerLng = allSnaps[0].lng();
     let finalDistance = Math.round(this.state.distance*100)/100;
-    let activityType = "Run";
-    const newRoute = {polyline: encode, centerLat: centerLat, centerLng: centerLng, distance: finalDistance, athlete_id: this.props.current_athlete_id, activity_type: travelTypes[this.state.travelMode], title: "tests"};
+    let activityType = travelTypes[this.state.travelMode];
+    // const newRoute = {polyline: encode, centerLat: centerLat, centerLng: centerLng, distance: finalDistance, athlete_id: this.props.current_athlete_id, activity_type: travelTypes[this.state.travelMode], title: "tests"};
     // this.props.createRoute(newRoute).then(() => this.props.history.push("/routes"));
     debugger
-    this.props.openRouteModal("saveRoute", newRoute.polyline, centerLat, centerLng, finalDistance, activityType);
+    this.props.openRouteModal("saveRoute", encode, centerLat, centerLng, finalDistance, activityType);
   }
-
 
   render() {
     const travelTypes = {"BICYCLING": "Ride", "WALKING": "Run"};
