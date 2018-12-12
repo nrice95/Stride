@@ -1568,7 +1568,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
 /* harmony import */ var _dashboard_header_dashboard_header_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../dashboard_header/dashboard_header_container */ "./frontend/components/dashboard_header/dashboard_header_container.jsx");
 /* harmony import */ var _activity_dashboard_activity_index_item__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../activity/dashboard_activity_index_item */ "./frontend/components/activity/dashboard_activity_index_item.jsx");
-/* harmony import */ var _reducers_selectors__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../reducers/selectors */ "./frontend/reducers/selectors.js");
+/* harmony import */ var _route_index_dashboard_route_index_item__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../route_index/dashboard_route_index_item */ "./frontend/components/route_index/dashboard_route_index_item.jsx");
+/* harmony import */ var _reducers_selectors__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../reducers/selectors */ "./frontend/reducers/selectors.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1594,6 +1595,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var Dashboard =
 /*#__PURE__*/
 function (_React$Component) {
@@ -1602,7 +1604,9 @@ function (_React$Component) {
   _createClass(Dashboard, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      debugger;
       this.props.fetchActivities();
+      this.props.fetchRoutes();
     }
   }]);
 
@@ -1617,18 +1621,54 @@ function (_React$Component) {
     value: function render() {
       var _this = this;
 
-      //debugger
+      var recentActivity = this.props.activities[0] || {
+        date: "",
+        time: ""
+      };
+      debugger;
+      var recentTime = new Date(recentActivity.date + " " + recentActivity.time).getTime() || 0;
       var _this$props = this.props,
           currentAthlete = _this$props.currentAthlete,
           logout = _this$props.logout;
-      var activities = this.props.activities.reverse().map(function (activity) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_activity_dashboard_activity_index_item__WEBPACK_IMPORTED_MODULE_4__["default"], {
-          key: activity.id,
-          activity: activity,
-          currentAthlete: currentAthlete,
-          updateActivity: _this.props.updateActivity,
-          deleteActivity: _this.props.deleteActivity
-        });
+      var routes = this.props.routes;
+      var activities = this.props.activities;
+      var dashboardItems = routes.concat(activities);
+      dashboardItems = dashboardItems // .sort((a,b) => {
+      //   const aDate = new Date(a.date + " " + a.time).getTime();
+      //   const bDate = new Date(b.date + " " + b.time).getTime();
+      //   debugger
+      //   return bDate - aDate;
+      // })
+      .sort(function (a, b) {
+        var newTime = new Date(b.date + " " + b.time).getTime();
+
+        if (newTime > recentTime) {
+          recentActivity = b;
+          recentTime = newTime;
+        }
+
+        var aTmp = a.created_at.split(new RegExp('(T|Z)'));
+        var bTmp = b.created_at.split(new RegExp('(T|Z)'));
+        var aDate = new Date(a[0] + " " + a[3]).getTime();
+        var bDate = new Date(b[0] + " " + b[3]).getTime();
+        return bDate - aDate;
+      }) // .reverse()
+      .map(function (item) {
+        // debugger
+        if (item.polyline !== undefined) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_route_index_dashboard_route_index_item__WEBPACK_IMPORTED_MODULE_5__["default"], {
+            key: item.id,
+            route: item
+          });
+        } else {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_activity_dashboard_activity_index_item__WEBPACK_IMPORTED_MODULE_4__["default"], {
+            key: item.id,
+            activity: item,
+            currentAthlete: currentAthlete,
+            updateActivity: _this.props.updateActivity,
+            deleteActivity: _this.props.deleteActivity
+          });
+        }
 
         if (activities.length === 0) {
           activities = "No recent activities";
@@ -1636,9 +1676,10 @@ function (_React$Component) {
       });
       var latestActivity = activities.length === 0 ? {
         title: ""
-      } : this.props.activities[0];
-      var relativeDay = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_5__["findRelativeDay"])(latestActivity); // debugger
+      } : recentActivity;
+      var relativeDay = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_6__["findRelativeDay"])(latestActivity); // debugger
 
+      debugger;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dashboard"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_dashboard_header_dashboard_header_container__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1657,7 +1698,7 @@ function (_React$Component) {
         className: "dashboard-username"
       }, currentAthlete.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "activity-count-column"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Activities"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, activities.length)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Activities"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, dashboardItems.length)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "latest-activity-column"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Latest Activity"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "#/activity/".concat(latestActivity.id)
@@ -1668,7 +1709,7 @@ function (_React$Component) {
         className: "activities-feed"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "activities-list"
-      }, activities))));
+      }, dashboardItems))));
     }
   }]);
 
@@ -1692,6 +1733,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _dashboard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dashboard */ "./frontend/components/dashboard/dashboard.jsx");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
 /* harmony import */ var _actions_activity_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/activity_actions */ "./frontend/actions/activity_actions.js");
+/* harmony import */ var _actions_route_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/route_actions */ "./frontend/actions/route_actions.js");
+
 
 
 
@@ -1704,7 +1747,10 @@ var msp = function msp(state) {
     activities: Object.keys(state.activities).map(function (id) {
       return state.activities[id];
     }),
-    currentAthlete: state.entities.athletes[state.session.id]
+    currentAthlete: state.entities.athletes[state.session.id],
+    routes: Object.keys(state.routes).map(function (id) {
+      return state.routes[id];
+    })
   };
 };
 
@@ -1718,6 +1764,9 @@ var mdp = function mdp(dispatch) {
     },
     fetchActivities: function fetchActivities() {
       return dispatch(Object(_actions_activity_actions__WEBPACK_IMPORTED_MODULE_3__["fetchActivities"])());
+    },
+    fetchRoutes: function fetchRoutes() {
+      return dispatch(Object(_actions_route_actions__WEBPACK_IMPORTED_MODULE_4__["fetchRoutes"])());
     },
     deleteActivity: function (_deleteActivity) {
       function deleteActivity(_x) {
@@ -3666,6 +3715,31 @@ var Root = function Root(_ref) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Root);
+
+/***/ }),
+
+/***/ "./frontend/components/route_index/dashboard_route_index_item.jsx":
+/*!************************************************************************!*\
+  !*** ./frontend/components/route_index/dashboard_route_index_item.jsx ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _reducers_selectors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../reducers/selectors */ "./frontend/reducers/selectors.js");
+
+
+
+var RouteIndexItem = function RouteIndexItem(_ref) {
+  var route = _ref.route,
+      currentAthlete = _ref.currentAthlete;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, route.title));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (RouteIndexItem);
 
 /***/ }),
 

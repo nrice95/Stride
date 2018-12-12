@@ -3,11 +3,14 @@ import { Link } from "react-router-dom";
 import { logout } from "../../actions/session_actions";
 import Header from "../dashboard_header/dashboard_header_container";
 import ActivityIndexItem from "../activity/dashboard_activity_index_item";
+import RouteIndexItem from "../route_index/dashboard_route_index_item";
 import { findRelativeDay } from "../../reducers/selectors";
 
 class Dashboard extends React.Component {
   componentDidMount(){
+    debugger
     this.props.fetchActivities();
+    this.props.fetchRoutes();
   }
 
   constructor(props){
@@ -16,24 +19,60 @@ class Dashboard extends React.Component {
   }
 
   render(){
-    //debugger
+    let recentActivity = this.props.activities[0] || {date: "", time: ""};
+    debugger
+    let recentTime = new Date(recentActivity.date + " " + recentActivity.time).getTime() || 0;
     const { currentAthlete, logout } = this.props;
-    let activities = this.props.activities.reverse().map(activity => {
-      return (
-        <ActivityIndexItem
-          key={activity.id}
-          activity={activity}
-          currentAthlete={currentAthlete}
-          updateActivity={this.props.updateActivity}
-          deleteActivity={this.props.deleteActivity} />
-      )
+    let routes = this.props.routes;
+    let activities = this.props.activities;
+    let dashboardItems = routes.concat(activities);
+    dashboardItems = dashboardItems
+    // .sort((a,b) => {
+    //   const aDate = new Date(a.date + " " + a.time).getTime();
+    //   const bDate = new Date(b.date + " " + b.time).getTime();
+    //   debugger
+    //   return bDate - aDate;
+    // })
+    .sort((a,b) => {
+      const newTime = new Date(b.date + " " + b.time).getTime();
+      if (newTime > recentTime) {
+        recentActivity = b;
+        recentTime = newTime;
+      }
+      const aTmp = a.created_at.split(new RegExp('(T|Z)'));
+      const bTmp = b.created_at.split(new RegExp('(T|Z)'));
+      const aDate = new Date(a[0] + " " + a[3]).getTime();
+      const bDate = new Date(b[0] + " " + b[3]).getTime();
+
+      return bDate-aDate;
+    })
+    // .reverse()
+    .map(item => {
+      // debugger
+      if (item.polyline !== undefined){
+        return (
+          <RouteIndexItem
+            key={item.id}
+            route={item} />
+        )
+      }else{
+        return (
+          <ActivityIndexItem
+            key={item.id}
+            activity={item}
+            currentAthlete={currentAthlete}
+            updateActivity={this.props.updateActivity}
+            deleteActivity={this.props.deleteActivity} />
+        )
+      }
       if (activities.length === 0) {
         activities = "No recent activities"
       }
     });
-    let latestActivity = (activities.length === 0 ? {title: ""} : this.props.activities[0]);
+    let latestActivity = (activities.length === 0 ? {title: ""} : recentActivity);
     let relativeDay = findRelativeDay(latestActivity);
     // debugger
+    debugger
     return(
       <div className="dashboard">
         <Header />
@@ -50,7 +89,7 @@ class Dashboard extends React.Component {
               </a>
               <div className="activity-count-column">
                 <div>{`Activities`}</div>
-                <div>{activities.length}</div>
+                <div>{dashboardItems.length}</div>
               </div>
               <div className="latest-activity-column">
                 <div>{`Latest Activity`}</div>
@@ -64,7 +103,7 @@ class Dashboard extends React.Component {
           </div>
           <div className="activities-feed">
             <ul className="activities-list">
-              {activities}
+              {dashboardItems}
             </ul>
           </div>
         </div>
