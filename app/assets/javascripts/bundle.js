@@ -1621,6 +1621,7 @@ function (_React$Component) {
     value: function render() {
       var _this = this;
 
+      var numActivities = 0;
       var recentActivity = this.props.activities[0] || {
         date: "",
         time: ""
@@ -1658,9 +1659,12 @@ function (_React$Component) {
         if (item.polyline !== undefined) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_route_index_dashboard_route_index_item__WEBPACK_IMPORTED_MODULE_5__["default"], {
             key: item.id,
-            route: item
+            route: item,
+            currentAthlete: currentAthlete,
+            refs: _this.refs.map
           });
         } else {
+          numActivities++;
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_activity_dashboard_activity_index_item__WEBPACK_IMPORTED_MODULE_4__["default"], {
             key: item.id,
             activity: item,
@@ -1698,7 +1702,7 @@ function (_React$Component) {
         className: "dashboard-username"
       }, currentAthlete.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "activity-count-column"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Activities"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, dashboardItems.length)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Activities"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, numActivities)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "latest-activity-column"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Latest Activity"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "#/activity/".concat(latestActivity.id)
@@ -2944,6 +2948,7 @@ function (_React$Component) {
   _createClass(RouteIndexItem, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      debugger;
       this.setState({
         route: this.props.route
       }); // debugger
@@ -3730,16 +3735,163 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _reducers_selectors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../reducers/selectors */ "./frontend/reducers/selectors.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 
 
-var RouteIndexItem = function RouteIndexItem(_ref) {
-  var route = _ref.route,
-      currentAthlete = _ref.currentAthlete;
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, route.title));
-};
+var mapRef;
+var map;
+var route;
 
-/* harmony default export */ __webpack_exports__["default"] = (RouteIndexItem);
+var DashboardRouteIndexItem =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(DashboardRouteIndexItem, _React$Component);
+
+  function DashboardRouteIndexItem(props) {
+    var _this;
+
+    _classCallCheck(this, DashboardRouteIndexItem);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(DashboardRouteIndexItem).call(this, props));
+    _this.state = {
+      route: props.route,
+      currentAthlete: props.currentAthlete
+    };
+    return _this;
+  }
+
+  _createClass(DashboardRouteIndexItem, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      // this.setState({route:this.props.route});
+      this.state;
+      this.props;
+      this;
+      debugger;
+      route = this.state.route;
+      mapRef = this.refs.map;
+      map = new google.maps.Map(mapRef, {
+        zoom: 12,
+        center: {
+          lat: route.center_lat,
+          lng: route.center_lng
+        },
+        mapTypeId: 'terrain'
+      });
+      var coords = [];
+      var route = route || {
+        polyline: "",
+        distance: 0
+      };
+      google.maps.geometry.encoding.decodePath(route.polyline).forEach(function (coord) {
+        var laty = coord.lat();
+        var lngx = coord.lng();
+        coords.push({
+          lat: laty,
+          lng: lngx
+        });
+      });
+      var path = new google.maps.Polyline({
+        path: coords,
+        geodesic: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 6
+      });
+      path.setMap(map);
+      var startMarker = new google.maps.Marker({
+        position: coords[coords.length - 1],
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          fillColor: "green",
+          scale: 8,
+          fillOpacity: 1,
+          strokeWeight: 3
+        },
+        map: map
+      });
+      var endMarker = new google.maps.Marker({
+        position: coords[0],
+        map: map
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var date = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_1__["parseRouteDate"])(this.state.route.current_date);
+      var time = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_1__["parseRouteTime"])(this.state.route.current_date);
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "dashboard-route"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dashboard-route-content"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dashboard-avatar-column"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#/athlete",
+        className: "dashboard-item-avatar"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dashboard-item-initial"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.currentAthlete.username.charAt(0).toUpperCase())))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dashboard-route-summary"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#/athlete",
+        className: "dashboard-item-name"
+      }, this.state.currentAthlete.username, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dashboard-dateT"
+      }, "".concat(date, " at ").concat(time))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#/route/".concat(this.state.route.id),
+        className: "dashboard-route-title"
+      }, this.state.route.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "route-summary-data"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dashboard-datum"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dashboard-datum-label"
+      }, "Distance"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dashboard-datum-value"
+      }, "".concat(Math.floor(this.state.route.distance * 0.0621371) / 100, " mi"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dashboard-datum"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dashboard-datum-label"
+      }, "Elevation"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dashboard-datum-value"
+      }, "".concat(Math.floor(this.state.route.distance * 0.0621371) / 100, " m"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dashboard-datum"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dashboard-datum-label"
+      }, "Sport"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "dashboard-datum-value"
+      }, "".concat(this.state.route.activity_type)))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#/route/".concat(this.state.route.id),
+        className: "long-map-holder"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "long-map",
+        ref: "map"
+      })));
+    }
+  }]);
+
+  return DashboardRouteIndexItem;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (DashboardRouteIndexItem);
 
 /***/ }),
 
@@ -3803,6 +3955,7 @@ function (_React$Component) {
 
       // debugger
       var routes = this.props.routes.reverse().map(function (route) {
+        debugger;
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_map_route_index_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
           key: route.id,
           route: route,
@@ -4874,7 +5027,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /*!****************************************!*\
   !*** ./frontend/reducers/selectors.js ***!
   \****************************************/
-/*! exports provided: activityData, findRelativeDay, renderTime, currentDate, currentTime, parseRouteDate, parseDateTime */
+/*! exports provided: activityData, findRelativeDay, renderTime, currentDate, currentTime, parseRouteDate, parseRouteTime, parseDateTime */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4885,6 +5038,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "currentDate", function() { return currentDate; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "currentTime", function() { return currentTime; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "parseRouteDate", function() { return parseRouteDate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "parseRouteTime", function() { return parseRouteTime; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "parseDateTime", function() { return parseDateTime; });
 var activityData = function activityData(activity) {
   var unitAbbrs = {
@@ -5036,6 +5190,21 @@ var parseRouteDate = function parseRouteDate(routeDate) {
   var day = date.getDate();
   var year = date.getUTCFullYear();
   return "".concat(month, " ").concat(day, ", ").concat(year);
+};
+var parseRouteTime = function parseRouteTime(routeDate) {
+  if (typeof routeDate === "undefined") return "";
+  var time = new Date(routeDate);
+  var minutes = "".concat(time.getMinutes());
+  if (minutes.length === 1) minutes = "0" + minutes;
+  var hour = time.getHours();
+  var meridian = "AM";
+
+  if (hour > 12) {
+    hour = hour - 12;
+    meridian = "PM";
+  }
+
+  return "".concat(hour, ":").concat(minutes, " ").concat(meridian);
 };
 var parseDateTime = function parseDateTime(activity, type) {
   var dateString = activity.date.split("-");

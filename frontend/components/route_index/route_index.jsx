@@ -11,6 +11,7 @@ class RouteIndex extends React.Component {
   render(){
     // debugger
     const routes = this.props.routes.reverse().map(route => {
+      debugger
       return (
         <RouteIndexItem
           key={route.id}

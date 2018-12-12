@@ -1,0 +1,126 @@
+.dashboard-route{
+  padding: 20px;
+  background-color: white;
+  width: 552px;
+  height: 370px;
+  margin-top: 0;
+  margin-bottom: 10px;
+  border-radius: 3px;
+  box-shadow: 0px 8px 20px -4px rgba(209,209,209,1);
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-item-avatar{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 40px;
+  border-radius: 100%;
+  background-color: #be3825;
+  color: white;
+  text-decoration: none;
+  margin-right: 20px;
+  font-size: 24px;
+}
+
+.dashboard-avatar-column{
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-item-name{
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+  /* margin-bottom: 5px; */
+}
+
+.dashboard-dateT {
+  font-size: 12px;
+  font-weight: 300;
+  margin-bottom: 20px;
+  color: #6c6c6c;
+}
+
+.dashboard-item-name:hover{
+  transition: 0.2s;
+  color: #005b83;
+  font-weight: 500;
+}
+
+.dashboard-route-summary {
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-route-content{
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+  width: 542px;
+}
+
+.dashboard-route-title{
+  text-decoration: none;
+  color: black;
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.dashboard-route-title:hover{
+  transition: 0.2s;
+  color: #005b83;
+}
+
+.route-summary-data{
+  display: flex;
+  flex-direction: row;
+  /* margin-bottom: 20px; */
+  /* border-bottom: 1px solid #e6e6ea; */
+}
+
+.dashboard-datum:first-of-type{
+  padding-left: 0;
+}
+
+.dashboard-datum{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 90px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-right: 1px solid #e6e6ea;
+
+}
+
+.dashboard-datum:last-of-type{
+  border-right: 0;
+  width: 110px;
+}
+
+.dashboard-datum-label{
+  font-size: 12px;
+  color: #848382;
+}
+
+.dashboard-datum-value{
+  font-size: 20px;
+}
+
+.long-map {
+  height: 181px;
+  width: 506px;
+  padding-left: 20px;
+}
+
+.long-map-holder{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e6e6ea;
+}

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { logout } from "../../actions/session_actions";
 import Header from "../dashboard_header/dashboard_header_container";
 import ActivityIndexItem from "../activity/dashboard_activity_index_item";
-import RouteIndexItem from "../route_index/dashboard_route_index_item";
+import DashboardRouteIndexItem from "../route_index/dashboard_route_index_item";
 import { findRelativeDay } from "../../reducers/selectors";
 
 class Dashboard extends React.Component {
@@ -19,6 +19,7 @@ class Dashboard extends React.Component {
   }
 
   render(){
+    let numActivities = 0;
     let recentActivity = this.props.activities[0] || {date: "", time: ""};
     debugger
     let recentTime = new Date(recentActivity.date + " " + recentActivity.time).getTime() || 0;
@@ -51,11 +52,14 @@ class Dashboard extends React.Component {
       // debugger
       if (item.polyline !== undefined){
         return (
-          <RouteIndexItem
+          <DashboardRouteIndexItem
             key={item.id}
-            route={item} />
+            route={item}
+            currentAthlete={currentAthlete}
+            refs={this.refs.map} />
         )
       }else{
+        numActivities++;
         return (
           <ActivityIndexItem
             key={item.id}
@@ -89,7 +93,7 @@ class Dashboard extends React.Component {
               </a>
               <div className="activity-count-column">
                 <div>{`Activities`}</div>
-                <div>{dashboardItems.length}</div>
+                <div>{numActivities}</div>
               </div>
               <div className="latest-activity-column">
                 <div>{`Latest Activity`}</div>

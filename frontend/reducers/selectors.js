@@ -120,7 +120,20 @@ export const parseRouteDate = (routeDate) => {
   const day = date.getDate();
   const year = date.getUTCFullYear();
   return `${month} ${day}, ${year}`;
+}
 
+export const parseRouteTime = (routeDate) => {
+  if (typeof routeDate === "undefined") return "";
+  const time = new Date(routeDate);
+  let minutes = `${time.getMinutes()}`;
+  if (minutes.length === 1) minutes = "0" + minutes;
+  let hour = time.getHours();
+  let meridian = "AM";
+  if (hour > 12){
+    hour = hour - 12;
+    meridian = "PM"
+  }
+  return `${hour}:${minutes} ${meridian}`;
 }
 
 export const parseDateTime = (activity, type) => {
