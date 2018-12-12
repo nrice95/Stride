@@ -138,7 +138,8 @@ Route.create(
   center_lat: 40.7379863410218,
   center_lng: -74.4969950653499,
   distance: 5404.55,
-  description: "It's my first route"
+  description: "It's my first route",
+  current_date: "Fri Nov 09 2018 02:07:50 GMT-0500 (Eastern Standard Time)"
 )
 
 Route.create(
@@ -150,7 +151,8 @@ Route.create(
   center_lat: 40.7380184696829,
   center_lng: -74.4969764220433,
   distance: 8172.59,
-  description: "The usual hilly killer"
+  description: "The usual hilly killer",
+  current_date: "Thu Nov 15 2018 02:07:50 GMT-0500 (Eastern Standard Time)"
 )
 
 Route.create(
@@ -163,7 +165,7 @@ Route.create(
   center_lng: -73.9844201880059,
   distance: 905.72,
   description: "Quickie",
-  current_date: "Mon Dec 10 2018 02:07:50 GMT-0500 (Eastern Standard Time)"
+  current_date: "Sat Nov 17 2018 02:07:50 GMT-0500 (Eastern Standard Time)"
 )
 
 Route.create(
@@ -176,7 +178,7 @@ Route.create(
   center_lng: -74.4970222777546,
   distance: 15380.46,
   description: "Long dude",
-  current_date: "Mon Dec 10 2018 00:46:35 GMT-0500 (Eastern Standard Time)"
+  current_date: "Fri Nov 23 2018 00:46:35 GMT-0500 (Eastern Standard Time)"
 )
 
 Route.create(
@@ -189,5 +191,5 @@ Route.create(
   center_lng: -74.4969583,
   distance: 13637.6,
   description: "Lovely",
-  current_date: "Tue Dec 10 2018 00:46:35 GMT-0500 (Eastern Standard Time)"
+  current_date: "Mon Nov 26 2018 00:46:35 GMT-0500 (Eastern Standard Time)"
 )

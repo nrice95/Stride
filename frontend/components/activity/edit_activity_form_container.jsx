@@ -20,7 +20,7 @@ const msp = (state, ownProps) => {
     date: "",
     time: ""
   };
-  debugger
+  // debugger
 
   const activity = state.activities[ownProps.match.params.activityId] || defaultActivity;
 

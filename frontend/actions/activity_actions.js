@@ -24,7 +24,7 @@ export const createActivity = activity => dispatch => {
 };
 
 export const updateActivity = activity => dispatch => {
-  debugger
+  // debugger
   return ActivityApiUtil.updateActivity(activity).then(activity => {
     return dispatch(receiveActivity(activity))
   })

@@ -30,15 +30,38 @@ export const activityData = (activity) => {
   return {first_render, first_render_title, second_render, second_render_title, third_render, third_render_title};
 }
 
+export const parseItemForSort = (item) => {
+  if (item.polyline === undefined){
+    return activityParse(item);
+  }else{
+    return routeParse(item);
+  }
+}
+
+const activityParse = (activity) => {
+  const tmpTime = activity.created_at.split(new RegExp('(T|Z)'));
+  return new Date(tmpTime[0] + " " + tmpTime[2]).getTime();
+}
+
+const routeParse = (route) => {
+  if (route.current_date === null){
+    const tmpTime = route.created_at.split(new RegExp('(T|Z)'));
+    return new Date(tmpTime[0] + " " + tmpTime[2]).getTime();
+  }else{
+    // debugger
+    return new Date(route.current_date).getTime();
+  }
+}
+
 const parseDate = (date) => {
-  debugger
+  // debugger
   const splitDate = date.split("-");
   const month = months[splitDate[1]];
   return `${month} ${splitDate[2]}, ${splitDate[0]}`
 }
 
 export const findRelativeDay = (activity) => {
-  debugger
+  // debugger
   if (activity.title === "") return "";
   const currentDate = new Date();
   const startOfToday = new Date(currentDate.toDateString() + " 00:00")
@@ -114,7 +137,7 @@ export const parseRouteDate = (routeDate) => {
   if (typeof routeDate === "undefined") return "";
   const date = new Date(routeDate);
   let month = date.getMonth().toString();
-  debugger
+  // debugger
   if (month.length === 1) month = "0" + month;
   month = months[month];
   const day = date.getDate();

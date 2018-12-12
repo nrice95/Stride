@@ -7,7 +7,7 @@ export default function modalReducer(state = {}, action) {
     case OPEN_ROUTE_MODAL:
       return merge({}, {modalType: action.modal, polyline: action.polyline, centerLat: action.centerLat, centerLng: action.centerLng, distance: action.distance, activityType: action.activityType});
     case OPEN_USER_MODAL:
-      debugger
+      // debugger
         return merge({}, {modalType: action.modal});
     case CLOSE_MODAL:
     // debugger

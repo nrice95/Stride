@@ -4,7 +4,7 @@ import { renderTime } from "../../reducers/selectors";
 class ActivityTableElement extends React.Component {
   constructor(props){
     super(props);
-    debugger
+    // debugger
     this.state = this.props.activity;
   }
 
@@ -12,7 +12,7 @@ class ActivityTableElement extends React.Component {
   alert(){
     if (confirm("Are you sure? Deleting an activity cannot be undone.")){
       this.props.deleteActivity(this.state.id).then(() => {
-        debugger
+        // debugger
         this.props.history.push(`/dashboard`)
       })
     }

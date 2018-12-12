@@ -4,11 +4,11 @@ import { logout } from "../../actions/session_actions";
 import Header from "../dashboard_header/dashboard_header_container";
 import ActivityIndexItem from "../activity/dashboard_activity_index_item";
 import DashboardRouteIndexItem from "../route_index/dashboard_route_index_item";
-import { findRelativeDay } from "../../reducers/selectors";
+import { findRelativeDay, parseItemForSort } from "../../reducers/selectors";
 
 class Dashboard extends React.Component {
   componentDidMount(){
-    debugger
+    // debugger
     this.props.fetchActivities();
     this.props.fetchRoutes();
   }
@@ -21,7 +21,7 @@ class Dashboard extends React.Component {
   render(){
     let numActivities = 0;
     let recentActivity = this.props.activities[0] || {date: "", time: ""};
-    debugger
+    // debugger
     let recentTime = new Date(recentActivity.date + " " + recentActivity.time).getTime() || 0;
     const { currentAthlete, logout } = this.props;
     let routes = this.props.routes;
@@ -34,20 +34,31 @@ class Dashboard extends React.Component {
     //   debugger
     //   return bDate - aDate;
     // })
-    .sort((a,b) => {
-      const newTime = new Date(b.date + " " + b.time).getTime();
-      if (newTime > recentTime) {
-        recentActivity = b;
-        recentTime = newTime;
-      }
-      const aTmp = a.created_at.split(new RegExp('(T|Z)'));
-      const bTmp = b.created_at.split(new RegExp('(T|Z)'));
-      const aDate = new Date(a[0] + " " + a[3]).getTime();
-      const bDate = new Date(b[0] + " " + b[3]).getTime();
-
-      return bDate-aDate;
-    })
+    // .sort((a,b) => {
+    //   const newTime = new Date(b.date + " " + b.time).getTime();
+    //   if (newTime > recentTime) {
+    //     recentActivity = b;
+    //     recentTime = newTime;
+    //   }
+    //   const aTmp = a.created_at.split(new RegExp('(T|Z)'));
+    //   const bTmp = b.created_at.split(new RegExp('(T|Z)'));
+    //   const aDate = new Date(a[0] + " " + a[3]).getTime();
+    //   const bDate = new Date(b[0] + " " + b[3]).getTime();
+    //
+    //   return bDate-aDate;
+    //
     // .reverse()
+    .sort((a,b) => {
+      const newTime = new Date(a.date + " " + a.time).getTime();
+       if (newTime > recentTime) {
+         recentActivity = a;
+         recentTime = newTime;
+       }
+      const aDate = parseItemForSort(a);
+      const bDate = parseItemForSort(b);
+      // debugger
+      return bDate - aDate;
+    })
     .map(item => {
       // debugger
       if (item.polyline !== undefined){
@@ -76,7 +87,7 @@ class Dashboard extends React.Component {
     let latestActivity = (activities.length === 0 ? {title: ""} : recentActivity);
     let relativeDay = findRelativeDay(latestActivity);
     // debugger
-    debugger
+    // debugger
     return(
       <div className="dashboard">
         <Header />

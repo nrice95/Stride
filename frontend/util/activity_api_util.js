@@ -22,7 +22,7 @@ export const createActivity = data => {
 }
 
 export const updateActivity = payload => {
-  debugger
+  // debugger
   return $.ajax({
     method: "PATCH",
     url: `api/activities/${payload.activity.id}`,

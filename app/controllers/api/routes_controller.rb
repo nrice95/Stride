@@ -5,14 +5,14 @@ class Api::RoutesController < ApplicationController
   end
 
   def create
-    debugger
+    # debugger
     @route = Route.new(route_params)
-    debugger
+    # debugger
     if @route.save
-      debugger
+      # debugger
       render :show
     else
-      debugger
+      # debugger
       render json: @route.errors.full_messages, status: 422
     end
   end

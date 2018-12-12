@@ -12,7 +12,7 @@ class RouteIndexItem extends React.Component {
   }
 
   componentDidMount(){
-    debugger
+    // debugger
     this.setState({route:this.props.route});
     // debugger
     route = this.props.route;

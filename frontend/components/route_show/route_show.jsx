@@ -22,7 +22,7 @@ class RouteShow extends React.Component {
   }
 
   render(){
-    debugger
+    // debugger
     const route = this.props.route || {polyline: "", distance: 0, elevation: 0};
     const createDate = parseRouteDate(route.current_date);
     var coords = [];

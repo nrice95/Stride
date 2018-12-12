@@ -16,7 +16,7 @@ class ActivityShow extends React.Component {
   alert(){
     if (confirm("Are you sure? Deleting an activity cannot be undone.")){
       this.props.deleteActivity(this.state.id).then(() => {
-        debugger
+        // debugger
         this.props.history.push(`/dashboard`)
       })
     }
@@ -44,7 +44,7 @@ class ActivityShow extends React.Component {
     }
     let description;
     if (activity.description === ""){
-      debugger
+      // debugger
       description = <a className="add-description" href={`#/activities/${this.props.match.params.activityId}/edit`}>Add a description</a>;
     }else{
       description = <div className="activity-description">{activity.description}</div>;

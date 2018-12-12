@@ -57,7 +57,7 @@ class TestMap extends React.Component {
     // directionsDisplay.setMap(map);
 
     map.addListener("click", e => {
-      debugger
+      // debugger
       this.addAndPlaceMarker(e.latLng, e.pixel, iconProps);
       if (this.state.firstMarker){
         this.calculateAndDisplayRoute(directionsService, this.setState.bind(this), this.state);
@@ -110,11 +110,11 @@ class TestMap extends React.Component {
     polylines.push(snappedPolyline);
     snappedPolyline.setMap(map);
     markers;
-    debugger
+    // debugger
   }
 
   removeLatestMarker(){
-    debugger
+    // debugger
     markers[markers.length-1].setMap(null);
     markers.pop();
   }
@@ -140,7 +140,7 @@ class TestMap extends React.Component {
       if (status === 'OK') {
         const addedDistance = that.extendRouteWithPolyline(response,false);
         that.setState({distance: that.state.distance + addedDistance})
-        debugger
+        // debugger
         distanceStack.push(addedDistance);
       } else {
         window.alert('Directions request failed due to ' + status);
@@ -151,7 +151,7 @@ class TestMap extends React.Component {
   extendRouteWithPolyline(response, toggled){
     const newRouteData = response.routes[0];
     const newCoords = response.routes[0].overview_path;
-    debugger
+    // debugger
     if (!toggled && snappedCoords.length === 0) {
       this.snapFirstMarker(newCoords[0]);
     }
@@ -167,7 +167,7 @@ class TestMap extends React.Component {
   }
 
   needsRecenter(pixel){
-    debugger
+    // debugger
     const x = pixel.x;
     const y = pixel.y;
     const w = window.innerWidth;
@@ -197,7 +197,7 @@ class TestMap extends React.Component {
     markers.forEach(marker=>{
       marker.setMap(null);
     })
-    debugger
+    // debugger
     polylines.forEach(poly=>{
       poly.setMap(null);
     })
@@ -210,14 +210,14 @@ class TestMap extends React.Component {
 
   undo(){
     if (this.state.redoAvailable) this.setState({redoAvailable: true});
-    debugger
+    // debugger
     if (markers.length > 0){
       this.setState({redoAvailable: true})
       if (markers.length === 1) {
         this.setState({distance: 0, iconProps: {color: "#64b717", stroke: "white", scale: 8}, firstMarker: false});
         iconProps = {color: "#64b717", stroke: "white", scale: 8};
       }else{
-    debugger
+    // debugger
         const lastDistance = distanceStack.pop();
         redoDistanceStack.push(lastDistance);
         this.setState({distance: this.state.distance - lastDistance});
@@ -232,11 +232,11 @@ class TestMap extends React.Component {
       lastPolyline.setMap(null);
       snappedCoords.pop();
     }
-    debugger
+    // debugger
   }
 
   redo(){
-    debugger
+    // debugger
     if (this.state.redoAvailable) {
       if (markers.length > 0){
         let redonePoly = redoPolylineStack.pop();
@@ -257,7 +257,7 @@ class TestMap extends React.Component {
   }
 
   ride(){
-    debugger
+    // debugger
     if (this.state.travelMode === "WALKING") {
       this.setState({travelMode: "BICYCLING"});
       this.toggle("BICYCLING");
@@ -265,7 +265,7 @@ class TestMap extends React.Component {
   }
 
   run(){
-    debugger
+    // debugger
     if (this.state.travelMode === "BICYCLING") {
       this.setState({travelMode: "WALKING"});
       this.toggle("WALKING");
@@ -277,17 +277,17 @@ class TestMap extends React.Component {
       poly.setMap(null);
     });
     const that = this;
-    debugger
+    // debugger
     this.setState({distance: 0});
     for (let i = 0; i < markers.length - 1; i++){
-      debugger
+      // debugger
       directionsService.route({
         origin: markers[i].position,
         destination: markers[i+1].position,
         travelMode: type,
       }, function(response, status) {
         if (status === 'OK') {
-          debugger
+          // debugger
           const addedDistance = that.extendRouteWithPolyline(response,true);
           that.setState({distance: that.state.distance + addedDistance});
           distanceStack.push(addedDistance);
@@ -296,7 +296,7 @@ class TestMap extends React.Component {
         }
       });
     }
-    debugger
+    // debugger
   }
 
   handleSubmit(e){
@@ -315,7 +315,7 @@ class TestMap extends React.Component {
     let activityType = travelTypes[this.state.travelMode];
     // const newRoute = {polyline: encode, centerLat: centerLat, centerLng: centerLng, distance: finalDistance, athlete_id: this.props.current_athlete_id, activity_type: travelTypes[this.state.travelMode], title: "tests"};
     // this.props.createRoute(newRoute).then(() => this.props.history.push("/routes"));
-    debugger
+    // debugger
     this.props.openRouteModal("saveRoute", encode, centerLat, centerLng, finalDistance, activityType);
   }
 

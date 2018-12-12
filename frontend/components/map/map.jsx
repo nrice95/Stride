@@ -92,7 +92,7 @@ class Map extends React.Component {
     // debugger
     drawingManager.addListener('markercomplete', (marker) =>{
       this.setState({colorOfFill: "white"});
-      debugger
+      // debugger
       markers.push(marker);
       if (markers.length > 1){
         let newPoly = new google.maps.Polyline({
@@ -116,12 +116,12 @@ class Map extends React.Component {
 
         // debugger
       }
-      debugger
+      // debugger
       // console.log(polylines.length);
     });
 
     $('.clear').click(function(ev) {
-      debugger
+      // debugger
       for (var i = 0; i < polylines.length; ++i) {
         polylines[i].setMap(null);
       }
@@ -183,7 +183,7 @@ class Map extends React.Component {
     let activityType = "Run";
     const newRoute = {polyline: encode, centerLat: centerLat, centerLng: centerLng, distance: finalDistance, athlete_id: this.props.current_athlete_id, activity_type: "Run", title: "tests"};
     // this.props.createRoute(newRoute).then(() => this.props.history.push("/routes"));
-    debugger
+    // debugger
     this.props.openRouteModal("saveRoute", newRoute.polyline, centerLat, centerLng, finalDistance, activityType);
   }
 

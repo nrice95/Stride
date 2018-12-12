@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
   class RouteSaveForm extends React.Component {
   constructor(props){
     super(props);
-    debugger
+    // debugger
     this.state = {
       polyline: this.props.polyline,
       activity_type: this.props.activityType,
@@ -26,7 +26,7 @@ import { withRouter } from "react-router-dom";
   }
 
   handleSubmit(e){
-    debugger
+    // debugger
     e.preventDefault();
     this.props.createRoute(this.state).then(thing => {
       // debugger

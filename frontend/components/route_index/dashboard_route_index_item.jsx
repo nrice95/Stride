@@ -15,7 +15,7 @@ class DashboardRouteIndexItem extends React.Component{
     this.state;
     this.props;
     this;
-    debugger
+    // debugger
     route = this.state.route;
     mapRef = this.refs.map;
     map = new google.maps.Map(mapRef, {

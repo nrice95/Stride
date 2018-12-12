@@ -4,7 +4,7 @@ import Header from "../header/header_container";
 
 class ActivityForm extends React.Component {
   constructor(props) {
-    debugger
+    // debugger
     super(props);
     this.state = this.props.activity;
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -20,7 +20,7 @@ class ActivityForm extends React.Component {
   handleSubmit(e){
     e.preventDefault();
     // if (this.props.formType === "Create"){
-      debugger
+      // debugger
       this.props.action({activity: this.state}).then(thing => {
         this.props.history.push(`/activity/${thing.activity.id}`);
       })
@@ -28,7 +28,7 @@ class ActivityForm extends React.Component {
   }
 
   componentDidMount() {
-    debugger
+    // debugger
   }
 
   renderErrors(){
@@ -46,7 +46,7 @@ class ActivityForm extends React.Component {
   }
 
   render() {
-    debugger
+    // debugger
     return (
       <div>
         <Header />

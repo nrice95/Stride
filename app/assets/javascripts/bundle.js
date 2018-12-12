@@ -135,7 +135,7 @@ var createActivity = function createActivity(activity) {
 };
 var updateActivity = function updateActivity(activity) {
   return function (dispatch) {
-    debugger;
+    // debugger
     return _util_activity_api_util__WEBPACK_IMPORTED_MODULE_0__["updateActivity"](activity).then(function (activity) {
       return dispatch(receiveActivity(activity));
     });
@@ -198,7 +198,7 @@ var OPEN_ROUTE_MODAL = 'OPEN_ROUTE_MODAL';
 var OPEN_USER_MODAL = "OPEN_USER_MODAL";
 var CLOSE_MODAL = 'CLOSE_MODAL';
 var openRouteModal = function openRouteModal(modal, polyline, centerLat, centerLng, distance, activityType) {
-  debugger;
+  // debugger
   return {
     type: OPEN_ROUTE_MODAL,
     modal: modal,
@@ -274,7 +274,7 @@ var fetchRoutes = function fetchRoutes() {
   };
 };
 var receiveRoute = function receiveRoute(route) {
-  debugger;
+  // debugger
   return {
     type: RECEIVE_ROUTE,
     route: route
@@ -493,8 +493,7 @@ function (_React$Component) {
 
       if (confirm("Are you sure? Deleting an activity cannot be undone.")) {
         this.props.deleteActivity(this.state.id).then(function () {
-          debugger;
-
+          // debugger
           _this2.props.history.push("/dashboard");
         });
       }
@@ -546,7 +545,7 @@ function (_React$Component) {
       var description;
 
       if (activity.description === "") {
-        debugger;
+        // debugger
         description = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           className: "add-description",
           href: "#/activities/".concat(this.props.match.params.activityId, "/edit")
@@ -672,7 +671,7 @@ function (_React$Component) {
 
     _classCallCheck(this, ActivityForm);
 
-    debugger;
+    // debugger
     _this = _possibleConstructorReturn(this, _getPrototypeOf(ActivityForm).call(this, props));
     _this.state = _this.props.activity;
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
@@ -695,8 +694,8 @@ function (_React$Component) {
       var _this3 = this;
 
       e.preventDefault(); // if (this.props.formType === "Create"){
+      // debugger
 
-      debugger;
       this.props.action({
         activity: this.state
       }).then(function (thing) {
@@ -705,8 +704,7 @@ function (_React$Component) {
     }
   }, {
     key: "componentDidMount",
-    value: function componentDidMount() {
-      debugger;
+    value: function componentDidMount() {// debugger
     }
   }, {
     key: "renderErrors",
@@ -725,7 +723,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      debugger;
+      // debugger
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_header_header_container__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         className: "activity-form",
         onSubmit: this.handleSubmit
@@ -1072,8 +1070,8 @@ function (_React$Component) {
 
     _classCallCheck(this, ActivityTableElement);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(ActivityTableElement).call(this, props));
-    debugger;
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ActivityTableElement).call(this, props)); // debugger
+
     _this.state = _this.props.activity;
     return _this;
   }
@@ -1085,8 +1083,7 @@ function (_React$Component) {
 
       if (confirm("Are you sure? Deleting an activity cannot be undone.")) {
         this.props.deleteActivity(this.state.id).then(function () {
-          debugger;
-
+          // debugger
           _this2.props.history.push("/dashboard");
         });
       }
@@ -1147,8 +1144,8 @@ var msp = function msp(state, ownProps) {
   if (currentHour.length === 1) currentHour = "0" + currentHour;
   var currentMinute = "".concat(date.getMinutes());
   if (currentMinute.length === 1) currentMinute = "0" + currentMinute;
-  var currentTime = "".concat(currentHour, ":").concat(currentMinute);
-  debugger;
+  var currentTime = "".concat(currentHour, ":").concat(currentMinute); // debugger
+
   return {
     errors: state.errors,
     activity: {
@@ -1297,8 +1294,8 @@ var msp = function msp(state, ownProps) {
     elevation_units: "feet",
     date: "",
     time: ""
-  };
-  debugger;
+  }; // debugger
+
   var activity = state.activities[ownProps.match.params.activityId] || defaultActivity;
   return {
     activity: activity,
@@ -1604,7 +1601,7 @@ function (_React$Component) {
   _createClass(Dashboard, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      debugger;
+      // debugger
       this.props.fetchActivities();
       this.props.fetchRoutes();
     }
@@ -1625,8 +1622,8 @@ function (_React$Component) {
       var recentActivity = this.props.activities[0] || {
         date: "",
         time: ""
-      };
-      debugger;
+      }; // debugger
+
       var recentTime = new Date(recentActivity.date + " " + recentActivity.time).getTime() || 0;
       var _this$props = this.props,
           currentAthlete = _this$props.currentAthlete,
@@ -1640,21 +1637,33 @@ function (_React$Component) {
       //   debugger
       //   return bDate - aDate;
       // })
+      // .sort((a,b) => {
+      //   const newTime = new Date(b.date + " " + b.time).getTime();
+      //   if (newTime > recentTime) {
+      //     recentActivity = b;
+      //     recentTime = newTime;
+      //   }
+      //   const aTmp = a.created_at.split(new RegExp('(T|Z)'));
+      //   const bTmp = b.created_at.split(new RegExp('(T|Z)'));
+      //   const aDate = new Date(a[0] + " " + a[3]).getTime();
+      //   const bDate = new Date(b[0] + " " + b[3]).getTime();
+      //
+      //   return bDate-aDate;
+      //
+      // .reverse()
       .sort(function (a, b) {
-        var newTime = new Date(b.date + " " + b.time).getTime();
+        var newTime = new Date(a.date + " " + a.time).getTime();
 
         if (newTime > recentTime) {
-          recentActivity = b;
+          recentActivity = a;
           recentTime = newTime;
         }
 
-        var aTmp = a.created_at.split(new RegExp('(T|Z)'));
-        var bTmp = b.created_at.split(new RegExp('(T|Z)'));
-        var aDate = new Date(a[0] + " " + a[3]).getTime();
-        var bDate = new Date(b[0] + " " + b[3]).getTime();
+        var aDate = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_6__["parseItemForSort"])(a);
+        var bDate = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_6__["parseItemForSort"])(b); // debugger
+
         return bDate - aDate;
-      }) // .reverse()
-      .map(function (item) {
+      }).map(function (item) {
         // debugger
         if (item.polyline !== undefined) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_route_index_dashboard_route_index_item__WEBPACK_IMPORTED_MODULE_5__["default"], {
@@ -1682,8 +1691,8 @@ function (_React$Component) {
         title: ""
       } : recentActivity;
       var relativeDay = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_6__["findRelativeDay"])(latestActivity); // debugger
+      // debugger
 
-      debugger;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dashboard"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_dashboard_header_dashboard_header_container__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2617,9 +2626,9 @@ function (_React$Component) {
       drawingManager.addListener('markercomplete', function (marker) {
         _this2.setState({
           colorOfFill: "white"
-        });
+        }); // debugger
 
-        debugger;
+
         markers.push(marker);
 
         if (markers.length > 1) {
@@ -2638,13 +2647,12 @@ function (_React$Component) {
           // debugger
           // setTimeout(this.setState({distance: this.state.distance + distanceStack[distanceStack.length-1]}), 5000);
           // debugger
-        }
+        } // debugger
+        // console.log(polylines.length);
 
-        debugger; // console.log(polylines.length);
       });
       $('.clear').click(function (ev) {
-        debugger;
-
+        // debugger
         for (var i = 0; i < polylines.length; ++i) {
           polylines[i].setMap(null);
         }
@@ -2714,8 +2722,8 @@ function (_React$Component) {
         activity_type: "Run",
         title: "tests"
       }; // this.props.createRoute(newRoute).then(() => this.props.history.push("/routes"));
+      // debugger
 
-      debugger;
       this.props.openRouteModal("saveRoute", newRoute.polyline, centerLat, centerLng, finalDistance, activityType);
     }
   }, {
@@ -2948,7 +2956,7 @@ function (_React$Component) {
   _createClass(RouteIndexItem, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      debugger;
+      // debugger
       this.setState({
         route: this.props.route
       }); // debugger
@@ -3144,8 +3152,7 @@ function (_React$Component) {
       }); // directionsDisplay.setMap(map);
 
       map.addListener("click", function (e) {
-        debugger;
-
+        // debugger
         _this2.addAndPlaceMarker(e.latLng, e.pixel, iconProps);
 
         if (_this2.state.firstMarker) {
@@ -3205,13 +3212,12 @@ function (_React$Component) {
       snappedCoords.push(coords);
       polylines.push(snappedPolyline);
       snappedPolyline.setMap(map);
-      markers;
-      debugger;
+      markers; // debugger
     }
   }, {
     key: "removeLatestMarker",
     value: function removeLatestMarker() {
-      debugger;
+      // debugger
       markers[markers.length - 1].setMap(null);
       markers.pop();
     }
@@ -3244,8 +3250,8 @@ function (_React$Component) {
           var addedDistance = that.extendRouteWithPolyline(response, false);
           that.setState({
             distance: that.state.distance + addedDistance
-          });
-          debugger;
+          }); // debugger
+
           distanceStack.push(addedDistance);
         } else {
           window.alert('Directions request failed due to ' + status);
@@ -3256,8 +3262,7 @@ function (_React$Component) {
     key: "extendRouteWithPolyline",
     value: function extendRouteWithPolyline(response, toggled) {
       var newRouteData = response.routes[0];
-      var newCoords = response.routes[0].overview_path;
-      debugger;
+      var newCoords = response.routes[0].overview_path; // debugger
 
       if (!toggled && snappedCoords.length === 0) {
         this.snapFirstMarker(newCoords[0]);
@@ -3276,7 +3281,7 @@ function (_React$Component) {
   }, {
     key: "needsRecenter",
     value: function needsRecenter(pixel) {
-      debugger;
+      // debugger
       var x = pixel.x;
       var y = pixel.y;
       var w = window.innerWidth;
@@ -3307,8 +3312,8 @@ function (_React$Component) {
     value: function clear() {
       markers.forEach(function (marker) {
         marker.setMap(null);
-      });
-      debugger;
+      }); // debugger
+
       polylines.forEach(function (poly) {
         poly.setMap(null);
       });
@@ -3335,8 +3340,7 @@ function (_React$Component) {
     value: function undo() {
       if (this.state.redoAvailable) this.setState({
         redoAvailable: true
-      });
-      debugger;
+      }); // debugger
 
       if (markers.length > 0) {
         this.setState({
@@ -3359,7 +3363,7 @@ function (_React$Component) {
             scale: 8
           };
         } else {
-          debugger;
+          // debugger
           var lastDistance = distanceStack.pop();
           redoDistanceStack.push(lastDistance);
           this.setState({
@@ -3377,15 +3381,13 @@ function (_React$Component) {
         redoPolylineStack.push(lastPolyline);
         lastPolyline.setMap(null);
         snappedCoords.pop();
-      }
+      } // debugger
 
-      debugger;
     }
   }, {
     key: "redo",
     value: function redo() {
-      debugger;
-
+      // debugger
       if (this.state.redoAvailable) {
         if (markers.length > 0) {
           var redonePoly = redoPolylineStack.pop();
@@ -3412,8 +3414,7 @@ function (_React$Component) {
   }, {
     key: "ride",
     value: function ride() {
-      debugger;
-
+      // debugger
       if (this.state.travelMode === "WALKING") {
         this.setState({
           travelMode: "BICYCLING"
@@ -3424,8 +3425,7 @@ function (_React$Component) {
   }, {
     key: "run",
     value: function run() {
-      debugger;
-
+      // debugger
       if (this.state.travelMode === "BICYCLING") {
         this.setState({
           travelMode: "WALKING"
@@ -3439,21 +3439,21 @@ function (_React$Component) {
       polylines.forEach(function (poly) {
         poly.setMap(null);
       });
-      var that = this;
-      debugger;
+      var that = this; // debugger
+
       this.setState({
         distance: 0
       });
 
       for (var i = 0; i < markers.length - 1; i++) {
-        debugger;
+        // debugger
         directionsService.route({
           origin: markers[i].position,
           destination: markers[i + 1].position,
           travelMode: type
         }, function (response, status) {
           if (status === 'OK') {
-            debugger;
+            // debugger
             var addedDistance = that.extendRouteWithPolyline(response, true);
             that.setState({
               distance: that.state.distance + addedDistance
@@ -3463,9 +3463,8 @@ function (_React$Component) {
             window.alert('Directions request failed due to ' + status);
           }
         });
-      }
+      } // debugger
 
-      debugger;
     }
   }, {
     key: "handleSubmit",
@@ -3487,8 +3486,8 @@ function (_React$Component) {
       var finalDistance = Math.round(this.state.distance * 100) / 100;
       var activityType = travelTypes[this.state.travelMode]; // const newRoute = {polyline: encode, centerLat: centerLat, centerLng: centerLng, distance: finalDistance, athlete_id: this.props.current_athlete_id, activity_type: travelTypes[this.state.travelMode], title: "tests"};
       // this.props.createRoute(newRoute).then(() => this.props.history.push("/routes"));
+      // debugger
 
-      debugger;
       this.props.openRouteModal("saveRoute", encode, centerLat, centerLng, finalDistance, activityType);
     }
   }, {
@@ -3674,7 +3673,7 @@ function Modal(_ref) {
 }
 
 var mapStateToProps = function mapStateToProps(state) {
-  debugger;
+  // debugger
   return {
     errors: state.errors,
     modal: state.ui.modal.modalType
@@ -3783,8 +3782,8 @@ function (_React$Component) {
       // this.setState({route:this.props.route});
       this.state;
       this.props;
-      this;
-      debugger;
+      this; // debugger
+
       route = this.state.route;
       mapRef = this.refs.map;
       map = new google.maps.Map(mapRef, {
@@ -3955,7 +3954,7 @@ function (_React$Component) {
 
       // debugger
       var routes = this.props.routes.reverse().map(function (route) {
-        debugger;
+        // debugger
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_map_route_index_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
           key: route.id,
           route: route,
@@ -4066,8 +4065,8 @@ function (_React$Component) {
 
     _classCallCheck(this, RouteSaveForm);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(RouteSaveForm).call(this, props));
-    debugger;
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(RouteSaveForm).call(this, props)); // debugger
+
     _this.state = {
       polyline: _this.props.polyline,
       activity_type: _this.props.activityType,
@@ -4097,7 +4096,7 @@ function (_React$Component) {
     value: function handleSubmit(e) {
       var _this3 = this;
 
-      debugger;
+      // debugger
       e.preventDefault();
       this.props.createRoute(this.state).then(function (thing) {
         // debugger
@@ -4170,7 +4169,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var msp = function msp(state) {
-  debugger;
+  // debugger
   return {
     polyline: state.ui.modal.polyline,
     currentAthlete: state.entities.athletes[state.session.id],
@@ -4263,7 +4262,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      debugger;
+      // debugger
       var route = this.props.route || {
         polyline: "",
         distance: 0,
@@ -4372,7 +4371,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var msp = function msp(state, ownProps) {
-  debugger;
+  // debugger
   return {
     athlete: state.entities.athletes[state.session.id],
     route: state.entities.routes[ownProps.match.params.routeId],
@@ -4765,7 +4764,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var msp = function msp(_ref) {
   var errors = _ref.errors;
-  debugger;
+  // debugger
   return {
     errors: errors,
     formType: "Sign Up",
@@ -4931,7 +4930,7 @@ function modalReducer() {
       });
 
     case _actions_modal_actions__WEBPACK_IMPORTED_MODULE_0__["OPEN_USER_MODAL"]:
-      debugger;
+      // debugger
       return lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, {
         modalType: action.modal
       });
@@ -5027,12 +5026,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /*!****************************************!*\
   !*** ./frontend/reducers/selectors.js ***!
   \****************************************/
-/*! exports provided: activityData, findRelativeDay, renderTime, currentDate, currentTime, parseRouteDate, parseRouteTime, parseDateTime */
+/*! exports provided: activityData, parseItemForSort, findRelativeDay, renderTime, currentDate, currentTime, parseRouteDate, parseRouteTime, parseDateTime */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "activityData", function() { return activityData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "parseItemForSort", function() { return parseItemForSort; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "findRelativeDay", function() { return findRelativeDay; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "renderTime", function() { return renderTime; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "currentDate", function() { return currentDate; });
@@ -5081,16 +5081,38 @@ var activityData = function activityData(activity) {
     third_render_title: third_render_title
   };
 };
+var parseItemForSort = function parseItemForSort(item) {
+  if (item.polyline === undefined) {
+    return activityParse(item);
+  } else {
+    return routeParse(item);
+  }
+};
+
+var activityParse = function activityParse(activity) {
+  var tmpTime = activity.created_at.split(new RegExp('(T|Z)'));
+  return new Date(tmpTime[0] + " " + tmpTime[2]).getTime();
+};
+
+var routeParse = function routeParse(route) {
+  if (route.current_date === null) {
+    var tmpTime = route.created_at.split(new RegExp('(T|Z)'));
+    return new Date(tmpTime[0] + " " + tmpTime[2]).getTime();
+  } else {
+    // debugger
+    return new Date(route.current_date).getTime();
+  }
+};
 
 var parseDate = function parseDate(date) {
-  debugger;
+  // debugger
   var splitDate = date.split("-");
   var month = months[splitDate[1]];
   return "".concat(month, " ").concat(splitDate[2], ", ").concat(splitDate[0]);
 };
 
 var findRelativeDay = function findRelativeDay(activity) {
-  debugger;
+  // debugger
   if (activity.title === "") return "";
   var currentDate = new Date();
   var startOfToday = new Date(currentDate.toDateString() + " 00:00");
@@ -5183,8 +5205,8 @@ var currentTime = function currentTime() {
 var parseRouteDate = function parseRouteDate(routeDate) {
   if (typeof routeDate === "undefined") return "";
   var date = new Date(routeDate);
-  var month = date.getMonth().toString();
-  debugger;
+  var month = date.getMonth().toString(); // debugger
+
   if (month.length === 1) month = "0" + month;
   month = months[month];
   var day = date.getDate();
@@ -5450,7 +5472,7 @@ var createActivity = function createActivity(data) {
   });
 };
 var updateActivity = function updateActivity(payload) {
-  debugger;
+  // debugger
   return $.ajax({
     method: "PATCH",
     url: "api/activities/".concat(payload.activity.id),
@@ -5493,7 +5515,7 @@ var fetchRoute = function fetchRoute(id) {
   });
 };
 var createRoute = function createRoute(data) {
-  debugger;
+  // debugger
   return $.ajax({
     method: "POST",
     url: "api/routes",
