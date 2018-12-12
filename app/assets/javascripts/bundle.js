@@ -5090,6 +5090,7 @@ var parseItemForSort = function parseItemForSort(item) {
 };
 
 var activityParse = function activityParse(activity) {
+  // debugger
   var tmpTime = activity.created_at.split(new RegExp('(T|Z)'));
   return new Date(tmpTime[0] + " " + tmpTime[2]).getTime();
 };
@@ -5099,7 +5100,6 @@ var routeParse = function routeParse(route) {
     var tmpTime = route.created_at.split(new RegExp('(T|Z)'));
     return new Date(tmpTime[0] + " " + tmpTime[2]).getTime();
   } else {
-    // debugger
     return new Date(route.current_date).getTime();
   }
 };
@@ -5205,8 +5205,8 @@ var currentTime = function currentTime() {
 var parseRouteDate = function parseRouteDate(routeDate) {
   if (typeof routeDate === "undefined") return "";
   var date = new Date(routeDate);
-  var month = date.getMonth().toString(); // debugger
-
+  debugger;
+  var month = (date.getMonth() + 1).toString();
   if (month.length === 1) month = "0" + month;
   month = months[month];
   var day = date.getDate();

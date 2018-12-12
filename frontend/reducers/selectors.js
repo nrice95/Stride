@@ -39,6 +39,7 @@ export const parseItemForSort = (item) => {
 }
 
 const activityParse = (activity) => {
+  // debugger
   const tmpTime = activity.created_at.split(new RegExp('(T|Z)'));
   return new Date(tmpTime[0] + " " + tmpTime[2]).getTime();
 }
@@ -48,7 +49,6 @@ const routeParse = (route) => {
     const tmpTime = route.created_at.split(new RegExp('(T|Z)'));
     return new Date(tmpTime[0] + " " + tmpTime[2]).getTime();
   }else{
-    // debugger
     return new Date(route.current_date).getTime();
   }
 }
@@ -136,8 +136,8 @@ export const currentTime = () => {
 export const parseRouteDate = (routeDate) => {
   if (typeof routeDate === "undefined") return "";
   const date = new Date(routeDate);
-  let month = date.getMonth().toString();
-  // debugger
+  debugger
+  let month = (date.getMonth()+1).toString();
   if (month.length === 1) month = "0" + month;
   month = months[month];
   const day = date.getDate();
