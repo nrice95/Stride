@@ -273,9 +273,11 @@ class TestMap extends React.Component {
   }
 
   toggle(type){
+    snappedCoords = [];
     polylines.forEach(poly => {
       poly.setMap(null);
     });
+    polylines = [];
     const that = this;
     // debugger
     this.setState({distance: 0});
@@ -300,9 +302,12 @@ class TestMap extends React.Component {
   }
 
   handleSubmit(e){
+    debugger
     const travelTypes = {"BICYCLING": "Ride", "WALKING": "Run"}
     e.preventDefault();
     let allSnaps = [];
+    snappedCoords;
+    debugger
     snappedCoords.forEach(list => {
       allSnaps = allSnaps.concat(list);
     })

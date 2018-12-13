@@ -3436,9 +3436,11 @@ function (_React$Component) {
   }, {
     key: "toggle",
     value: function toggle(type) {
+      snappedCoords = [];
       polylines.forEach(function (poly) {
         poly.setMap(null);
       });
+      polylines = [];
       var that = this; // debugger
 
       this.setState({
@@ -3469,12 +3471,15 @@ function (_React$Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
+      debugger;
       var travelTypes = {
         "BICYCLING": "Ride",
         "WALKING": "Run"
       };
       e.preventDefault();
       var allSnaps = [];
+      snappedCoords;
+      debugger;
       snappedCoords.forEach(function (list) {
         allSnaps = allSnaps.concat(list);
       });
