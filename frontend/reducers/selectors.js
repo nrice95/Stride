@@ -136,7 +136,7 @@ export const currentTime = () => {
 export const parseRouteDate = (routeDate) => {
   if (typeof routeDate === "undefined") return "";
   const date = new Date(routeDate);
-  debugger
+  // debugger
   let month = (date.getMonth()+1).toString();
   if (month.length === 1) month = "0" + month;
   month = months[month];

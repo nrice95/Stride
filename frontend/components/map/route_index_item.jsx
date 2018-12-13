@@ -41,7 +41,7 @@ class RouteIndexItem extends React.Component {
 
     path.setMap(map);
     let startMarker = new google.maps.Marker({
-      position: coords[coords.length-1],
+      position: coords[0],
       icon: {
         path: google.maps.SymbolPath.CIRCLE,
         fillColor: "green",
@@ -52,7 +52,7 @@ class RouteIndexItem extends React.Component {
       map
     })
     let endMarker = new google.maps.Marker({
-      position: coords[0],
+      position: coords[coords.length-1],
       map
     })
   }

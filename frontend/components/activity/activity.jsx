@@ -11,6 +11,7 @@ class ActivityShow extends React.Component {
 
   componentDidMount(){
     this.props.fetchActivity(this.props.match.params.activityId);
+    this.props.fetchActivities();
   }
 
   alert(){
@@ -25,6 +26,14 @@ class ActivityShow extends React.Component {
   render(){
     const username = this.props.currentAthlete.username || ""
     const activity = this.props.activity || {activity: {title: "", activity_type: ""}};
+    const activities = this.props.activities.map(activity => {
+      return(
+      <li>
+        <a href={`#/activity/${activity.id}`}>
+          {<strong>{activity.activity_type}</strong>}{` ${activity.title}`}
+        </a>
+      </li>
+    )}) || [];
     let data;
     if (activity === {activity: {title: "", activity_type: ""}}){
       data = {first_render: "", first_render_title: "", second_render: "", second_render_title: "", third_render: "", third_render_title: ""};
@@ -98,6 +107,14 @@ class ActivityShow extends React.Component {
           </div>
         </div>
         <div className="activity-footer">
+          <div className="activity-footer-elements">
+            <div>
+              Your Recent Activities
+            </div>
+            <ul>
+              {activities.slice(0,6)}
+            </ul>
+          </div>
         </div>
       </div>
     </div>

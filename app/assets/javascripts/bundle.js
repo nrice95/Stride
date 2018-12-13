@@ -485,6 +485,7 @@ function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.fetchActivity(this.props.match.params.activityId);
+      this.props.fetchActivities();
     }
   }, {
     key: "alert",
@@ -510,6 +511,11 @@ function (_React$Component) {
           activity_type: ""
         }
       };
+      var activities = this.props.activities.map(function (activity) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          href: "#/activity/".concat(activity.id)
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, activity.activity_type), " ".concat(activity.title)));
+      }) || [];
       var data;
 
       if (activity === {
@@ -613,7 +619,9 @@ function (_React$Component) {
         className: "second-render-title"
       }, second_render_title))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "activity-footer"
-      })));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "activity-footer-elements"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Your Recent Activities"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, activities.slice(0, 6))))));
     }
   }]);
 
@@ -1005,12 +1013,18 @@ __webpack_require__.r(__webpack_exports__);
 var msp = function msp(state, ownProps) {
   return {
     currentAthlete: state.entities.athletes[state.session.id],
-    activity: state.entities.activities[ownProps.match.params.activityId]
+    activity: state.entities.activities[ownProps.match.params.activityId],
+    activities: Object.keys(state.activities).map(function (id) {
+      return state.activities[id];
+    })
   };
 };
 
 var mdp = function mdp(dispatch) {
   return {
+    fetchActivities: function fetchActivities() {
+      return dispatch(Object(_actions_activity_actions__WEBPACK_IMPORTED_MODULE_2__["fetchActivities"])());
+    },
     fetchActivity: function fetchActivity(id) {
       return dispatch(Object(_actions_activity_actions__WEBPACK_IMPORTED_MODULE_2__["fetchActivity"])(id));
     },
@@ -2993,7 +3007,7 @@ function (_React$Component) {
       });
       path.setMap(map);
       var startMarker = new google.maps.Marker({
-        position: coords[coords.length - 1],
+        position: coords[0],
         icon: {
           path: google.maps.SymbolPath.CIRCLE,
           fillColor: "green",
@@ -3004,7 +3018,7 @@ function (_React$Component) {
         map: map
       });
       var endMarker = new google.maps.Marker({
-        position: coords[0],
+        position: coords[coords.length - 1],
         map: map
       });
     }
@@ -3821,7 +3835,7 @@ function (_React$Component) {
       });
       path.setMap(map);
       var startMarker = new google.maps.Marker({
-        position: coords[coords.length - 1],
+        position: coords[0],
         icon: {
           path: google.maps.SymbolPath.CIRCLE,
           fillColor: "green",
@@ -3832,7 +3846,7 @@ function (_React$Component) {
         map: map
       });
       var endMarker = new google.maps.Marker({
-        position: coords[0],
+        position: coords[coords.length - 1],
         map: map
       });
     }
@@ -5209,8 +5223,8 @@ var currentTime = function currentTime() {
 };
 var parseRouteDate = function parseRouteDate(routeDate) {
   if (typeof routeDate === "undefined") return "";
-  var date = new Date(routeDate);
-  debugger;
+  var date = new Date(routeDate); // debugger
+
   var month = (date.getMonth() + 1).toString();
   if (month.length === 1) month = "0" + month;
   month = months[month];
