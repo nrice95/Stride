@@ -4574,7 +4574,7 @@ function (_React$Component) {
         className: "login-form-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "login-title"
-      }, this.props.formType), this.renderErrors(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      }, this.props.formType), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit,
         className: "login-form-box"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -4723,7 +4723,7 @@ function (_React$Component) {
         className: "signup-subtag"
       }, "Join for the tracking. Stay for the community."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "signup-errors"
-      }, this.renderErrors()), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit,
         className: "signup-form-box"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

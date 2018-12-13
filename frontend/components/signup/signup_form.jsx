@@ -56,7 +56,7 @@ class SignupForm extends React.Component {
             </div>
             <div className="signup-subtag">Join for the tracking. Stay for the community.</div>
             <div className="signup-errors">
-              {this.renderErrors()}
+
             </div>
             <form onSubmit={this.handleSubmit} className="signup-form-box">
               <br></br>
