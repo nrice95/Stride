@@ -2,8 +2,8 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 
 class SignupForm extends React.Component {
-  constructor(props){
-    debugger
+  // constructor(props){
+    // debugger
     super(props);
     this.state = {
       username: "",
@@ -26,7 +26,7 @@ class SignupForm extends React.Component {
   }
 
   renderErrors(){
-    debugger
+    // debugger
     if (this.props.errors.length > 0 ){
       return(
         <ul className="auth-errors">
@@ -42,7 +42,7 @@ class SignupForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    debugger
+    // debugger
     const user = Object.assign({}, this.state);
     this.props.action(user).then(this.props.closeModal);
   }

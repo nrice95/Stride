@@ -302,12 +302,12 @@ class TestMap extends React.Component {
   }
 
   handleSubmit(e){
-    debugger
+    // debugger
     const travelTypes = {"BICYCLING": "Ride", "WALKING": "Run"}
     e.preventDefault();
     let allSnaps = [];
     snappedCoords;
-    debugger
+    // debugger
     snappedCoords.forEach(list => {
       allSnaps = allSnaps.concat(list);
     })

@@ -1,11 +1,11 @@
 import { RECEIVE_SIGNUP_ERRORS, RECEIVE_CURRENT_ATHLETE, RESET_SIGNUP_ERRORS} from "../actions/session_actions";
 
 export default (state = [], action) => {
-  debugger
+  // debugger
   Object.freeze(state);
   switch (action.type) {
     case RECEIVE_SIGNUP_ERRORS:
-      debugger
+      // debugger
       return action.errors;
     case RESET_SIGNUP_ERRORS:
       return [];

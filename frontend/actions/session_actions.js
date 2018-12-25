@@ -49,7 +49,7 @@ export const clearSignupErrors = () => dispatch => {
 }
 
 export const login = (athlete) => dispatch => {
-  debugger
+  // debugger
   return APIUtil.login(athlete).then(athlete => {
     // debugger
     return dispatch(receiveCurrentAthlete(athlete))
@@ -68,12 +68,12 @@ export const logout = () => dispatch => {
 };
 
 export const signup = (athlete) => dispatch => {
-  debugger
+  // debugger
   return APIUtil.signup(athlete).then(athlete => {
     // debugger
     return dispatch(receiveCurrentAthlete(athlete))
   }, err => {
-    debugger
+    // debugger
     return dispatch(receiveSignupErrors(err.responseJSON))
   });
 };

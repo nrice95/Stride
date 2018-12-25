@@ -20,7 +20,7 @@ class SessionForm extends React.Component {
   }
 
   renderErrors(){
-    debugger
+    // debugger
     if (this.props.errors.length > 0){
       return(
         <ul className="auth-errors">
@@ -36,7 +36,7 @@ class SessionForm extends React.Component {
 
   handleSubmit(e){
     e.preventDefault();
-    debugger
+    // debugger
     this.props.action(this.state);
   }
 

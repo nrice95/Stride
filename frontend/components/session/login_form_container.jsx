@@ -6,7 +6,7 @@ import SessionForm from "./session_form";
 import { openUserModal } from '../../actions/modal_actions';
 
 const msp = ({ sessionErrors }) => {
-  debugger
+  // debugger
   return {
     errors: sessionErrors,
     formType: "Log In",

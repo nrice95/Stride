@@ -7,7 +7,7 @@ import SignupFormContainer from '../signup/signup_form_container';
 import RouteSaveForm from "../route_save_form/route_save_form_container";
 
 function handleClose(close, errors, componentType, reset){
-  debugger
+  // debugger
   close();
   if (componentType === "signup"){
     reset();
@@ -15,7 +15,7 @@ function handleClose(close, errors, componentType, reset){
 }
 
 function Modal({errors, modal, closeModal, resetSignupErrors}) {
-  debugger
+  // debugger
   if (!modal) {
     return null;
   }
@@ -45,7 +45,7 @@ function Modal({errors, modal, closeModal, resetSignupErrors}) {
 }
 
 const mapStateToProps = state => {
-  debugger
+  // debugger
   return {
     errors: {signupErrors: state.signupErrors},
     modal: state.ui.modal.modalType
@@ -53,7 +53,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  debugger
+  // debugger
   return {
     closeModal: () => dispatch(closeModal()),
     resetSignupErrors: () => dispatch(resetSignupErrors())

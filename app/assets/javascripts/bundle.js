@@ -402,7 +402,7 @@ var clearSignupErrors = function clearSignupErrors() {
 };
 var login = function login(athlete) {
   return function (dispatch) {
-    debugger;
+    // debugger
     return _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__["login"](athlete).then(function (athlete) {
       // debugger
       return dispatch(receiveCurrentAthlete(athlete));
@@ -423,12 +423,12 @@ var logout = function logout() {
 };
 var signup = function signup(athlete) {
   return function (dispatch) {
-    debugger;
+    // debugger
     return _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__["signup"](athlete).then(function (athlete) {
       // debugger
       return dispatch(receiveCurrentAthlete(athlete));
     }, function (err) {
-      debugger;
+      // debugger
       return dispatch(receiveSignupErrors(err.responseJSON));
     });
   };
@@ -3087,537 +3087,9 @@ function (_React$Component) {
   !*** ./frontend/components/map/test_map.jsx ***!
   \**********************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-
-
-
-var mapRef;
-var map;
-var drawingManager;
-var markers;
-var snappedCoords;
-var iconProps;
-var polylines;
-var redoPolylineStack;
-var redoMarkerStack;
-var distanceStack;
-var redoDistanceStack;
-var directionsService;
-
-var TestMap =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(TestMap, _React$Component);
-
-  function TestMap(props) {
-    var _this;
-
-    _classCallCheck(this, TestMap);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(TestMap).call(this, props));
-    _this.state = {
-      distance: 0,
-      firstMarker: false,
-      iconProps: {
-        color: "#64b717",
-        stroke: "white",
-        scale: 8
-      },
-      redoAvailable: false,
-      travelMode: "BICYCLING"
-    };
-    _this.clear = _this.clear.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.undo = _this.undo.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.redo = _this.redo.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.toggle = _this.toggle.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.ride = _this.ride.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.run = _this.run.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this))); // this.addAndPlaceMarker.bind(this);
-
-    return _this;
-  }
-
-  _createClass(TestMap, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      redoDistanceStack = [];
-      distanceStack = [];
-      redoPolylineStack = [];
-      redoMarkerStack = [];
-      polylines = [];
-      markers = [];
-      snappedCoords = [];
-      mapRef = this.refs.map;
-      iconProps = {
-        color: "#64b717",
-        stroke: "white",
-        scale: 8
-      };
-      directionsService = new google.maps.DirectionsService(); // const directionsDisplay = new google.maps.DirectionsRenderer;
-
-      map = new google.maps.Map(mapRef, {
-        zoom: 18,
-        // center: {lat: 40.7374579, lng: -74.49510900000001},
-        center: {
-          lat: 40.751484,
-          lng: -73.983898
-        },
-        mapTypeId: 'terrain'
-      }); // directionsDisplay.setMap(map);
-
-      map.addListener("click", function (e) {
-        // debugger
-        _this2.addAndPlaceMarker(e.latLng, e.pixel, iconProps);
-
-        if (_this2.state.firstMarker) {
-          _this2.calculateAndDisplayRoute(directionsService, _this2.setState.bind(_this2), _this2.state);
-        } else {
-          _this2.setState({
-            firstMarker: true
-          });
-
-          iconProps = {
-            color: "white",
-            stroke: "black",
-            scale: 5
-          };
-        }
-      });
-      map.controls[google.maps.ControlPosition.RIGHT_TOP].push(this.refs.bar);
-      var autocomplete = new google.maps.places.Autocomplete(this.refs.autoc);
-      autocomplete.bindTo('bounds', map);
-      autocomplete.addListener('place_changed', function () {
-        var place = autocomplete.getPlace();
-
-        if (place.geometry.viewport) {
-          map.fitBounds(place.geometry.viewport);
-        } else {
-          map.setCenter(place.geometry.location);
-          map.setZoom(17);
-        }
-      });
-    }
-  }, {
-    key: "addAndPlaceMarker",
-    value: function addAndPlaceMarker(latLng, pixel, iconProps) {
-      var newMarker = new google.maps.Marker({
-        position: latLng,
-        map: map,
-        icon: {
-          path: google.maps.SymbolPath.CIRCLE,
-          fillColor: iconProps.color,
-          strokeColor: iconProps.stroke,
-          scale: iconProps.scale,
-          fillOpacity: 1,
-          strokeWeight: 3
-        }
-      });
-      markers.push(newMarker);
-      if (pixel !== null && this.needsRecenter(pixel)) map.panTo(newMarker.position);
-    }
-  }, {
-    key: "addAndPlacePolyline",
-    value: function addAndPlacePolyline(coords) {
-      var snappedPolyline = new google.maps.Polyline({
-        path: coords,
-        strokeColor: 'rgb(102,102,102,0.95)',
-        strokeWeight: 6
-      });
-      snappedCoords.push(coords);
-      polylines.push(snappedPolyline);
-      snappedPolyline.setMap(map);
-      markers; // debugger
-    }
-  }, {
-    key: "removeLatestMarker",
-    value: function removeLatestMarker() {
-      // debugger
-      markers[markers.length - 1].setMap(null);
-      markers.pop();
-    }
-  }, {
-    key: "removeFirstMarker",
-    value: function removeFirstMarker() {
-      markers[0].setMap(null);
-      markers.shift();
-    }
-  }, {
-    key: "calculateAndDisplayRoute",
-    value: function calculateAndDisplayRoute(directionsService, setState, state) {
-      var that = this;
-
-      if (this.state.redoAvailable) {
-        this.setState({
-          redoAvailable: false
-        });
-        redoMarkerStack = [];
-        redoPolylineStack = [];
-        redoDistanceStack = [];
-      }
-
-      directionsService.route({
-        origin: markers[markers.length - 2].position,
-        destination: markers[markers.length - 1].position,
-        travelMode: that.state.travelMode
-      }, function (response, status) {
-        if (status === 'OK') {
-          var addedDistance = that.extendRouteWithPolyline(response, false);
-          that.setState({
-            distance: that.state.distance + addedDistance
-          }); // debugger
-
-          distanceStack.push(addedDistance);
-        } else {
-          window.alert('Directions request failed due to ' + status);
-        }
-      });
-    }
-  }, {
-    key: "extendRouteWithPolyline",
-    value: function extendRouteWithPolyline(response, toggled) {
-      var newRouteData = response.routes[0];
-      var newCoords = response.routes[0].overview_path; // debugger
-
-      if (!toggled && snappedCoords.length === 0) {
-        this.snapFirstMarker(newCoords[0]);
-      }
-
-      this.addAndPlacePolyline(newCoords);
-      if (!toggled) this.snapLatestMarker(newCoords[newCoords.length - 1]);
-      return newRouteData.legs[0].distance.value;
-    }
-  }, {
-    key: "snapLatestMarker",
-    value: function snapLatestMarker(latestCoord) {
-      this.removeLatestMarker();
-      this.addAndPlaceMarker(latestCoord, null, iconProps);
-    }
-  }, {
-    key: "needsRecenter",
-    value: function needsRecenter(pixel) {
-      // debugger
-      var x = pixel.x;
-      var y = pixel.y;
-      var w = window.innerWidth;
-      var h = window.innerHeight;
-      if (x < 50 || x > w - 50) return true;
-      if (y < 50 || y > h - 50) return true;
-    }
-  }, {
-    key: "snapFirstMarker",
-    value: function snapFirstMarker(firstCoord) {
-      this.removeFirstMarker();
-      var newMarker = new google.maps.Marker({
-        position: firstCoord,
-        map: map,
-        icon: {
-          path: google.maps.SymbolPath.CIRCLE,
-          fillColor: "#64b717",
-          strokeColor: "white",
-          scale: 8,
-          fillOpacity: 1,
-          strokeWeight: 3
-        }
-      });
-      markers.unshift(newMarker);
-    }
-  }, {
-    key: "clear",
-    value: function clear() {
-      markers.forEach(function (marker) {
-        marker.setMap(null);
-      }); // debugger
-
-      polylines.forEach(function (poly) {
-        poly.setMap(null);
-      });
-      this.setState({
-        distance: 0,
-        iconProps: {
-          color: "#64b717",
-          stroke: "white",
-          scale: 8
-        },
-        firstMarker: false
-      });
-      markers = [];
-      snappedCoords = [];
-      iconProps = {
-        color: "#64b717",
-        stroke: "white",
-        scale: 8
-      };
-      polylines = [];
-    }
-  }, {
-    key: "undo",
-    value: function undo() {
-      if (this.state.redoAvailable) this.setState({
-        redoAvailable: true
-      }); // debugger
-
-      if (markers.length > 0) {
-        this.setState({
-          redoAvailable: true
-        });
-
-        if (markers.length === 1) {
-          this.setState({
-            distance: 0,
-            iconProps: {
-              color: "#64b717",
-              stroke: "white",
-              scale: 8
-            },
-            firstMarker: false
-          });
-          iconProps = {
-            color: "#64b717",
-            stroke: "white",
-            scale: 8
-          };
-        } else {
-          // debugger
-          var lastDistance = distanceStack.pop();
-          redoDistanceStack.push(lastDistance);
-          this.setState({
-            distance: this.state.distance - lastDistance
-          });
-        }
-
-        var lastMarker = markers.pop();
-        redoMarkerStack.push(lastMarker);
-        lastMarker.setMap(null);
-      }
-
-      if (polylines.length > 0) {
-        var lastPolyline = polylines.pop();
-        redoPolylineStack.push(lastPolyline);
-        lastPolyline.setMap(null);
-        snappedCoords.pop();
-      } // debugger
-
-    }
-  }, {
-    key: "redo",
-    value: function redo() {
-      // debugger
-      if (this.state.redoAvailable) {
-        if (markers.length > 0) {
-          var redonePoly = redoPolylineStack.pop();
-          var redoneDistance = redoDistanceStack.pop();
-          redonePoly.setMap(map);
-          this.setState({
-            distance: this.state.distance + redoneDistance
-          });
-          snappedCoords.push(redonePoly.latLngs.j[0].j);
-          polylines.push(redonePoly);
-          distanceStack.push(redoneDistance);
-          if (markers.length === 0) this.setState({
-            redoAvailable: false
-          });
-        }
-
-        if (redoMarkerStack.length > 0) {
-          var redoneMarker = redoMarkerStack.pop();
-          redoneMarker.setMap(map);
-          markers.push(redoneMarker);
-        }
-      }
-    }
-  }, {
-    key: "ride",
-    value: function ride() {
-      // debugger
-      if (this.state.travelMode === "WALKING") {
-        this.setState({
-          travelMode: "BICYCLING"
-        });
-        this.toggle("BICYCLING");
-      }
-    }
-  }, {
-    key: "run",
-    value: function run() {
-      // debugger
-      if (this.state.travelMode === "BICYCLING") {
-        this.setState({
-          travelMode: "WALKING"
-        });
-        this.toggle("WALKING");
-      }
-    }
-  }, {
-    key: "toggle",
-    value: function toggle(type) {
-      snappedCoords = [];
-      polylines.forEach(function (poly) {
-        poly.setMap(null);
-      });
-      polylines = [];
-      var that = this; // debugger
-
-      this.setState({
-        distance: 0
-      });
-
-      for (var i = 0; i < markers.length - 1; i++) {
-        // debugger
-        directionsService.route({
-          origin: markers[i].position,
-          destination: markers[i + 1].position,
-          travelMode: type
-        }, function (response, status) {
-          if (status === 'OK') {
-            // debugger
-            var addedDistance = that.extendRouteWithPolyline(response, true);
-            that.setState({
-              distance: that.state.distance + addedDistance
-            });
-            distanceStack.push(addedDistance);
-          } else {
-            window.alert('Directions request failed due to ' + status);
-          }
-        });
-      } // debugger
-
-    }
-  }, {
-    key: "handleSubmit",
-    value: function handleSubmit(e) {
-      debugger;
-      var travelTypes = {
-        "BICYCLING": "Ride",
-        "WALKING": "Run"
-      };
-      e.preventDefault();
-      var allSnaps = [];
-      snappedCoords;
-      debugger;
-      snappedCoords.forEach(function (list) {
-        allSnaps = allSnaps.concat(list);
-      });
-      var encode = google.maps.geometry.encoding.encodePath(allSnaps); // debugger
-      // debugger
-
-      var centerLat = allSnaps[0].lat();
-      var centerLng = allSnaps[0].lng();
-      var finalDistance = Math.round(this.state.distance * 100) / 100;
-      var activityType = travelTypes[this.state.travelMode]; // const newRoute = {polyline: encode, centerLat: centerLat, centerLng: centerLng, distance: finalDistance, athlete_id: this.props.current_athlete_id, activity_type: travelTypes[this.state.travelMode], title: "tests"};
-      // this.props.createRoute(newRoute).then(() => this.props.history.push("/routes"));
-      // debugger
-
-      this.props.openRouteModal("saveRoute", encode, centerLat, centerLng, finalDistance, activityType);
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var travelTypes = {
-        "BICYCLING": "Ride",
-        "WALKING": "Run"
-      };
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "map-header-items"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "left-map-header"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "#/dashboard",
-        className: "map-stride-title"
-      }, "STRIDE"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "route-builder"
-      }, "ROUTE BUILDER")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "#/routes",
-        className: "exit-builder"
-      }, "Exit Builder"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
-        className: "sub-header"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "left-sub-header"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "auto"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "text",
-        className: "autoc",
-        placeholder: "New York, New York, United States",
-        ref: "autoc"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "map-history-buttons"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "clear",
-        onClick: this.clear
-      }, "Clear"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "undo",
-        onClick: this.undo
-      }, "Undo"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "redo",
-        onClick: this.redo
-      }, "Redo")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "map-toggle-buttons"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "ride",
-        onClick: this.ride
-      }, "Ride"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "run",
-        onClick: this.run
-      }, "Run"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "new-route-button",
-        onClick: this.handleSubmit
-      }, "Save")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "map",
-        ref: "map"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "map-footer"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "distance-container"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "distance-group"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "distance"
-      }, Math.round(this.state.distance * 0.0621371) / 100), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "miles"
-      }, "mi")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Distance")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "distance-container"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "distance-group"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "distance"
-      }, travelTypes[this.state.travelMode]), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "miles"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Travel Type"))));
-    }
-  }]);
-
-  return TestMap;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
-
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(TestMap));
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nError: ENOENT: no such file or directory, open '/home/nathan/Documents/App_Academy/Full_Time/Full_Stack/Stride/frontend/components/map/test_map.jsx'");
 
 /***/ }),
 
@@ -3688,7 +3160,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function handleClose(close, errors, componentType, reset) {
-  debugger;
+  // debugger
   close();
 
   if (componentType === "signup") {
@@ -3701,8 +3173,8 @@ function Modal(_ref) {
       modal = _ref.modal,
       closeModal = _ref.closeModal,
       resetSignupErrors = _ref.resetSignupErrors;
-  debugger;
 
+  // debugger
   if (!modal) {
     return null;
   }
@@ -3741,7 +3213,7 @@ function Modal(_ref) {
 }
 
 var mapStateToProps = function mapStateToProps(state) {
-  debugger;
+  // debugger
   return {
     errors: {
       signupErrors: state.signupErrors
@@ -3751,7 +3223,7 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  debugger;
+  // debugger
   return {
     closeModal: function closeModal() {
       return dispatch(Object(_actions_modal_actions__WEBPACK_IMPORTED_MODULE_1__["closeModal"])());
@@ -4491,7 +3963,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var msp = function msp(_ref) {
   var sessionErrors = _ref.sessionErrors;
-  debugger;
+  // debugger
   return {
     errors: sessionErrors,
     formType: "Log In",
@@ -4588,8 +4060,7 @@ function (_React$Component) {
   }, {
     key: "renderErrors",
     value: function renderErrors() {
-      debugger;
-
+      // debugger
       if (this.props.errors.length > 0) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           className: "auth-errors"
@@ -4604,8 +4075,8 @@ function (_React$Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
-      e.preventDefault();
-      debugger;
+      e.preventDefault(); // debugger
+
       this.props.action(this.state);
     }
   }, {
@@ -4676,147 +4147,9 @@ function (_React$Component) {
   !*** ./frontend/components/signup/signup_form.jsx ***!
   \****************************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-
-
-
-var SignupForm =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(SignupForm, _React$Component);
-
-  function SignupForm(props) {
-    var _this;
-
-    _classCallCheck(this, SignupForm);
-
-    debugger;
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(SignupForm).call(this, props));
-    _this.state = {
-      username: "",
-      password: "",
-      errors: props.errors
-    };
-    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    return _this;
-  }
-
-  _createClass(SignupForm, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.setState({
-        errors: []
-      });
-    }
-  }, {
-    key: "updateUsername",
-    value: function updateUsername(e) {
-      this.setState({
-        username: e.target.value
-      });
-    }
-  }, {
-    key: "updatePassword",
-    value: function updatePassword(e) {
-      this.setState({
-        password: e.target.value
-      });
-    }
-  }, {
-    key: "renderErrors",
-    value: function renderErrors() {
-      debugger;
-
-      if (this.props.errors.length > 0) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-          className: "auth-errors"
-        }, this.props.errors.map(function (error, i) {
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-            className: "error-item",
-            key: "error-".concat(i)
-          }, error);
-        }));
-      }
-    }
-  }, {
-    key: "handleSubmit",
-    value: function handleSubmit(e) {
-      e.preventDefault();
-      debugger;
-      var user = Object.assign({}, this.state);
-      this.props.action(user).then(this.props.closeModal);
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "bg"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "signup-form-container"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "signup-form-elements"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "signup-title"
-      }, "Sign Up for free"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "signup-subtag"
-      }, "Join for the tracking. Stay for the community."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "signup-errors"
-      }, this.renderErrors()), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        onSubmit: this.handleSubmit,
-        className: "signup-form-box"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "signup-form"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "signup-username"
-      }, "Username"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "text",
-        value: this.state.username,
-        onChange: this.updateUsername.bind(this),
-        className: "signup-input"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "signup-new-password"
-      }, "New Password"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "password",
-        value: this.state.password,
-        onChange: this.updatePassword.bind(this),
-        className: "signup-input"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "signup-submit-holder"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "signup-submit",
-        type: "submit"
-      }, this.props.formType))))));
-    }
-  }]);
-
-  return SignupForm;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
-
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(SignupForm));
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /home/nathan/Documents/App_Academy/Full_Time/Full_Stack/Stride/frontend/components/signup/signup_form.jsx: Unexpected token, expected \"{\" (7:16)\n\n\u001b[0m \u001b[90m  5 | \u001b[39m  \u001b[90m// constructor(props){\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m  6 | \u001b[39m    \u001b[90m// debugger\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  7 | \u001b[39m    \u001b[36msuper\u001b[39m(props)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    | \u001b[39m                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m  8 | \u001b[39m    \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mstate \u001b[33m=\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m  9 | \u001b[39m      username\u001b[33m:\u001b[39m \u001b[32m\"\"\u001b[39m\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 10 | \u001b[39m      password\u001b[33m:\u001b[39m \u001b[32m\"\"\u001b[39m\u001b[33m,\u001b[39m\u001b[0m\n    at _class.raise (/home/nathan/Documents/App_Academy/Full_Time/Full_Stack/Stride/node_modules/@babel/parser/lib/index.js:4021:15)\n    at _class.unexpected (/home/nathan/Documents/App_Academy/Full_Time/Full_Stack/Stride/node_modules/@babel/parser/lib/index.js:5330:16)\n    at _class.expect (/home/nathan/Documents/App_Academy/Full_Time/Full_Stack/Stride/node_modules/@babel/parser/lib/index.js:5318:28)\n    at _class.parseBlock (/home/nathan/Documents/App_Academy/Full_Time/Full_Stack/Stride/node_modules/@babel/parser/lib/index.js:7780:10)\n    at _class.parseFunctionBody (/home/nathan/Documents/App_Academy/Full_Time/Full_Stack/Stride/node_modules/@babel/parser/lib/index.js:7026:24)\n    at _class.parseFunctionBodyAndFinish (/home/nathan/Documents/App_Academy/Full_Time/Full_Stack/Stride/node_modules/@babel/parser/lib/index.js:7008:10)\n    at _class.parseMethod (/home/nathan/Documents/App_Academy/Full_Time/Full_Stack/Stride/node_modules/@babel/parser/lib/index.js:6950:10)\n    at _class.pushClassMethod (/home/nathan/Documents/App_Academy/Full_Time/Full_Stack/Stride/node_modules/@babel/parser/lib/index.js:8184:30)\n    at _class.parseClassMemberWithIsStatic (/home/nathan/Documents/App_Academy/Full_Time/Full_Stack/Stride/node_modules/@babel/parser/lib/index.js:8109:12)\n    at _class.parseClassMember (/home/nathan/Documents/App_Academy/Full_Time/Full_Stack/Stride/node_modules/@babel/parser/lib/index.js:8051:10)\n    at _class.parseClassBody (/home/nathan/Documents/App_Academy/Full_Time/Full_Stack/Stride/node_modules/@babel/parser/lib/index.js:8006:12)\n    at _class.parseClass (/home/nathan/Documents/App_Academy/Full_Time/Full_Stack/Stride/node_modules/@babel/parser/lib/index.js:7956:10)\n    at _class.parseStatementContent (/home/nathan/Documents/App_Academy/Full_Time/Full_Stack/Stride/node_modules/@babel/parser/lib/index.js:7281:21)\n    at _class.parseStatement (/home/nathan/Documents/App_Academy/Full_Time/Full_Stack/Stride/node_modules/@babel/parser/lib/index.js:7253:17)\n    at _class.parseBlockOrModuleBlockBody (/home/nathan/Documents/App_Academy/Full_Time/Full_Stack/Stride/node_modules/@babel/parser/lib/index.js:7805:23)\n    at _class.parseBlockBody (/home/nathan/Documents/App_Academy/Full_Time/Full_Stack/Stride/node_modules/@babel/parser/lib/index.js:7792:10)\n    at _class.parseTopLevel (/home/nathan/Documents/App_Academy/Full_Time/Full_Stack/Stride/node_modules/@babel/parser/lib/index.js:7218:10)\n    at _class.parse (/home/nathan/Documents/App_Academy/Full_Time/Full_Stack/Stride/node_modules/@babel/parser/lib/index.js:8618:17)\n    at parse (/home/nathan/Documents/App_Academy/Full_Time/Full_Stack/Stride/node_modules/@babel/parser/lib/index.js:10624:38)\n    at parser (/home/nathan/Documents/App_Academy/Full_Time/Full_Stack/Stride/node_modules/@babel/core/lib/transformation/normalize-file.js:170:34)\n    at normalizeFile (/home/nathan/Documents/App_Academy/Full_Time/Full_Stack/Stride/node_modules/@babel/core/lib/transformation/normalize-file.js:138:11)\n    at runSync (/home/nathan/Documents/App_Academy/Full_Time/Full_Stack/Stride/node_modules/@babel/core/lib/transformation/index.js:44:43)\n    at runAsync (/home/nathan/Documents/App_Academy/Full_Time/Full_Stack/Stride/node_modules/@babel/core/lib/transformation/index.js:35:14)\n    at process.nextTick (/home/nathan/Documents/App_Academy/Full_Time/Full_Stack/Stride/node_modules/@babel/core/lib/transform.js:34:34)\n    at _combinedTickCallback (internal/process/next_tick.js:131:7)\n    at process._tickCallback (internal/process/next_tick.js:180:9)");
 
 /***/ }),
 
@@ -4845,7 +4178,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var msp = function msp(_ref) {
   var signupErrors = _ref.signupErrors;
-  debugger;
+  // debugger
   return {
     errors: signupErrors,
     formType: "Sign Up",
@@ -4997,8 +4330,8 @@ __webpack_require__.r(__webpack_exports__);
 function modalReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments.length > 1 ? arguments[1] : undefined;
-  debugger;
 
+  // debugger
   switch (action.type) {
     case _actions_modal_actions__WEBPACK_IMPORTED_MODULE_0__["OPEN_ROUTE_MODAL"]:
       return lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, {
@@ -5017,7 +4350,7 @@ function modalReducer() {
       });
 
     case _actions_modal_actions__WEBPACK_IMPORTED_MODULE_0__["CLOSE_MODAL"]:
-      debugger;
+      // debugger
       return {};
 
     default:
@@ -5360,7 +4693,7 @@ __webpack_require__.r(__webpack_exports__);
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_SESSION_ERRORS"]:
-      debugger;
+      // debugger
       return action.errors;
 
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CURRENT_ATHLETE"]:
@@ -5390,7 +4723,7 @@ var defaultState = {
 /* harmony default export */ __webpack_exports__["default"] = (function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments.length > 1 ? arguments[1] : undefined;
-  debugger;
+  // debugger
   Object.freeze(state); // debugger
 
   switch (action.type) {
@@ -5423,12 +4756,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = (function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments.length > 1 ? arguments[1] : undefined;
-  debugger;
+  // debugger
   Object.freeze(state);
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_SIGNUP_ERRORS"]:
-      debugger;
+      // debugger
       return action.errors;
 
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RESET_SIGNUP_ERRORS"]:
