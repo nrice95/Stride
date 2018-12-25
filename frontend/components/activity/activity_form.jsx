@@ -21,6 +21,7 @@ class ActivityForm extends React.Component {
     e.preventDefault();
     // if (this.props.formType === "Create"){
       // debugger
+      let x = 5;
       this.props.action({activity: this.state}).then(thing => {
         this.props.history.push(`/activity/${thing.activity.id}`);
       })

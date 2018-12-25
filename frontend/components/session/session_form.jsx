@@ -20,7 +20,7 @@ class SessionForm extends React.Component {
   }
 
   renderErrors(){
-    // debugger
+    debugger
     if (this.props.errors.length > 0){
       return(
         <ul className="auth-errors">
@@ -36,7 +36,7 @@ class SessionForm extends React.Component {
 
   handleSubmit(e){
     e.preventDefault();
-    // debugger
+    debugger
     this.props.action(this.state);
   }
 
@@ -48,20 +48,20 @@ class SessionForm extends React.Component {
         <header className="main-header">
           <div className="header-items">
             <a href="/" className="login-stride-title">STRIDE</a>
-            <button className="signup-button" onClick={() => openUserModal('signup')}>Sign Up</button>
+            <button className="signup-button" onClick={() => openUserModal('signup', [])}>Sign Up</button>
           </div>
         </header>
         <div className="login-form-container">
           <div className="login-title">
             {this.props.formType}
           </div>
-
+          <div className="session-errors-list">{this.renderErrors()}</div>
+          <div className="session-demo-login">
+            <button className="session-demo-login-button" onClick={() => dispatch(demoLogin())}>Try as Guest</button>
+          </div>
           <form onSubmit={this.handleSubmit} className="login-form-box">
             <br></br>
             <div className="login-form">
-              <div className="session-demo-login">
-                <button className="session-demo-login-button" onClick={() => dispatch(demoLogin())}>Try as Guest</button>
-              </div>
               <label>
                 <input type="text" placeholder="Username" value={this.state.username} onChange={this.updateUsername.bind(this)} className="login-input"/>
               </label>

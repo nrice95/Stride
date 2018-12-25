@@ -15,11 +15,12 @@ export const openRouteModal = (modal, polyline, centerLat, centerLng, distance, 
   };
 };
 
-export const openUserModal = modal => {
+export const openUserModal = (modal, errors) => {
   // debugger
   return {
     type: OPEN_USER_MODAL,
     modal,
+    errors
   };
 };
 

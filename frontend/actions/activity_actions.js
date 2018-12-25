@@ -19,7 +19,7 @@ export const createActivity = activity => dispatch => {
   return ActivityApiUtil.createActivity(activity).then(activity => {
     return dispatch(receiveActivity(activity))
   }, err => {
-    return dispatch(receiveErrors(err.responseJSON))
+    return dispatch(receiveActivityErrors(err.responseJSON))
   });
 };
 
@@ -56,7 +56,7 @@ const removeActivity = activityId => {
   })
 }
 
-const receiveErrors = errors => {
+const receiveActivityErrors = errors => {
   return {
     type: RECEIVE_ACTIVITY_ERRORS,
     errors,

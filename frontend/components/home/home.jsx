@@ -8,7 +8,7 @@ export const Home = () => {
     <div className="home">
       <header className="home-header">
         <div className="home-header-items">
-          <a className="home-stride-title">STRIDE</a>
+          <a className="home-stride-title" href="/#/login">STRIDE</a>
           <a href="/#/login" className="home-login-button">Log In</a>
         </div>
       </header>

@@ -6,10 +6,10 @@ import SignupForm from "./signup_form";
 import { closeModal } from "../../actions/modal_actions";
 
 
-const msp = ({ errors }) => {
-  // debugger
+const msp = ({ signupErrors }) => {
+  debugger
   return {
-    errors,
+    errors: signupErrors,
     formType: "Sign Up",
     oppFormType: "Log In",
     navKey: "login",

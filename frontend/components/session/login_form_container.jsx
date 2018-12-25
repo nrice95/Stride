@@ -5,10 +5,10 @@ import { login } from "../../actions/session_actions";
 import SessionForm from "./session_form";
 import { openUserModal } from '../../actions/modal_actions';
 
-const msp = ({ errors }) => {
-  // debugger
+const msp = ({ sessionErrors }) => {
+  debugger
   return {
-    errors: errors,
+    errors: sessionErrors,
     formType: "Log In",
     oppFormType: "Sign Up",
     navKey: "signup",
@@ -20,7 +20,7 @@ const mdp = dispatch => {
   // debugger
   return ({
     action: athlete => dispatch(login(athlete)),
-    openUserModal: modal => dispatch(openUserModal(modal))
+    openUserModal: (modal, errors) => dispatch(openUserModal(modal, errors))
   })
 }
 

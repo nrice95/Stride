@@ -2,6 +2,7 @@ import { RECEIVE_CURRENT_ATHLETE, LOGOUT_CURRENT_ATHLETE } from "../actions/sess
 const defaultState = { id: null };
 
 export default (state = {}, action) => {
+  debugger
   Object.freeze(state);
   // debugger
   switch (action.type) {

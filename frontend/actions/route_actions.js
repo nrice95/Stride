@@ -10,7 +10,7 @@ export const createRoute = route => dispatch => {
     // debugger
     return dispatch(receiveRoute(route))
   }, err => {
-    return dispatch(receiveErrors(err.responseJSON))
+    return dispatch(receiveRouteErrors(err.responseJSON))
   });
 };
 
@@ -39,7 +39,7 @@ export const receiveRoutes = routes => {
   }
 }
 
-export const receiveErrors = errors => {
+export const receiveRouteErrors = errors => {
   return {
     type: RECEIVE_ROUTE_ERRORS,
     errors,

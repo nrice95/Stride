@@ -2,6 +2,15 @@ import * as APIUtil from "../util/session_api_util";
 export const RECEIVE_CURRENT_ATHLETE = "RECEIVE_CURRENT_ATHLETE";
 export const LOGOUT_CURRENT_ATHLETE = "LOGOUT_CURRENT_ATHLETE";
 export const RECEIVE_SESSION_ERRORS = "RECEIVE_SESSION_ERRORS";
+export const RECEIVE_SIGNUP_ERRORS = "RECEIVE_SIGNUP_ERRORS";
+export const RESET_SIGNUP_ERRORS = "RESET_SIGNUP_ERRORS";
+
+export const resetSignupErrors = () => {
+  return {
+    type: RESET_SIGNUP_ERRORS,
+    signupErrors: []
+  }
+}
 
 export const receiveCurrentAthlete = (currentAthlete) => {
   // //debugger
@@ -15,8 +24,13 @@ export const logoutCurrentAthlete = () => ({
   type: LOGOUT_CURRENT_ATHLETE,
 });
 
-export const receiveErrors = (errors) => ({
+export const receiveSessionErrors = (errors) => ({
   type: RECEIVE_SESSION_ERRORS,
+  errors,
+});
+
+export const receiveSignupErrors = (errors) => ({
+  type: RECEIVE_SIGNUP_ERRORS,
   errors,
 });
 
@@ -26,18 +40,22 @@ export const demoLogin = () => dispatch => {
   return APIUtil.login(demoAthlete).then(athlete => {
     return dispatch(receiveCurrentAthlete(athlete))
   }, err =>{
-    return dispatch(receiveErrors(err.responseJSON))
+    return dispatch(receiveSessionErrors(err.responseJSON))
   });
 };
 
+export const clearSignupErrors = () => dispatch => {
+  return dispatch(resetSignupErrors)
+}
+
 export const login = (athlete) => dispatch => {
-  //debugger
+  debugger
   return APIUtil.login(athlete).then(athlete => {
-    //debugger
+    // debugger
     return dispatch(receiveCurrentAthlete(athlete))
   }, err => {
-    //debugger
-    return dispatch(receiveErrors(err.responseJSON))
+    debugger
+    return dispatch(receiveSessionErrors(err.responseJSON))
   });
 };
 
@@ -50,13 +68,14 @@ export const logout = () => dispatch => {
 };
 
 export const signup = (athlete) => dispatch => {
-  // debugger
-  return APIUtil.signup(athlete).then(athlete => (
-    // //debugger
-    dispatch(receiveCurrentAthlete(athlete))
-  ), err => (
-    dispatch(receiveErrors(err.responseJSON))
-  ));
+  debugger
+  return APIUtil.signup(athlete).then(athlete => {
+    // debugger
+    return dispatch(receiveCurrentAthlete(athlete))
+  }, err => {
+    debugger
+    return dispatch(receiveSignupErrors(err.responseJSON))
+  });
 };
 
 // export const login = athlete => dispatch => {

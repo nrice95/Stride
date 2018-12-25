@@ -3,6 +3,7 @@ import { Home } from "./home";
 import { demoLogin } from "../../actions/session_actions";
 
 const mdp = dispatch => {
+  // debugger
   return ({
     demoLogin: () => dispatch(demoLogin())
   })
