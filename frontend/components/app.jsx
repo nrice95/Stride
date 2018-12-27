@@ -7,8 +7,9 @@ import DashboardContainer from "./dashboard/dashboard_container";
 import AthleteContainer from "./athlete/athlete_container";
 import MapContainer from "./map/map_container";
 import MapTest from "./map_demo/map_test_container";
-import RouteShow from "./route_show/route_show_container";
 import RouteIndex from "./route_index/route_index_container";
+import RouteSearch from "./route_search/route_search_container";
+import RouteShow from "./route_show/route_show_container";
 import ActivityForm from "./activity/create_activity_form_container";
 import EditActivityForm from "./activity/edit_activity_form_container";
 import ActivityIndex from "./activity/activity_index_container";
@@ -29,6 +30,7 @@ const App = () => {
         <ProtectedRoute path="/dashboard" component={DashboardContainer} />
         <ProtectedRoute path="/athlete" component={ActivityIndex}/>
         <ProtectedRoute path="/route/new" component={MapTest}/>
+        <ProtectedRoute path="/route/search" component={RouteSearch}/>
         <ProtectedRoute path="/oldmap" component={MapContainer}/>
         <ProtectedRoute path="/route/:routeId" component={RouteShow}/>
         <ProtectedRoute path="/routes" component={RouteIndex}/>

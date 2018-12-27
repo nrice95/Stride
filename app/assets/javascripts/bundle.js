@@ -704,8 +704,8 @@ function (_React$Component) {
 
     _classCallCheck(this, ActivityForm);
 
-    // debugger
     _this = _possibleConstructorReturn(this, _getPrototypeOf(ActivityForm).call(this, props));
+    debugger;
     _this.state = _this.props.activity;
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
@@ -743,10 +743,13 @@ function (_React$Component) {
   }, {
     key: "renderErrors",
     value: function renderErrors() {
-      if (this.props.errors.length > 0) {
+      debugger;
+      var errors = this.props.errors || [];
+
+      if (errors.length > 0) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           className: "activity-errors"
-        }, this.props.errors.map(function (error, i) {
+        }, errors.map(function (error, i) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
             className: "error-item",
             key: "error-".concat(i)
@@ -950,7 +953,7 @@ function (_React$Component) {
     value: function render() {
       var _this = this;
 
-      // debugger
+      debugger;
       var activities = this.props.activities.map(function (activity) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_activity_table_element__WEBPACK_IMPORTED_MODULE_1__["default"], {
           key: activity.id,
@@ -1184,10 +1187,10 @@ var msp = function msp(state, ownProps) {
   if (currentHour.length === 1) currentHour = "0" + currentHour;
   var currentMinute = "".concat(date.getMinutes());
   if (currentMinute.length === 1) currentMinute = "0" + currentMinute;
-  var currentTime = "".concat(currentHour, ":").concat(currentMinute); // debugger
-
+  var currentTime = "".concat(currentHour, ":").concat(currentMinute);
+  debugger;
   return {
-    errors: state.errors,
+    errors: state.activityErrors,
     activity: {
       title: "",
       description: "",
@@ -1402,15 +1405,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _athlete_athlete_container__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./athlete/athlete_container */ "./frontend/components/athlete/athlete_container.jsx");
 /* harmony import */ var _map_map_container__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./map/map_container */ "./frontend/components/map/map_container.jsx");
 /* harmony import */ var _map_demo_map_test_container__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./map_demo/map_test_container */ "./frontend/components/map_demo/map_test_container.jsx");
-/* harmony import */ var _route_show_route_show_container__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./route_show/route_show_container */ "./frontend/components/route_show/route_show_container.jsx");
-/* harmony import */ var _route_index_route_index_container__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./route_index/route_index_container */ "./frontend/components/route_index/route_index_container.jsx");
-/* harmony import */ var _activity_create_activity_form_container__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./activity/create_activity_form_container */ "./frontend/components/activity/create_activity_form_container.jsx");
-/* harmony import */ var _activity_edit_activity_form_container__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./activity/edit_activity_form_container */ "./frontend/components/activity/edit_activity_form_container.jsx");
-/* harmony import */ var _activity_activity_index_container__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./activity/activity_index_container */ "./frontend/components/activity/activity_index_container.jsx");
-/* harmony import */ var _activity_activity_show_container__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./activity/activity_show_container */ "./frontend/components/activity/activity_show_container.jsx");
-/* harmony import */ var _modal_modal__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./modal/modal */ "./frontend/components/modal/modal.jsx");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
-/* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.jsx");
+/* harmony import */ var _route_index_route_index_container__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./route_index/route_index_container */ "./frontend/components/route_index/route_index_container.jsx");
+/* harmony import */ var _route_search_route_search_container__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./route_search/route_search_container */ "./frontend/components/route_search/route_search_container.jsx");
+/* harmony import */ var _route_show_route_show_container__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./route_show/route_show_container */ "./frontend/components/route_show/route_show_container.jsx");
+/* harmony import */ var _activity_create_activity_form_container__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./activity/create_activity_form_container */ "./frontend/components/activity/create_activity_form_container.jsx");
+/* harmony import */ var _activity_edit_activity_form_container__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./activity/edit_activity_form_container */ "./frontend/components/activity/edit_activity_form_container.jsx");
+/* harmony import */ var _activity_activity_index_container__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./activity/activity_index_container */ "./frontend/components/activity/activity_index_container.jsx");
+/* harmony import */ var _activity_activity_show_container__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./activity/activity_show_container */ "./frontend/components/activity/activity_show_container.jsx");
+/* harmony import */ var _modal_modal__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./modal/modal */ "./frontend/components/modal/modal.jsx");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+/* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.jsx");
+
 
 
 
@@ -1433,43 +1438,46 @@ __webpack_require__.r(__webpack_exports__);
 
 var App = function App() {
   // debugger
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_modal_modal__WEBPACK_IMPORTED_MODULE_15__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_16__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_17__["AuthRoute"], {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_modal_modal__WEBPACK_IMPORTED_MODULE_16__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_17__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_18__["AuthRoute"], {
     path: "/login",
     component: _session_login_form_container__WEBPACK_IMPORTED_MODULE_3__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_17__["AuthRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_18__["AuthRoute"], {
     path: "/signup",
     component: _signup_signup_form_container__WEBPACK_IMPORTED_MODULE_2__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_17__["ProtectedRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_18__["ProtectedRoute"], {
     path: "/dashboard",
     component: _dashboard_dashboard_container__WEBPACK_IMPORTED_MODULE_5__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_17__["ProtectedRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_18__["ProtectedRoute"], {
     path: "/athlete",
-    component: _activity_activity_index_container__WEBPACK_IMPORTED_MODULE_13__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_17__["ProtectedRoute"], {
+    component: _activity_activity_index_container__WEBPACK_IMPORTED_MODULE_14__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_18__["ProtectedRoute"], {
     path: "/route/new",
     component: _map_demo_map_test_container__WEBPACK_IMPORTED_MODULE_8__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_17__["ProtectedRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_18__["ProtectedRoute"], {
+    path: "/route/search",
+    component: _route_search_route_search_container__WEBPACK_IMPORTED_MODULE_10__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_18__["ProtectedRoute"], {
     path: "/oldmap",
     component: _map_map_container__WEBPACK_IMPORTED_MODULE_7__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_17__["ProtectedRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_18__["ProtectedRoute"], {
     path: "/route/:routeId",
-    component: _route_show_route_show_container__WEBPACK_IMPORTED_MODULE_9__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_17__["ProtectedRoute"], {
+    component: _route_show_route_show_container__WEBPACK_IMPORTED_MODULE_11__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_18__["ProtectedRoute"], {
     path: "/routes",
-    component: _route_index_route_index_container__WEBPACK_IMPORTED_MODULE_10__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_17__["ProtectedRoute"], {
+    component: _route_index_route_index_container__WEBPACK_IMPORTED_MODULE_9__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_18__["ProtectedRoute"], {
     path: "/activity/new",
-    component: _activity_create_activity_form_container__WEBPACK_IMPORTED_MODULE_11__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_17__["ProtectedRoute"], {
+    component: _activity_create_activity_form_container__WEBPACK_IMPORTED_MODULE_12__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_18__["ProtectedRoute"], {
     path: "/activities/:activityId/edit",
-    component: _activity_edit_activity_form_container__WEBPACK_IMPORTED_MODULE_12__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_17__["ProtectedRoute"], {
+    component: _activity_edit_activity_form_container__WEBPACK_IMPORTED_MODULE_13__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_18__["ProtectedRoute"], {
     path: "/activity/:activityId",
-    component: _activity_activity_show_container__WEBPACK_IMPORTED_MODULE_14__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_17__["ProtectedRoute"], {
+    component: _activity_activity_show_container__WEBPACK_IMPORTED_MODULE_15__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_18__["ProtectedRoute"], {
     path: "/activities",
-    component: _activity_activity_index_container__WEBPACK_IMPORTED_MODULE_13__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_17__["AuthRoute"], {
+    component: _activity_activity_index_container__WEBPACK_IMPORTED_MODULE_14__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_18__["AuthRoute"], {
     path: "/",
     component: _home_home_container__WEBPACK_IMPORTED_MODULE_4__["default"]
   })));
@@ -4270,6 +4278,160 @@ var mdp = function mdp(dispatch) {
 
 /***/ }),
 
+/***/ "./frontend/components/route_search/route_search.jsx":
+/*!***********************************************************!*\
+  !*** ./frontend/components/route_search/route_search.jsx ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var RouteSearch =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(RouteSearch, _React$Component);
+
+  function RouteSearch(props) {
+    var _this;
+
+    _classCallCheck(this, RouteSearch);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(RouteSearch).call(this, props));
+    _this.state = {
+      routes: [],
+      map: null
+    };
+    return _this;
+  }
+
+  _createClass(RouteSearch, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      var routesPromise = this.props.fetchRoutes();
+      routesPromise.then(function (response) {
+        var mapRef = _this2.refs.map;
+        var map = new google.maps.Map(mapRef, {
+          zoom: 18,
+          // center: {lat: 40.7374579, lng: -74.49510900000001},
+          center: {
+            lat: 40.751484,
+            lng: -73.983898
+          },
+          mapTypeId: 'terrain'
+        });
+
+        _this2.placeMarkers(map, response.routes);
+
+        _this2.setState({
+          map: map
+        });
+      });
+    }
+  }, {
+    key: "placeMarkers",
+    value: function placeMarkers(map, routes) {
+      var routesArr = Object.keys(routes).map(function (id) {
+        return routes[id];
+      });
+      routesArr.forEach(function (route) {
+        debugger;
+        var newMarker = new google.maps.Marker({
+          position: {
+            lat: route.center_lat,
+            lng: route.center_lng
+          },
+          map: map,
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            fillColor: "green",
+            scale: 8,
+            fillOpacity: 1,
+            strokeWeight: 3
+          }
+        });
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "map",
+        ref: "map"
+      }));
+    }
+  }]);
+
+  return RouteSearch;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (RouteSearch);
+
+/***/ }),
+
+/***/ "./frontend/components/route_search/route_search_container.jsx":
+/*!*********************************************************************!*\
+  !*** ./frontend/components/route_search/route_search_container.jsx ***!
+  \*********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_route_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/route_actions */ "./frontend/actions/route_actions.js");
+/* harmony import */ var _route_search__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./route_search */ "./frontend/components/route_search/route_search.jsx");
+
+
+
+
+
+var msp = function msp(state) {
+  return {
+    routes: Object.keys(state.routes).map(function (id) {
+      return state.routes[id];
+    })
+  };
+};
+
+var mdp = function mdp(dispatch) {
+  return {
+    fetchRoutes: function fetchRoutes() {
+      return dispatch(Object(_actions_route_actions__WEBPACK_IMPORTED_MODULE_2__["fetchRoutes"])());
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(msp, mdp)(_route_search__WEBPACK_IMPORTED_MODULE_3__["default"]));
+
+/***/ }),
+
 /***/ "./frontend/components/route_show/route_show.jsx":
 /*!*******************************************************!*\
   !*** ./frontend/components/route_show/route_show.jsx ***!
@@ -4919,6 +5081,34 @@ var ActivitiesReducer = function ActivitiesReducer() {
 
 /***/ }),
 
+/***/ "./frontend/reducers/activity_errors_reducer.js":
+/*!******************************************************!*\
+  !*** ./frontend/reducers/activity_errors_reducer.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_activity_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/activity_actions */ "./frontend/actions/activity_actions.js");
+
+/* harmony default export */ __webpack_exports__["default"] = (function () {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+
+  switch (action.type) {
+    case _actions_activity_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_ACTIVITY_ERRORS"]:
+      // debugger
+      return action.errors;
+
+    default:
+      return state;
+  }
+});
+
+/***/ }),
+
 /***/ "./frontend/reducers/athletes_reducer.js":
 /*!***********************************************!*\
   !*** ./frontend/reducers/athletes_reducer.js ***!
@@ -5039,9 +5229,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _entities_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./entities_reducer */ "./frontend/reducers/entities_reducer.js");
 /* harmony import */ var _session_errors_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./session_errors_reducer */ "./frontend/reducers/session_errors_reducer.js");
 /* harmony import */ var _signup_errors_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./signup_errors_reducer */ "./frontend/reducers/signup_errors_reducer.js");
-/* harmony import */ var _ui_reducers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ui_reducers */ "./frontend/reducers/ui_reducers.js");
-/* harmony import */ var _routes_reducer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./routes_reducer */ "./frontend/reducers/routes_reducer.js");
-/* harmony import */ var _activities_reducer__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./activities_reducer */ "./frontend/reducers/activities_reducer.js");
+/* harmony import */ var _activity_errors_reducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./activity_errors_reducer */ "./frontend/reducers/activity_errors_reducer.js");
+/* harmony import */ var _ui_reducers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ui_reducers */ "./frontend/reducers/ui_reducers.js");
+/* harmony import */ var _routes_reducer__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./routes_reducer */ "./frontend/reducers/routes_reducer.js");
+/* harmony import */ var _activities_reducer__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./activities_reducer */ "./frontend/reducers/activities_reducer.js");
+
 
 
 
@@ -5051,13 +5243,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var rootReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
+  activities: _activities_reducer__WEBPACK_IMPORTED_MODULE_8__["default"],
+  activityErrors: _activity_errors_reducer__WEBPACK_IMPORTED_MODULE_5__["default"],
   entities: _entities_reducer__WEBPACK_IMPORTED_MODULE_2__["default"],
+  routes: _routes_reducer__WEBPACK_IMPORTED_MODULE_7__["default"],
   session: _session_reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
   sessionErrors: _session_errors_reducer__WEBPACK_IMPORTED_MODULE_3__["default"],
-  routes: _routes_reducer__WEBPACK_IMPORTED_MODULE_6__["default"],
-  activities: _activities_reducer__WEBPACK_IMPORTED_MODULE_7__["default"],
   signupErrors: _signup_errors_reducer__WEBPACK_IMPORTED_MODULE_4__["default"],
-  ui: _ui_reducers__WEBPACK_IMPORTED_MODULE_5__["default"]
+  ui: _ui_reducers__WEBPACK_IMPORTED_MODULE_6__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (rootReducer);
 

@@ -15,9 +15,9 @@ const msp = (state, ownProps) => {
   let currentMinute = `${date.getMinutes()}`;
   if (currentMinute.length === 1) currentMinute = "0" + currentMinute;
   const currentTime = `${currentHour}:${currentMinute}`;
-  // debugger
+  debugger
   return ({
-    errors: state.errors,
+    errors: state.activityErrors,
     activity: {
       title: "",
       description: "",

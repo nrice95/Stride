@@ -8,7 +8,7 @@ class ActivityIndex extends React.Component {
   }
 
   render(){
-    // debugger
+    debugger
     const activities = this.props.activities.map(activity => {
       return (
         <ActivityTableElement

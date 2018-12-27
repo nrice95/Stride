@@ -4,8 +4,8 @@ import Header from "../header/header_container";
 
 class ActivityForm extends React.Component {
   constructor(props) {
-    // debugger
     super(props);
+    debugger
     this.state = this.props.activity;
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -33,10 +33,12 @@ class ActivityForm extends React.Component {
   }
 
   renderErrors(){
-    if (this.props.errors.length > 0){
+    debugger
+    let errors = this.props.errors || []
+    if (errors.length > 0){
       return(
         <ul className="activity-errors">
-          {this.props.errors.map((error,i) => (
+          {errors.map((error,i) => (
             <li className="error-item" key={`error-${i}`}>
               {error}
             </li>
